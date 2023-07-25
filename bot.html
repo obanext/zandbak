@@ -1,0 +1,26 @@
+
+<html>
+    <head>
+        <title>OBA</title>
+        <style>
+            html, body {
+                margin: 0;
+                padding: 0;
+            }
+            #widget {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <script id="obi-bots-launcher" src="https://cloudstatic.obi4wan.com/ngbots/obi-launcher.bundle.js"></script>
+        <script>
+        const chat = OBI.bots("33158f3d-15c1-4af8-aef4-89deb125a0a8", {
+            open_by_default: true,
+            width: "95%",
+            height: "95%",
+            enable_launcher: false
+        });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Zoeken</title>
+  <style>
+    .iframe-container {
+      display: flex;
+    }
+
+    .iframe-container iframe {
+      width: 50%;
+      height: 800px;
+      border: none;
+    }
+  </style>
+  <script>
+    function updateFrames() {
+      var year = document.getElementById("year-dropdown").value;
+      var iframes = document.getElementsByTagName("iframe");
+
+      for (var i = 0; i < iframes.length; i++) {
+        var base = iframes[i].getAttribute("data-base");
+        var src = base + "?activate=" + year + "&hide=dropdowns";
+        iframes[i].src = src;
+      }
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#">Collectie</a></li>
+        <li><a href="locaties.html">Locaties</a></li>
+        <li><a href="#">Agenda</a></li>
+        <li><a href="bot.html">bot</a></li>
+        <li><a href="#">datavis</a></li>
+      </ul>
+    </nav>
+    <img src="oba-logo.png" alt="OBA Logo" id="oba-logo" />
+  </header>
+
+  <div>
+    <select id="year-dropdown" onchange="updateFrames()">
+      <option value="2020">2020</option>
+      <option value="2021">2021</option>
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+    </select>
+  </div>
+  <div class="iframe-container">
+    <iframe data-base="https://localfocuswidgets.net/6480494231b85"></iframe>
+    <iframe data-base="https://localfocuswidgets.net/6480436708589"></iframe>
+  </div>
+</body>
+</html>
