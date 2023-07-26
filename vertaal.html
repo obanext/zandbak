@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head> <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
     <title>Webpage Translation</title>
@@ -15,6 +16,14 @@
             height: 50px; /* Reduced size */
             border-radius: 50%; /* This makes the images round */
             margin-left: 10px; /* Add some space between the images */
+        }
+        /* Create a flex container for the content */
+        #content {
+            display: flex;
+        }
+        /* Create a 50/50 split between the text and the image */
+        #content .text, #content .image-container {
+            width: 50%;
         }
     </style>
     <script>
@@ -47,7 +56,7 @@
         }
 
         function translatePage(lang) {
-            var textToTranslate = document.getElementById('content').textContent;
+            var textToTranslate = document.getElementById('text-content').textContent;
             fetch('https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=' + lang, {
                 method: 'POST',
                 headers: {
@@ -60,7 +69,7 @@
             .then(response => response.json())
             .then(data => {
                 var translatedText = data[0].translations[0].text;
-                document.getElementById('content').textContent = translatedText;
+                document.getElementById('text-content').textContent = translatedText;
             })
             .catch(error => console.error('Error:', error));
         }
@@ -80,7 +89,37 @@
 </head>
 <body>
     <div id="content">
-        Kom deze zomervakantie, vanaf 22 juli, naar de OBA voor de leukste zomervakantie in Amsterdam. Kinderen kunnen gratis bij ons ontwerpen, maken, luisteren naar verhalen, beleven, ontdekken, kijken, genieten en lezen. We zien je deze zomer graag bij de OBA.
+        <div class="text" id="text-content">
+            OBA Next is het
+innovatieprogramma
+van de OBA om te
+komen tot de nieuwe
+Amsterdamse
+bibliotheek van de
+toekomst. Dit is ook de
+werktitel voor het nog te
+ontwikkelen gebouw in
+Zuidoost waar het
+innovatieprogramma
+uiteindelijk zijn
+hoofdkwartier zal
+vinden.
+Bij OBA Next ontwikkel
+je je kennis en
+vaardigheden om zelf de
+wereld vorm te geven.
+Wat de toekomstige
+generaties daar precies
+voor nodig hebben,
+gaan we de komende
+tijd onderzoeken. Samen
+met partners,
+bibliotheekmedewerkers en
+Amsterdammers.
+        <div class="image-container">
+            <!-- Add your image here -->
+            <img src="next.png" alt="next">
+        </div>
     </div>
 </body>
 </html>
