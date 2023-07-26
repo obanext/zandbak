@@ -73,7 +73,30 @@
             })
             .catch(error => console.error('Error:', error));
         }
+          // Definieer de basis URL en API key
+    const api_url_base = "https://cors-anywhere.herokuapp.com/https://zoeken.oba.nl/api/v1/details/?id=|oba-catalogus|";
+    const api_key = "&authorization=d7519ea81ad4e06ab5e5dac46ddeb63a";
+    const api_output = "&output=json";
+    const detail_level = "&detaillevel=extended";
 
+    // Definieer de functie om de data te halen
+    async function getData(id) {
+      const api_url = api_url_base + id + detail_level + api_key + api_output;
+
+      try {
+        const response = await fetch(api_url, {
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        });
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+   
         // Run the createLanguageSelector function when the page loads
         window.onload = function() {
             createLanguageSelector();
@@ -85,7 +108,33 @@
                 });
             });
         };
-    </script>
+
+     
+
+      // Voeg een inputveld en een knop toe onder de tekstinhoud
+      const content = document.getElementById('content');
+      const inputDiv = document.createElement('div');
+      inputDiv.innerHTML = `
+        <p>Voer het ID in:</p>
+        <input type="text" id="myInput">
+        <button id="myBtn">Zoeken</button>
+        <p id="description"></p>
+      `;
+      content.appendChild(inputDiv);
+
+      // Krijg de button, input en paragraaf elementen
+      const btn = document.getElementById("myBtn");
+      const input = document.getElementById("myInput");
+      const description = document.getElementById("description");
+
+      // Zet een event listener op de knop
+      btn.addEventListener("click", async () => {
+        const id = input.value;
+        const data = await getData(id);
+        description.innerText = data.record.summaries[0];
+      });
+    };
+  </script>
 </head>
 <body>
     <div id="language-selector"></div>
