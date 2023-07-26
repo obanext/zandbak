@@ -16,16 +16,22 @@
             border-radius: 50%; /* This makes the images round */
             margin-left: 10px; /* Add some space between the images */
         }
-        /* Make the elements stack vertically */
+        /* Create a flex container for the content */
         #content {
             display: flex;
             flex-direction: column;
         }
+        /* Create a 50/50 split between the text and the image */
+        #content .text, #content .image-container {
+            width: 100%;
+        }
+        #content .image-container img {
+            /* Make the image responsive */
+            width: 100%;
+            height: auto;
+        }
     </style>
     <script>
-        let currentLang = 'nl'; // Default to Dutch
-        let currentBookId = null;
-
         function createLanguageSelector() {
             // Define the available languages
             const languages = [
@@ -54,36 +60,27 @@
             document.body.insertBefore(languageSelector, document.getElementById('content'));
         }
 
-        function translateText(lang, text) {
-            return fetch('https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=' + lang, {
+        function translatePage(lang) {
+            var textToTranslate = document.getElementById('text-content').textContent;
+            fetch('https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=' + lang, {
                 method: 'POST',
                 headers: {
-                    'Ocp-Apim-Subscription-Key': '',
+                    'Ocp-Apim-Subscription-Key': '', // Add your subscription key here
                     'Content-Type': 'application/json',
                     'Ocp-Apim-Subscription-Region': 'westeurope'
                 },
-                body: JSON.stringify([{'Text' : text}]),
+                body: JSON.stringify([{'Text' : textToTranslate}]),
             })
             .then(response => response.json())
-            .then(data => data[0].translations[0].text)
+            .then(data => {
+                var translatedText = data[0].translations[0].text;
+                document.getElementById('text-content').textContent = translatedText;
+                document.getElementById('book-title').textContent = data[0].translations[0].text;
+                document.getElementById('book-summary').textContent = data[0].translations[0].text;
+            })
             .catch(error => console.error('Error:', error));
         }
-
-        function translatePage(lang) {
-            currentLang = lang;
-            const textToTranslate = document.getElementById('text-content').textContent;
-            translateText(lang, textToTranslate)
-                .then(translatedText => {
-                    document.getElementById('text-content').textContent = translatedText;
-                });
-
-            // Also translate the current book if one is selected
-            if (currentBookId) {
-                fetchBookData(currentBookId);
-            }
-        }
-
-                // Run the createLanguageSelector function when the page loads
+        // Run the createLanguageSelector function when the page loads
         window.onload = function() {
             createLanguageSelector();
             // Add a click event listener to each image
@@ -93,35 +90,32 @@
                     translatePage(this.dataset.lang); // Use the data attribute to get the language code
                 });
             });
-
-            // Add event listener to the search button
-            document.getElementById('search-button').addEventListener('click', function() {
-                const bookId = document.getElementById('book-id').value;
-                if (bookId) {
-                    fetchBookData(bookId);
-                }
-            });
         };
 
         function fetchBookData(id) {
-            currentBookId = id;
-            fetch(`https://zoeken.oba.nl/api/v1/details/?id=|oba-catalogus|${id}&detaillevel=extended&authorization=d7519ea81ad4e06ab5e5dac46ddeb63a&output=json`)
+            fetch(`https://cors-anywhere.herokuapp.com/https://zoeken.oba.nl/api/v1/details/?id=|oba-catalogus|${id}&detaillevel=extended&authorization=d7519ea81ad4e06ab5e5dac46ddeb63a&output=json`, {
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+            })
                 .then(response => response.json())
                 .then(data => {
                     // Get the title and summary from the data and display them
                     const title = data.record.titles[0];
                     const summary = data.record.summaries[0];
-                    return Promise.all([
-                        translateText(currentLang, title),
-                        translateText(currentLang, summary)
-                    ]);
-                })
-                .then(([translatedTitle, translatedSummary]) => {
-                    document.getElementById('book-title').textContent = translatedTitle;
-                    document.getElementById('book-summary').textContent = translatedSummary;
+                    document.getElementById('book-title').textContent = title;
+                    document.getElementById('book-summary').textContent = summary;
                 })
                 .catch(error => console.error('Error:', error));
         }
+
+        // Add event listener to the search button
+        document.getElementById('search-button').addEventListener('click', function() {
+            const bookId = document.getElementById('book-id').value;
+            if (bookId) {
+                fetchBookData(bookId);
+            }
+        });
     </script>
 </head>
 <body>
@@ -132,9 +126,9 @@
         </div>
         <input type="text" id="book-id" placeholder="Enter book ID">
         <button id="search-button">Search</button>
+        <h2
         <h2 id="book-title"></h2>
         <p id="book-summary"></p>
     </div>
 </body>
 </html>
-
