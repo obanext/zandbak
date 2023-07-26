@@ -16,129 +16,113 @@
             border-radius: 50%; /* This makes the images round */
             margin-left: 10px; /* Add some space between the images */
         }
-        /* Create a flex container for the content */
+        /* Make the elements stack vertically */
         #content {
             display: flex;
-            flex-direction: column; /* Make the content blocks stack vertically */
-        }
-        /* Add some space around the content blocks */
-        #content .text, #content .book-data {
-            margin: 10px 0; 
+            flex-direction: column;
         }
     </style>
     <script>
-  function createLanguageSelector() {
-    // Define the available languages
-    const languages = [
-      { code: 'nl', name: 'Dutch', img: 'dutch.png' },
-      { code: 'en', name: 'English', img: 'english.png' },
-      { code: 'es', name: 'Spanish', img: 'spanish.png' },
-      { code: 'ar', name: 'Arabic', img: 'arabic.png' },
-      { code: 'uk', name: 'Ukranian', img: 'ukrainian.png' },
-    ];
+        let currentLang = 'nl'; // Default to Dutch
+        let currentBookId = null;
 
-    // Create a div element to hold the images
-    const languageSelector = document.createElement('div');
-    languageSelector.id = 'language-selector';
+        function createLanguageSelector() {
+            // Define the available languages
+            const languages = [
+                { code: 'nl', name: 'Dutch', img: 'dutch.png' },
+                { code: 'en', name: 'English', img: 'english.png' },
+                { code: 'es', name: 'Spanish', img: 'spanish.png' },
+                { code: 'ar', name: 'Arabic', img: 'arabic.png' },
+                { code: 'uk', name: 'Ukranian', img: 'ukrainian.png' },
+            ];
 
-    // Create an img element for each language
-    for (const language of languages) {
-      const img = document.createElement('img');
-      img.src = language.img;
-      img.alt = language.name;
-      img.dataset.lang = language.code;
-      img.style.cursor = 'pointer';
-      img.classList.add('language-selector-img');
-      if (language.code === 'en') {
-        img.classList.add('selected');
-      }
-      languageSelector.appendChild(img);
-    }
+            // Create a div element to hold the images
+            const languageSelector = document.createElement('div');
+            languageSelector.id = 'language-selector';
 
-    // Insert the div element before the content
-    document.body.insertBefore(languageSelector, document.getElementById('content'));
-  }
+            // Create an img element for each language
+            for (const language of languages) {
+                const img = document.createElement('img');
+                img.src = language.img;
+                img.alt = language.name;
+                img.dataset.lang = language.code; // Use a data attribute to store the language code
+                img.style.cursor = 'pointer'; // Change the cursor to a pointer when hovering over the image
+                languageSelector.appendChild(img);
+            }
 
-  function translatePage(lang) {
-    var textToTranslate = document.getElementById('text-content').textContent;
-    fetch('https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=' + lang, {
-      method: 'POST',
-      headers: {
-        'Ocp-Apim-Subscription-Key': '85f583d33db041b7abcce5522527b562',
-        'Content-Type': 'application/json',
-        'Ocp-Apim-Subscription-Region': 'westeurope'
-      },
-      body: JSON.stringify([{'Text' : textToTranslate}]),
-    })
-    .then(response => response.json())
-    .then(data => {
-      var translatedText = data[0].translations[0].text;
-      document.getElementById('text-content').textContent = translatedText;
-    })
-    .catch(error => console.error('Error:', error));
-  }
+            // Insert the div element before the content
+            document.body.insertBefore(languageSelector, document.getElementById('content'));
+        }
 
-  function translateBookData(lang) {
-    var titleToTranslate = document.getElementById('book-title').textContent;
-    var summaryToTranslate = document.getElementById('book-summary').textContent;
-    fetch('https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=' + lang, {
-      method: 'POST',
-      headers: {
-        'Ocp-Apim-Subscription-Key': '',
-        'Content-Type': 'application/json',
-        'Ocp-Apim-Subscription-Region': 'westeurope'
-      },
-      body: JSON.stringify([{'Text' : titleToTranslate}, {'Text' : summaryToTranslate}]),
-    })
-    .then(response => response.json())
-    .then(data => {
-      var translatedTitle = data[0].translations[0].text;
-      var translatedSummary = data[1].translations[0].text;
-      document.getElementById('book-title').textContent = translatedTitle;
-      document.getElementById('book-summary').textContent = translatedSummary;
-    })
-    .catch(error => console.error('Error:', error));
-  }
+        function translateText(lang, text) {
+            return fetch('https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=' + lang, {
+                method: 'POST',
+                headers: {
+                    'Ocp-Apim-Subscription-Key': '',
+                    'Content-Type': 'application/json',
+                    'Ocp-Apim-Subscription-Region': 'westeurope'
+                },
+                body: JSON.stringify([{'Text' : text}]),
+            })
+            .then(response => response.json())
+            .then(data => data[0].translations[0].text)
+            .catch(error => console.error('Error:', error));
+        }
 
-  function fetchBookData(id) {
-    fetch(`https://zoeken.oba.nl/api/v1/details/?id=|oba-catalogus|${id}&detaillevel=extended&authorization=d7519ea81ad4e06ab5e5dac46ddeb63a&output=json`)
-      .then(response => response.json())
-      .then(data => {
-        const title = data.record.titles[0];
-        const summary = data.record.summaries[0];
-        document.getElementById('book-title').textContent = title;
-        document.getElementById('book-summary').textContent = summary;
-        
-        // Translate the book data
-        const currentLang = document.querySelector('#language-selector img.selected').dataset.lang;
-        translateBookData(currentLang);
-      })
-      .catch(error => console.error('Error:', error));
-  }
+        function translatePage(lang) {
+            currentLang = lang;
+            const textToTranslate = document.getElementById('text-content').textContent;
+            translateText(lang, textToTranslate)
+                .then(translatedText => {
+                    document.getElementById('text-content').textContent = translatedText;
+                });
 
-  window.onload = function() {
-    createLanguageSelector();
+            // Also translate the current book if one is selected
+            if (currentBookId) {
+                fetchBookData(currentBookId);
+            }
+        }
 
-    const images = document.querySelectorAll('#language-selector img');
-    images.forEach(img => {
-      img.addEventListener('click', function() {
-        const lang = this.dataset.lang;
-        translatePage(lang);
-        translateBookData(lang);
-        
-        document.querySelectorAll('#language-selector img').forEach(img => img.classList.remove('selected'));
-        this.classList.add('selected');
-      });
-    });
+                // Run the createLanguageSelector function when the page loads
+        window.onload = function() {
+            createLanguageSelector();
+            // Add a click event listener to each image
+            const images = document.querySelectorAll('#language-selector img');
+            images.forEach(img => {
+                img.addEventListener('click', function() {
+                    translatePage(this.dataset.lang); // Use the data attribute to get the language code
+                });
+            });
 
-    document.getElementById('search-button').addEventListener('click', function() {
-      const bookId = document.getElementById('book-id').value;
-      if (bookId) {
-        fetchBookData(bookId);
-      }
-    });
-  };
-</script>
+            // Add event listener to the search button
+            document.getElementById('search-button').addEventListener('click', function() {
+                const bookId = document.getElementById('book-id').value;
+                if (bookId) {
+                    fetchBookData(bookId);
+                }
+            });
+        };
+
+        function fetchBookData(id) {
+            currentBookId = id;
+            fetch(`https://zoeken.oba.nl/api/v1/details/?id=|oba-catalogus|${id}&detaillevel=extended&authorization=d7519ea81ad4e06ab5e5dac46ddeb63a&output=json`)
+                .then(response => response.json())
+                .then(data => {
+                    // Get the title and summary from the data and display them
+                    const title = data.record.titles[0];
+                    const summary = data.record.summaries[0];
+                    return Promise.all([
+                        translateText(currentLang, title),
+                        translateText(currentLang, summary)
+                    ]);
+                })
+                .then(([translatedTitle, translatedSummary]) => {
+                    document.getElementById('book-title').textContent = translatedTitle;
+                    document.getElementById('book-summary').textContent = translatedSummary;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
 </head>
 <body>
     <div id="language-selector"></div>
@@ -146,12 +130,11 @@
         <div class="text" id="text-content">
             OBA Next is het innovatieprogramma van de OBA om te komen tot de nieuwe Amsterdamse bibliotheek van de toekomst. Dit is ook de werktitel voor het nog te ontwikkelen gebouw in Zuidoost waar het innovatieprogramma uiteindelijk zijn hoofdkwartier zal vinden. Bij OBA Next ontwikkel je je kennis en vaardigheden om zelf de wereld vorm te geven. Wat de toekomstige generaties daar precies voor nodig hebben, gaan we de komende tijd onderzoeken. Samen met partners, bibliotheekmedewerkers en Amsterdammers.
         </div>
-        <div class="book-data">
-            <input type="text" id="book-id" placeholder="Enter book ID">
-            <button id="search-button">Search</button>
-            <h2 id="book-title"></h2>
-            <p id="book-summary"></p>
-        </div>
+        <input type="text" id="book-id" placeholder="Enter book ID">
+        <button id="search-button">Search</button>
+        <h2 id="book-title"></h2>
+        <p id="book-summary"></p>
     </div>
 </body>
 </html>
+
