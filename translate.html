@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Webpage Translation</title>
+    <style>
+        /* Add some styling to align images to the right and control the size of the images */
+        #language-selector {
+            text-align: right;
+            margin-bottom: 20px; /* Add some space between the selector and the content */
+        }
+        #language-selector img {
+            width: 25px; /* Reduced size */
+            height: 25px; /* Reduced size */
+            border-radius: 50%; /* This makes the images round */
+            margin-left: 10px; /* Add some space between the images */
+        }
+        /* Create a flex container for the content */
+        #content {
+            display: flex;
+        }
+        /* Create a 50/50 split between the text and the image */
+        #content .text, #content .image-container {
+            width: 50%;
+        }
+        #content .image-container img {
+            /* Make the image responsive */
+            width: 50%;
+            height: auto;
+        }
+    </style>
+    <script>
+        function createLanguageSelector() {
+            // Define the available languages
+            const languages = [
+                { code: 'nl', name: 'Dutch', img: 'dutch.png' },
+                { code: 'en', name: 'English', img: 'english.png' },
+                { code: 'es', name: 'Spanish', img: 'spanish.png' },
+                { code: 'ar', name: 'Arabic', img: 'arabic.png' },
+                { code: 'uk', name: 'Ukranian', img: 'ukrainian.png' },
+            ];
+
+            // Create a div element to hold the images
+            const languageSelector = document.getElementById('language-selector');
+
+            // Create an img element for each language
+            for (const language of languages) {
+                const img = document.createElement('img');
+                img.src = language.img;
+                img.alt = language.name;
+                img.dataset.lang = language.code; // Use a data attribute to store the language code
+                img.style.cursor = 'pointer'; // Change the cursor to a pointer when hovering over the image
+                languageSelector.appendChild(img);
+            }
+        }
+
+        function translatePage(lang) {
+            var textToTranslate = document.getElementById('text-content').textContent;
+            fetch('https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=' + lang, {
+                method: 'POST',
+                headers: {
+                    'Ocp-Apim-Subscription-Key': '85f583d33db041b7abcce5522527b562',
+                    'Content-Type': 'application/json',
+                    'Ocp-Apim-Subscription-Region': 'westeurope'
+                },
+                body: JSON.stringify([{'Text' : textToTranslate}]),
+            })
+            .then(response => response.json())
+            .then(data => {
+                var translatedText = data[0].translations[0].text;
+                document.getElementById('text-content').textContent = translatedText;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Run the createLanguageSelector function when the page loads
+        window.onload = function() {
+            createLanguageSelector();
+            // Add a click event listener to each image
+            const images = document.querySelectorAll('#language-selector img');
+            images.forEach(img => {
+                img.addEventListener('click', function() {
+                    translatePage(this.dataset.lang); // Use the data attribute to get the language code
+                });
+            });
+        };
+    </script>
+</head>
+<body>
+    <div id="language-selector"></div>
+    <div id="content">
+        <div class="text" id="text-content">
+            OBA Next is het innovatieprogramma van de OBA om te komen tot de nieuwe Amsterdamse bibliotheek van de toekomst. Dit is ook de werktitel voor het nog te ontwikkelen gebouw in Zuidoost waar het innovatieprogramma uiteindelijk zijn hoofdkwartier zal vinden. Bij OBA Next ontwikkel je je kennis en vaardigheden om zelf de wereld vorm te geven. Wat de toekomstige generaties daar precies voor nodig hebben, gaan we de komende tijd onderzoeken. Samen met partners, bibliotheekmedewerkers en Amsterdammers.
+        </div>
+    </div>
+</body>
+</html>
