@@ -19,15 +19,11 @@
         /* Create a flex container for the content */
         #content {
             display: flex;
+            flex-direction: column; /* Make the content blocks stack vertically */
         }
-        /* Create a 50/50 split between the text and the image */
-        #content .text, #content .image-container {
-            width: 50%;
-        }
-        #content .image-container img {
-            /* Make the image responsive */
-            width: 50%;
-            height: auto;
+        /* Add some space around the content blocks */
+        #content .text, #content .book-data {
+            margin: 10px 0; 
         }
     </style>
     <script>
@@ -120,10 +116,12 @@
         <div class="text" id="text-content">
             OBA Next is het innovatieprogramma van de OBA om te komen tot de nieuwe Amsterdamse bibliotheek van de toekomst. Dit is ook de werktitel voor het nog te ontwikkelen gebouw in Zuidoost waar het innovatieprogramma uiteindelijk zijn hoofdkwartier zal vinden. Bij OBA Next ontwikkel je je kennis en vaardigheden om zelf de wereld vorm te geven. Wat de toekomstige generaties daar precies voor nodig hebben, gaan we de komende tijd onderzoeken. Samen met partners, bibliotheekmedewerkers en Amsterdammers.
         </div>
-        <input type="text" id="book-id" placeholder="Enter book ID">
-        <button id="search-button">Search</button>
-        <h2 id="book-title"></h2>
-        <p id="book-summary"></p>
+        <div class="book-data">
+            <input type="text" id="book-id" placeholder="Enter book ID">
+            <button id="search-button">Search</button>
+            <h2 id="book-title"></h2>
+            <p id="book-summary"></p>
+        </div>
     </div>
 </body>
 </html>
