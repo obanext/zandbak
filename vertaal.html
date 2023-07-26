@@ -23,7 +23,7 @@
                 { code: 'en', name: 'English', img: 'english.png' },
                 { code: 'es', name: 'Spanish', img: 'spanish.png' },
                 { code: 'ar', name: 'Arabic', img: 'arabic.png' },
-                { code: 'uk', name: 'Ukranian', img: 'ukranian.png' },
+                { code: 'uk', name: 'Ukranian', img: 'ukrainian.png' },
             ];
 
             // Create a div element to hold the images
@@ -49,7 +49,7 @@
             fetch('https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=' + lang, {
                 method: 'POST',
                 headers: {
-                    'Ocp-Apim-Subscription-Key': '',
+                    'Ocp-Apim-Subscription-Key': 'af21e50781bd4e34a969ff072b9335d3',
                     'Content-Type': 'application/json',
                     'Ocp-Apim-Subscription-Region': 'westeurope'
                 },
