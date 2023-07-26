@@ -77,6 +77,22 @@
             })
             .catch(error => console.error('Error:', error));
         }
+
+        function fetchBookData(id) {
+            const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+            const targetUrl = `https://zoeken.oba.nl/api/v1/details/?id=|oba-catalogus|${id}&detaillevel=extended&authorization=d7519ea81ad4e06ab5e5dac46ddeb63a&output=json`;
+            fetch(proxyUrl + targetUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Get the title and summary from the data and display them
+                    const title = data.record.titles[0];
+                    const summary = data.record.summaries[0];
+                    document.getElementById('book-title').textContent = title;
+                    document.getElementById('book-summary').textContent = summary;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
         // Run the createLanguageSelector function when the page loads
         window.onload = function() {
             createLanguageSelector();
@@ -96,19 +112,6 @@
                 }
             });
         };
-
-        function fetchBookData(id) {
-            fetch(`https://zoeken.oba.nl/api/v1/details/?id=|oba-catalogus|${id}&detaillevel=extended&authorization=d7519ea81ad4e06ab5e5dac46ddeb63a&output=json`)
-                .then(response => response.json())
-                .then(data => {
-                    // Get the title and summary from the data and display them
-                    const title = data.record.titles[0];
-                    const summary = data.record.summaries[0];
-                    document.getElementById('book-title').textContent = title;
-                    document.getElementById('book-summary').textContent = summary;
-                })
-                .catch(error => console.error('Error:', error));
-        }
     </script>
 </head>
 <body>
