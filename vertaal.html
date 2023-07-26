@@ -6,11 +6,13 @@
         /* Add some styling to align images to the right and control the size of the images */
         #language-selector {
             text-align: right;
+            margin-bottom: 20px; /* Add some space between the selector and the content */
         }
         #language-selector img {
-            width: 100px;
-            height: 100px;
+            width: 50px; /* Reduced size */
+            height: 50px; /* Reduced size */
             border-radius: 50%; /* This makes the images round */
+            margin-left: 10px; /* Add some space between the images */
         }
     </style>
     <script>
@@ -38,8 +40,8 @@
                 languageSelector.appendChild(img);
             }
 
-            // Append the div element to the body (or another appropriate element)
-            document.body.appendChild(languageSelector);
+            // Insert the div element before the content
+            document.body.insertBefore(languageSelector, document.getElementById('content'));
         }
 
         function translatePage(lang) {
