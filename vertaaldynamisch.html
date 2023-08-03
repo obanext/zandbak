@@ -89,8 +89,13 @@
                         "X-Requested-With": "XMLHttpRequest",
                     },
                 });
-                const data = await response.json();
-                return data;
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Received data:", data); // Add this line to print the received data
+                    return data;
+                } else {
+                    console.log("Response error:", response); // Add this line to print the error response
+                }
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -127,7 +132,11 @@
             btn.addEventListener("click", async () => {
                 const id = input.value;
                 const data = await getData(id);
-                description.innerText = data.record.summaries[0];
+                if (data && data.record && data.record.summaries) {
+                    description.innerText = data.record.summaries[0];
+                } else {
+                    description.innerText = "Geen gegevens gevonden";
+                }
             });
         };
     </script>
