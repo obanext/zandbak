@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Webpage Translation</title>
+    <style>
+        /* ... uw huidige stijlinhoud ... */
+    </style>
+    <script>
+        /* ... uw huidige script-inhoud ... */
 
+        // Definieer de basis URL en API key
+        const api_url_base = "https://cors-anywhere.herokuapp.com/https://zoeken.oba.nl/api/v1/details/?id=|oba-catalogus|";
+        const api_key = "&authorization=d7519ea81ad4e06ab5e5dac46ddeb63a";
+        const api_output = "&output=json";
+        const detail_level = "&detaillevel=extended";
+
+        // Definieer de functie om de data te halen
+        async function getData(id) {
+            const api_url = api_url_base + id + detail_level + api_key + api_output;
+            try {
+                const response = await fetch(api_url, {
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
+                });
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Voer dit uit wanneer het venster wordt geladen
+        window.onload = function() {
+            createLanguageSelector();
+            // Voeg een inputveld en een knop toe onder de tekstinhoud
+            const content = document.getElementById('content');
+            const inputDiv = document.createElement('div');
+            inputDiv.innerHTML = `
+                <p>Voer het ID in:</p>
+                <input type="text" id="myInput">
+                <button id="myBtn">Zoeken</button>
+                <p id="description"></p>
+            `;
+            content.appendChild(inputDiv);
+
+            // Krijg de button, input en paragraaf elementen
+            const btn = document.getElementById("myBtn");
+            const input = document.getElementById("myInput");
+            const description = document.getElementById("description");
+
+            // Zet een event listener op de knop
+            btn.addEventListener("click", async () => {
+                const id = input.value;
+                const data = await getData(id);
+                description.innerText = data.record.summaries[0];
+            });
+
+            // Add a click event listener to each image
+            const images = document.querySelectorAll('#language-selector img');
+            images.forEach(img => {
+                img.addEventListener('click', function() {
+                    translatePage(this.dataset.lang); // Use the data attribute to get the language code
+                });
+            });
+        };
+    </script>
+</head>
+<body>
+    <div id="language-selector"></div>
+    <div id="content">
+        <div class="text" id="text-content">
+            OBA Next is het innovatieprogramma van de OBA om te komen tot de nieuwe Amsterdamse bibliotheek van de toekomst. Dit is ook de werktitel voor het nog te ontwikkelen gebouw in Zuidoost waar het innovatieprogramma uiteindelijk zijn hoofdkwartier zal vinden. Bij OBA Next ontwikkel je je kennis en vaardigheden om zelf de wereld vorm te geven. Wat de toekomstige generaties daar precies voor nodig hebben, gaan we de komende tijd onderzoeken. Samen met partners, bibliotheekmedewerkers en Amsterdammers.
+        </div>
+    </div>
+</body>
+</html>
+
+</body>
+</html>
