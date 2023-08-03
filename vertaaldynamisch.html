@@ -31,8 +31,6 @@
         }
     </style>
     <script>
-        let currentLanguage = 'nl'; // Initialize the current language as Dutch
-
         function createLanguageSelector() {
             // Define the available languages
             const languages = [
@@ -57,20 +55,21 @@
             }
         }
 
-        function translateText(text, lang) {
-            return fetch('https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=' + lang, {
+        function translatePage(lang) {
+            var textToTranslate = document.getElementById('text-content').textContent;
+            fetch('https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=' + lang, {
                 method: 'POST',
                 headers: {
                     'Ocp-Apim-Subscription-Key': 'ab78ee7796bf4632833a2c7b5bbb79de',
                     'Content-Type': 'application/json',
                     'Ocp-Apim-Subscription-Region': 'westeurope'
                 },
-                body: JSON.stringify([{'Text' : text}]),
+                body: JSON.stringify([{'Text' : textToTranslate}]),
             })
             .then(response => response.json())
             .then(data => {
                 var translatedText = data[0].translations[0].text;
-                return translatedText;
+                document.getElementById('text-content').textContent = translatedText;
             })
             .catch(error => console.error('Error:', error));
         }
@@ -92,7 +91,10 @@
                 });
                 if (response.ok) {
                     const data = await response.json();
+                    console.log("Received data:", data); // Add this line to print the received data
                     return data;
+                } else {
+                    console.log("Response error:", response); // Add this line to print the error response
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -105,17 +107,8 @@
             // Add a click event listener to each image
             const images = document.querySelectorAll('#language-selector img');
             images.forEach(img => {
-                img.addEventListener('click', async function() {
-                    const lang = this.dataset.lang;
-                    currentLanguage = lang;
-                    const text = document.getElementById('text-content').textContent;
-                    const descriptionText = document.getElementById('description').textContent;
-
-                    const translatedText = await translateText(text, lang);
-                    const translatedDescription = await translateText(descriptionText, lang);
-
-                    document.getElementById('text-content').textContent = translatedText;
-                    document.getElementById('description').textContent = translatedDescription;
+                img.addEventListener('click', function() {
+                    translatePage(this.dataset.lang); // Use the data attribute to get the language code
                 });
             });
 
@@ -140,8 +133,9 @@
                 const id = input.value;
                 const data = await getData(id);
                 if (data && data.record && data.record.summaries) {
-                    const translatedDescription = await translateText(data.record.summaries.summary._text, currentLanguage);
-                    description.textContent = translatedDescription;
+                    description.innerText = data.record.summaries[0];
+                } else {
+                    description.innerText = "Geen gegevens gevonden";
                 }
             });
         };
@@ -151,7 +145,8 @@
     <div id="language-selector"></div>
     <div id="content">
         <div class="text" id="text-content">
-            OBA Next is het innovatieprogramma van de OBA om te komen tot de nieuwe Amsterdamse bibliotheek van de toekomst. 
+            OBA Next is het innovatieprogramma van de OBA om te komen tot de nieuwe Amsterdamse bibliotheek van de toekomst.
+        </div>
     </div>
 </body>
 </html>
