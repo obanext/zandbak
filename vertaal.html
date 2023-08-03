@@ -77,9 +77,11 @@
         }
 
         function translatePage(lang) {
-            // Translate both 'text-content' and 'description'
+            // Translate all elements
             translateText(lang, 'text-content');
             translateText(lang, 'description');
+            translateText(lang, 'instruction');
+            translateText(lang, 'myBtn');
             // Update the current language
             currentLanguage = lang;
         }
@@ -124,7 +126,7 @@
             const content = document.getElementById('content');
             const inputDiv = document.createElement('div');
             inputDiv.innerHTML = `
-                <p>Voer het ID in:</p>
+                <p id="instruction">Voer het ID in:</p>
                 <input type="text" id="myInput">
                 <button id="myBtn">Zoeken</button>
                 <p id="description"></p>
