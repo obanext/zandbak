@@ -31,124 +31,61 @@
         }
     </style>
     <script>
-        let currentLanguage = 'nl'; // Initialize the current language as Dutch
-
+        // Variables to store the selected language and the original text
+        let selectedLang = 'nl';
+        let originalText = 'OBA Next is het innovatieprogramma van de OBA om te komen tot de nieuwe Amsterdamse bibliotheek van de toekomst...';
+        
         function createLanguageSelector() {
-            // Define the available languages
-            const languages = [
-                { code: 'nl', name: 'Dutch', img: 'dutch.png' },
-                { code: 'en', name: 'English', img: 'english.png' },
-                { code: 'es', name: 'Spanish', img: 'spanish.png' },
-                { code: 'ar', name: 'Arabic', img: 'arabic.png' },
-                { code: 'uk', name: 'Ukranian', img: 'ukrainian.png' },
-            ];
-
-            // Create a div element to hold the images
-            const languageSelector = document.getElementById('language-selector');
-
-            // Create an img element for each language
-            for (const language of languages) {
-                const img = document.createElement('img');
-                img.src = language.img;
-                img.alt = language.name;
-                img.dataset.lang = language.code; // Use a data attribute to store the language code
-                img.style.cursor = 'pointer'; // Change the cursor to a pointer when hovering over the image
-                languageSelector.appendChild(img);
-            }
+            // JavaScript code...
         }
-
-        function translateText(text, lang) {
-            return fetch('https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=' + lang, {
+        
+        function translatePage(lang) {
+            fetch('https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=' + lang, {
                 method: 'POST',
                 headers: {
                     'Ocp-Apim-Subscription-Key': '85f583d33db041b7abcce5522527b562',
                     'Content-Type': 'application/json',
                     'Ocp-Apim-Subscription-Region': 'westeurope'
                 },
-                body: JSON.stringify([{'Text' : text}]),
+                body: JSON.stringify([{'Text' : originalText}]),
             })
             .then(response => response.json())
             .then(data => {
-                var translatedText = data[0].translations[0].text;
-                return translatedText;
+                let translatedText = data[0].translations[0].text;
+                document.getElementById('text-content').textContent = translatedText;
             })
             .catch(error => console.error('Error:', error));
         }
-
-        // Define the base URL and API key
-        const api_url_base = "https://cors-anywhere.herokuapp.com/https://zoeken.oba.nl/api/v1/details/?id=|oba-catalogus|";
-        const api_key = "&authorization=d7519ea81ad4e06ab5e5dac46ddeb63a";
-        const api_output = "&output=json";
-        const detail_level = "&detaillevel=extended";
-
-        // Define the function to fetch the data
-        async function getData(id) {
-            const api_url = api_url_base + id + detail_level + api_key + api_output;
-            try {
-                const response = await fetch(api_url, {
-                    headers: {
-                        "X-Requested-With": "XMLHttpRequest",
-                    },
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    return data;
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
+        
+        function searchInLibrary() {
+            fetch('https://zoeken.oba.nl/api/v1/search/?q=OBA%20Next&authorization=d7519ea81ad4e06ab5e5dac46ddeb63a&output=json', {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(data => {
+                let summary = data.results[0].summaries.summary;
+                document.getElementById('summary').textContent = summary;
+                
+                // Update the original text and translate the summary
+                originalText = summary;
+                translatePage(selectedLang);
+            })
+            .catch(error => console.error('Error:', error));
         }
 
         // Run the createLanguageSelector function when the page loads
         window.onload = function() {
             createLanguageSelector();
+            searchInLibrary();
+            
             // Add a click event listener to each image
             const images = document.querySelectorAll('#language-selector img');
             images.forEach(img => {
-                img.addEventListener('click', async function() {
-                    const lang = this.dataset.lang;
-                    currentLanguage = lang;
-                    const text = document.getElementById('text-content').textContent;
-                    const translatedText = await translateText(text, lang);
-
-                    document.getElementById('text-content').textContent = translatedText;
-                    // Check if a book has been searched for and if so, translate its description
-                    const descriptionText = document.getElementById('description').textContent;
-                    if (descriptionText) {
-                        const translatedDescription = await translateText(descriptionText, lang);
-                        document.getElementById('description').textContent = translatedDescription;
-                    }
+                img.addEventListener('click', function() {
+                    // Update the selected language and translate the page
+                    selectedLang = this.dataset.lang;
+                    translatePage(selectedLang);
                 });
-            });
-
-            // Add a input field and button below the text content
-            const content = document.getElementById('content');
-            const inputDiv = document.createElement('div');
-            inputDiv.innerHTML = `
-                <p>Voer het ID in:</p>
-                <input type="text" id="myInput">
-                <button id="myBtn">Zoeken</button>
-                <p id="description"></p>
-            `;
-            content.appendChild(inputDiv);
-
-            // Get the button, input and paragraph elements
-            const btn = document.getElementById("myBtn");
-            const input = document.getElementById("myInput");
-            const description = document.getElementById("description");
-
-            // Set an event listener on the button
-            btn.addEventListener("click", async () => {
-                const id = input.value;
-                const data = await getData(id);
-                if (data) {
-                    description.textContent = data.aquabrowser.summaries.summary._text;
-                    // If a language has been selected, translate the description immediately
-                    if (currentLanguage !== 'nl') {
-                        const translatedDescription = await translateText(data.aquabrowser.summaries.summary._text, currentLanguage);
-                        description.textContent = translatedDescription;
-                    }
-                }
             });
         };
     </script>
@@ -157,7 +94,9 @@
     <div id="language-selector"></div>
     <div id="content">
         <div class="text" id="text-content">
-            OBA Next is het innovatieprogramma van de OBA om te komen tot de nieuwe Amsterdamse bibliotheek van de toekomst. 
+            OBA Next is het innovatieprogramma van de OBA om te komen tot de nieuwe Amsterdamse bibliotheek van de toekomst...
+        </div>
+        <div class="text" id="summary"></div>
     </div>
 </body>
 </html>
