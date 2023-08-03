@@ -36,7 +36,27 @@
         let originalText = 'OBA Next is het innovatieprogramma van de OBA om te komen tot de nieuwe Amsterdamse bibliotheek van de toekomst...';
         
         function createLanguageSelector() {
-            // JavaScript code...
+            // Define the available languages
+            const languages = [
+                { code: 'nl', name: 'Dutch', img: 'dutch.png' },
+                { code: 'en', name: 'English', img: 'english.png' },
+                { code: 'es', name: 'Spanish', img: 'spanish.png' },
+                { code: 'ar', name: 'Arabic', img: 'arabic.png' },
+                { code: 'uk', name: 'Ukranian', img: 'ukrainian.png' },
+            ];
+
+            // Create a div element to hold the images
+            const languageSelector = document.getElementById('language-selector');
+
+            // Create an img element for each language
+            for (const language of languages) {
+                const img = document.createElement('img');
+                img.src = language.img;
+                img.alt = language.name;
+                img.dataset.lang = language.code; // Use a data attribute to store the language code
+                img.style.cursor = 'pointer'; // Change the cursor to a pointer when hovering over the image
+                languageSelector.appendChild(img);
+            }
         }
         
         function translatePage(lang) {
