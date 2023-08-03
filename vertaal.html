@@ -118,7 +118,7 @@
             const searchDiv = document.createElement('div');
             searchDiv.className = 'search';
             searchDiv.innerHTML = `
-                <p id="instruction">Voer het ID in:</p>
+                <p id="instruction">geef boek id (bijvoorbeeld: 1014854, 1236360, 434823 </p>
                 <input type="text" id="myInput">
                 <button id="myBtn">Zoeken</button>
                 <p id="title"></p>
@@ -135,18 +135,24 @@
 
             btn.addEventListener("click", async () => {
                 const id = input.value;
-                const data = await getData(id);
-                if (data && data.record && data.record.summaries) {
-                    title.innerText = data.record.titles[0];
-                    coverImage.src = data.record.coverimages[1];
-                    description.innerText = data.record.summaries[0];
-                    translateText(currentLanguage, 'description');
-                    translateText(currentLanguage, 'title');
+                if (id) {
+                    const data = await getData(id);
+                    if (data && data.record && data.record.summaries) {
+                        title.innerText = data.record.titles[0];
+                        coverImage.src = data.record.coverimages[1];
+                        description.innerText = data.record.summaries[0];
+                        translateText(currentLanguage, 'description');
+                        translateText(currentLanguage, 'title');
+                    } else {
+                        title.innerText = '';
+                        coverImage.src = '';
+                        description.innerText = "Geen gegevens gevonden";
+                        translateText(currentLanguage, 'description');
+                    }
                 } else {
                     title.innerText = '';
                     coverImage.src = '';
-                    description.innerText = "Geen gegevens gevonden";
-                    translateText(currentLanguage, 'description');
+                    description.innerText = '';
                 }
             });
         };
