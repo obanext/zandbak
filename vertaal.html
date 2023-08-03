@@ -5,36 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Webpage Translation</title>
     <style>
-        /* Add some styling to align images to the right and control the size of the images */
         #language-selector {
             text-align: right;
-            margin-bottom: 20px; /* Add some space between the selector and the content */
+            margin-bottom: 20px;
         }
         #language-selector img {
-            width: 25px; /* Reduced size */
-            height: 25px; /* Reduced size */
-            border-radius: 50%; /* This makes the images round */
-            margin-left: 10px; /* Add some space between the images */
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            margin-left: 10px;
         }
-        /* Create a flex container for the content */
         #content {
             display: flex;
         }
-        /* Create a 50/50 split between the text and the image */
         #content .text, #content .image-container {
             width: 50%;
         }
         #content .image-container img {
-            /* Make the image responsive */
             width: 50%;
             height: auto;
         }
     </style>
     <script>
-        let currentLanguage = 'nl'; // Default language is Dutch
+        let currentLanguage = 'nl';
 
         function createLanguageSelector() {
-            // Define the available languages
             const languages = [
                 { code: 'nl', name: 'Dutch', img: 'dutch.png' },
                 { code: 'en', name: 'English', img: 'english.png' },
@@ -43,16 +38,14 @@
                 { code: 'uk', name: 'Ukranian', img: 'ukrainian.png' },
             ];
 
-            // Create a div element to hold the images
             const languageSelector = document.getElementById('language-selector');
 
-            // Create an img element for each language
             for (const language of languages) {
                 const img = document.createElement('img');
                 img.src = language.img;
                 img.alt = language.name;
-                img.dataset.lang = language.code; // Use a data attribute to store the language code
-                img.style.cursor = 'pointer'; // Change the cursor to a pointer when hovering over the image
+                img.dataset.lang = language.code;
+                img.style.cursor = 'pointer';
                 languageSelector.appendChild(img);
             }
         }
@@ -77,12 +70,11 @@
         }
 
         function translatePage(lang) {
-            // Translate all elements
             translateText(lang, 'text-content');
             translateText(lang, 'description');
             translateText(lang, 'instruction');
             translateText(lang, 'myBtn');
-            // Update the current language
+            translateText(lang, 'title');
             currentLanguage = lang;
         }
 
@@ -101,54 +93,56 @@
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    console.log("Received data:", data); // Add this line to print the received data
                     return data;
                 } else {
-                    console.log("Response error:", response); // Add this line to print the error response
+                    console.error("Response error:", response);
                 }
             } catch (error) {
                 console.error('Error:', error);
             }
         }
 
-        // Run the createLanguageSelector function when the page loads
         window.onload = function() {
             createLanguageSelector();
-            // Add a click event listener to each image
+
             const images = document.querySelectorAll('#language-selector img');
             images.forEach(img => {
                 img.addEventListener('click', function() {
-                    translatePage(this.dataset.lang); // Use the data attribute to get the language code
+                    translatePage(this.dataset.lang);
                 });
             });
 
-            // Add a input field and button below the text content
             const content = document.getElementById('content');
             const inputDiv = document.createElement('div');
             inputDiv.innerHTML = `
                 <p id="instruction">Voer het ID in:</p>
                 <input type="text" id="myInput">
                 <button id="myBtn">Zoeken</button>
+                <p id="title"></p>
+                <img id="coverImage" src="" alt="Book cover image">
                 <p id="description"></p>
             `;
             content.appendChild(inputDiv);
 
-            // Get the button, input and paragraph elements
             const btn = document.getElementById("myBtn");
             const input = document.getElementById("myInput");
             const description = document.getElementById("description");
+            const title = document.getElementById("title");
+            const coverImage = document.getElementById("coverImage");
 
-            // Set an event listener on the button
             btn.addEventListener("click", async () => {
                 const id = input.value;
                 const data = await getData(id);
                 if (data && data.record && data.record.summaries) {
+                    title.innerText = data.record.titles[0];
+                    coverImage.src = data.record.coverimages[1];
                     description.innerText = data.record.summaries[0];
-                    // Translate the summary immediately after setting it
                     translateText(currentLanguage, 'description');
+                    translateText(currentLanguage, 'title');
                 } else {
+                    title.innerText = '';
+                    coverImage.src = '';
                     description.innerText = "Geen gegevens gevonden";
-                    // Translate the error message too
                     translateText(currentLanguage, 'description');
                 }
             });
