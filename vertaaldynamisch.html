@@ -109,13 +109,15 @@
                     const lang = this.dataset.lang;
                     currentLanguage = lang;
                     const text = document.getElementById('text-content').textContent;
-                    const descriptionText = document.getElementById('description').textContent;
-
                     const translatedText = await translateText(text, lang);
-                    const translatedDescription = await translateText(descriptionText, lang);
 
                     document.getElementById('text-content').textContent = translatedText;
-                    document.getElementById('description').textContent = translatedDescription;
+                    // Check if a book has been searched for and if so, translate its description
+                    const descriptionText = document.getElementById('description').textContent;
+                    if (descriptionText) {
+                        const translatedDescription = await translateText(descriptionText, lang);
+                        document.getElementById('description').textContent = translatedDescription;
+                    }
                 });
             });
 
@@ -139,9 +141,13 @@
             btn.addEventListener("click", async () => {
                 const id = input.value;
                 const data = await getData(id);
-                if (data && data.record && data.record.summaries) {
-                    const translatedDescription = await translateText(data.record.summaries.summary._text, currentLanguage);
-                    description.textContent = translatedDescription;
+                if (data) {
+                    description.textContent = data.aquabrowser.summaries.summary._text;
+                    // If a language has been selected, translate the description immediately
+                    if (currentLanguage !== 'nl') {
+                        const translatedDescription = await translateText(data.aquabrowser.summaries.summary._text, currentLanguage);
+                        description.textContent = translatedDescription;
+                    }
                 }
             });
         };
@@ -151,6 +157,7 @@
     <div id="language-selector"></div>
     <div id="content">
         <div class="text" id="text-content">
-            OBA Next is het innovatieprogramma van de OBA om te komen tot de nieuwe Amsterdamse bibliotheek van de toekomst.
+            OBA Next is het innovatieprogramma van de OBA om te komen tot de nieuwe Amsterdamse bibliotheek van de toekomst. 
+    </div>
 </body>
 </html>
