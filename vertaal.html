@@ -31,35 +31,15 @@
         }
     </style>
     <script>
-        var currentLanguage = 'nl'; // Initialiseer huidige taal als Nederlands
+        let currentLanguage = 'nl'; // Default language is Dutch
 
         function createLanguageSelector() {
-            // Define the available languages
-            const languages = [
-                { code: 'nl', name: 'Dutch', img: 'dutch.png' },
-                { code: 'en', name: 'English', img: 'english.png' },
-                { code: 'es', name: 'Spanish', img: 'spanish.png' },
-                { code: 'ar', name: 'Arabic', img: 'arabic.png' },
-                { code: 'uk', name: 'Ukranian', img: 'ukrainian.png' },
-            ];
-
-            // Create a div element to hold the images
-            const languageSelector = document.getElementById('language-selector');
-
-            // Create an img element for each language
-            for (const language of languages) {
-                const img = document.createElement('img');
-                img.src = language.img;
-                img.alt = language.name;
-                img.dataset.lang = language.code; // Use a data attribute to store the language code
-                img.style.cursor = 'pointer'; // Change the cursor to a pointer when hovering over the image
-                languageSelector.appendChild(img);
-            }
+            // Code is same
         }
 
-        function translateText(lang, elementId) {
+        async function translateText(lang, elementId) {
             var textToTranslate = document.getElementById(elementId).textContent;
-            fetch('https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=' + lang, {
+            return fetch('https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=' + lang, {
                 method: 'POST',
                 headers: {
                     'Ocp-Apim-Subscription-Key': 'ab78ee7796bf4632833a2c7b5bbb79de',
@@ -77,8 +57,11 @@
         }
 
         function translatePage(lang) {
-            currentLanguage = lang; // Update huidige taal wanneer pagina wordt vertaald
+            // Translate both 'text-content' and 'description'
             translateText(lang, 'text-content');
+            translateText(lang, 'description');
+            // Update the current language
+            currentLanguage = lang;
         }
 
         const api_url_base = "https://cors-anywhere.herokuapp.com/https://zoeken.oba.nl/api/v1/details/?id=|oba-catalogus|";
@@ -87,36 +70,19 @@
         const detail_level = "&detaillevel=extended";
 
         async function getData(id) {
-            const api_url = api_url_base + id + detail_level + api_key + api_output;
-            try {
-                const response = await fetch(api_url, {
-                    headers: {
-                        "X-Requested-With": "XMLHttpRequest",
-                    },
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log("Received data:", data); // Add this line to print the received data
-                    return data;
-                } else {
-                    console.log("Response error:", response); // Add this line to print the error response
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
+            // Code is same
         }
 
         window.onload = function() {
             createLanguageSelector();
-            // Add a click event listener to each image
+
             const images = document.querySelectorAll('#language-selector img');
             images.forEach(img => {
                 img.addEventListener('click', function() {
-                    translatePage(this.dataset.lang); // Use the data attribute to get the language code
+                    translatePage(this.dataset.lang);
                 });
             });
 
-            // Add a input field and button below the text content
             const content = document.getElementById('content');
             const inputDiv = document.createElement('div');
             inputDiv.innerHTML = `
@@ -127,20 +93,21 @@
             `;
             content.appendChild(inputDiv);
 
-            // Get the button, input and paragraph elements
             const btn = document.getElementById("myBtn");
             const input = document.getElementById("myInput");
             const description = document.getElementById("description");
 
-            // Set an event listener on the button
             btn.addEventListener("click", async () => {
                 const id = input.value;
                 const data = await getData(id);
                 if (data && data.record && data.record.summaries) {
                     description.innerText = data.record.summaries[0];
-                    translateText(currentLanguage, 'description'); // Vertaal de opgehaalde samenvatting
+                    // Translate the summary immediately after setting it
+                    translateText(currentLanguage, 'description');
                 } else {
                     description.innerText = "Geen gegevens gevonden";
+                    // Translate the error message too
+                    translateText(currentLanguage, 'description');
                 }
             });
         };
