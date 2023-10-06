@@ -5,30 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>next uitlenen</title>
-    <style>
-        #preview {
-            width: 100%;
-            max-width: 400px;
-            height: 400px;
-            margin: 20px auto;
-        }
-    </style>
 </head>
 <body>
     <h1>next uitlenen</h1>
-    <video id="preview" width="300" height="200"></video>
-    <div class="chat-input">
-        <button onclick="toggleScan()">scan</button>
-    </div>
-    <input type="file" id="fileInput" onchange="loadInitialFile()" style="display: none;">
-    <div class="chat-input">
-        <button onclick="document.getElementById('fileInput').click()">lokaal</button>
-    </div>
-    <div class="chat-input">
-        <button onclick="restoreBackup()">backup</button>
+    <div style="text-align: center;">
+        <video id="preview" width="300" height="200"></video>
+        <div class="chat-input" style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+            <button onclick="toggleScan()">scan</button>
+            <button onclick="document.getElementById('fileInput').click()">lokaal</button>
+            <button onclick="restoreBackup()">backup(!)</button>
+            <button onclick="resetItems()">reset(!)</button>
+        </div>
+        <input type="file" id="fileInput" onchange="loadInitialFile()" style="display: none;">
     </div>
     <div id="logs" style="margin-top: 20px; color: red;"></div>
     <script src="https://unpkg.com/@zxing/library@latest"></script>
-    <script src="scannerscript.js"></script>
+    <script src="qrscannerscript.js"></script>
 </body>
 </html>
