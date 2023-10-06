@@ -15,8 +15,16 @@ function toggleScan() {
         scanner.stop();
         isScanning = false;
     } else {
-        scanner.start();
-        isScanning = true;
+        Instascan.Camera.getCameras().then(function (cameras) {
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]);  // Start de eerste beschikbare camera
+                isScanning = true;
+            } else {
+                logMessage('Geen camera\'s gevonden.');
+            }
+        }).catch(function (e) {
+            logMessage('Fout bij het ophalen van camera\'s: ' + e);
+        });
     }
 }
 
