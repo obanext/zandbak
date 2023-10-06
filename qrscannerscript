@@ -17,7 +17,7 @@ function toggleScan() {
     } else {
         codeReader.decodeFromVideoDevice(null, 'preview', (result, err) => {
             if (result) {
-                logMessage(`QR-code succesvol gescand: ${result.text}`);
+                logMessage(`QR-code gescand: ${result.text}`);
                 handleScannedData(result.text);
                 toggleScan();  // Stop na het scannen
             }
