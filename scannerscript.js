@@ -1,4 +1,4 @@
-let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+const codeReader = new ZXing.BrowserQRCodeReader();
 let isScanning = false;
 
 function logMessage(message) {
@@ -12,27 +12,22 @@ function logMessage(message) {
 
 function toggleScan() {
     if (isScanning) {
-        scanner.stop();
+        codeReader.reset();
         isScanning = false;
     } else {
-        Instascan.Camera.getCameras().then(function (cameras) {
-            if (cameras.length > 0) {
-                scanner.start(cameras[0]);  // Start de eerste beschikbare camera
-                isScanning = true;
-            } else {
-                logMessage('Geen camera\'s gevonden.');
+        codeReader.decodeFromVideoDevice(null, 'preview', (result, err) => {
+            if (result) {
+                logMessage(`QR-code succesvol gescand: ${result.text}`);
+                handleScannedData(result.text);
+                toggleScan();  // Stop na het scannen
             }
-        }).catch(function (e) {
-            logMessage('Fout bij het ophalen van camera\'s: ' + e);
+            if (err && !(err instanceof ZXing.NotFoundException)) {
+                logMessage(`Fout tijdens het scannen: ${err}`);
+            }
         });
+        isScanning = true;
     }
 }
-
-scanner.addListener('scan', function (content) {
-    logMessage("QR-code succesvol gescand: " + content);
-    handleScannedData(content);
-    toggleScan();  // Stop na het scannen
-});
 
 function handleScannedData(data) {
     let items = JSON.parse(localStorage.getItem('items')) || [];
