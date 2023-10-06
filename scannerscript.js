@@ -1,24 +1,45 @@
 let scanner = new Html5Qrcode("reader");
+let isScanning = false;
+
+function logMessage(message) {
+    console.log(message); // Log naar console
+
+    // Voeg bericht toe aan de pagina
+    const logDiv = document.getElementById('logs');
+    const messageDiv = document.createElement('div');
+    messageDiv.textContent = message;
+    logDiv.appendChild(messageDiv);
+}
+
+function toggleScan() {
+    if (isScanning) {
+        stopScan();
+    } else {
+        startScan();
+    }
+}
 
 function startScan() {
     scanner.start(
         { facingMode: "environment" },
         (decodedText, decodedResult) => {
-            console.log("QR-code succesvol gescand:", decodedText);
+            logMessage("QR-code succesvol gescand: " + decodedText);
             handleScannedData(decodedText);
-            stopScan();  // Stop de scanner na het scannen van een QR-code
+            stopScan();
         },
         (errorMessage) => {
-            console.error("Fout tijdens het scannen:", errorMessage);
+            logMessage("Fout tijdens het scannen: " + errorMessage);
         }
     ).catch(error => {
-        console.error("Fout bij het starten van de scanner:", error);
+        logMessage("Fout bij het starten van de scanner: " + error);
     });
+    isScanning = true;
 }
 
 function stopScan() {
     scanner.stop().then(() => {
-        console.log("Scan gestopt");
+        logMessage("Scan gestopt");
+        isScanning = false;
     });
 }
 
@@ -27,16 +48,16 @@ function handleScannedData(data) {
     let item = items.find(i => i.id === data);
 
     if (!item) {
-        alert("Item niet gevonden!");
+        logMessage("Item niet gevonden!");
         return;
     }
 
     if (item.status === "available") {
         item.status = "borrowed";
-        alert("Item is uitgeleend!");
+        logMessage("Item is uitgeleend!");
     } else {
         item.status = "available";
-        alert("Item is ingenomen!");
+        logMessage("Item is ingenomen!");
     }
 
     localStorage.setItem('items', JSON.stringify(items));
