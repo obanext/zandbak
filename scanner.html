@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>next uitlenen</title>
+    <title>Uitleen Systeem</title>
     <style>
-        #reader {
+        #preview {
             width: 100%;
             max-width: 400px;
             height: 400px;
@@ -14,19 +14,17 @@
         .button-container {
             text-align: center;
             margin-top: 20px;
-            z-index: 1000;  /* Verhoog de z-index */
-            position: relative;
         }
     </style>
 </head>
 <body>
     <h1>next uitlenen</h1>
-    <div id="reader"></div>
+    <video id="preview"></video>
     <div class="button-container">
         <button onclick="toggleScan()">Start/Stop Scan</button>
     </div>
-    <div id="logs" style="margin-top: 20px; color: red;"></div> <!-- Loggebied -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.0.3/html5-qrcode.min.js"></script>
+    <div id="logs" style="margin-top: 20px; color: red;"></div>
+    <script type="text/javascript" src="https://cdn.rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
     <script src="scannerscript.js"></script>
 </body>
 </html>
