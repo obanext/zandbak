@@ -4,24 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uitleen Systeem</title>
-</head>
     <style>
-    #reader {
-        width: 100%;
-        max-width: 400px;
-        height: 400px;
-        margin: 0 auto;
-    }
-    button {
-        display: block;
-        margin: 20px auto;
-    }
-</style>
+        #reader {
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            margin: 20px auto;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
 <body>
-    <h1>Uitleen Systeem</h1>
-    <div id="reader" style="width: 300px; height: 300px;"></div>
-    <button onclick="startScan()">Start Scan</button>
-    <button onclick="stopScan()">Stop Scan</button>
+    <h1>next uitlenen</h1>
+    <div id="reader"></div>
+    <div class="button-container">
+        <button onclick="startScan()">Start Scan</button>
+        <button onclick="stopScan()">Stop Scan</button>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.0.3/html5-qrcode.min.js"></script>
     <script src="scannerscript.js"></script>
 </body>
