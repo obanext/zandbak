@@ -22,14 +22,13 @@
       <img src="oba-logo.png" alt="OBA Logo" id="oba-logo" />
     </header>
 <body>
-    <h1>next uitlenen</h1>
     <div style="text-align: center;">
-        <video id="preview" width="200" height="200"></video>
+        <video id="preview" width="200" height="200" style="border: 1px solid white;"></video>
         <div class="chat-input" style="margin-top: 20px;">
-            <button onclick="toggleScan()" style="margin-top: 10px;>scan</button><br>
-            <button onclick="document.getElementById('fileInput').click()" style="margin-top: 10px;">lokaal</button><br>
-            <button onclick="restoreBackup()" style="margin-top: 10px;">backup(!)</button><br>
-            <button onclick="resetItems()" style="margin-top: 10px;">reset(!)</button>
+            <button onclick="toggleScan()">Start/Stop Scan</button><br>
+            <button onclick="document.getElementById('fileInput').click()" style="margin-top: 10px;">Laad Initieel Bestand</button><br>
+            <button onclick="restoreBackup()" style="margin-top: 10px;">Herstel van Backup</button><br>
+            <button onclick="resetItems()" style="margin-top: 10px;">Reset Items</button>
         </div>
     </div>
     <input type="file" id="fileInput" onchange="loadInitialFile()" style="display: none;">
