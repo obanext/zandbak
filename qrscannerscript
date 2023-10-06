@@ -100,8 +100,9 @@ function restoreBackup() {
 // Initialiseren van de items in localStorage (alleen de eerste keer)
 if (!localStorage.getItem('items')) {
     let initialItems = [
-        { titel: "123456", status: "aanwezig" },
-        { titel: "789012", status: "aanwezig" }
+        { titel: "alles gaat slapen", status: "aanwezig" },
+        { titel: "1984", status: "aanwezig" }
+{titel: "Vogel Atlas", status: "aanwezig" }
     ];
     localStorage.setItem('items', JSON.stringify(initialItems));
 }
