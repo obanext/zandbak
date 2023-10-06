@@ -1,10 +1,9 @@
-let scanner = new Html5Qrcode("reader");
+let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 let isScanning = false;
 
 function logMessage(message) {
-    console.log(message); // Log naar console
+    console.log(message);
 
-    // Voeg bericht toe aan de pagina
     const logDiv = document.getElementById('logs');
     const messageDiv = document.createElement('div');
     messageDiv.textContent = message;
@@ -13,44 +12,23 @@ function logMessage(message) {
 
 function toggleScan() {
     if (isScanning) {
-        stopScan();
+        scanner.stop();
+        isScanning = false;
     } else {
-        startScan();
+        scanner.start();
+        isScanning = true;
     }
 }
 
-function startScan() {
-    scanner.start(
-        { facingMode: "environment" },
-        (decodedText, decodedResult) => {
-            logMessage("QR-code succesvol gescand: " + decodedText);
-            handleScannedData(decodedText);
-            stopScan();
-        },
-        (errorMessage) => {
-            logMessage("Fout tijdens het scannen: " + errorMessage);
-        }
-    ).catch(error => {
-        logMessage("Fout bij het starten van de scanner: " + error);
-    });
-    isScanning = true;
-}
-
-function stopScan() {
-    scanner.stop().then(() => {
-        logMessage("Scan gestopt");
-        isScanning = false;
-    });
-}
+scanner.addListener('scan', function (content) {
+    logMessage("QR-code succesvol gescand: " + content);
+    handleScannedData(content);
+    toggleScan();  // Stop na het scannen
+});
 
 function handleScannedData(data) {
-    logMessage("Gescande data: " + data);
-
     let items = JSON.parse(localStorage.getItem('items')) || [];
-    logMessage("Items uit localStorage: " + JSON.stringify(items));
-
     let item = items.find(i => i.id === data);
-    logMessage("Gevonden item: " + JSON.stringify(item));
 
     if (!item) {
         logMessage("Item niet gevonden!");
