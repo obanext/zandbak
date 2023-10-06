@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uitleen Systeem</title>
+    <title>next uitlenen</title>
     <style>
         #reader {
             width: 100%;
@@ -14,16 +14,18 @@
         .button-container {
             text-align: center;
             margin-top: 20px;
+            z-index: 1000;  /* Verhoog de z-index */
+            position: relative;
         }
     </style>
 </head>
 <body>
-    <h1>Uitleen Systeem</h1>
+    <h1>next uitlenen</h1>
     <div id="reader"></div>
     <div class="button-container">
-        <button onclick="startScan()">Start Scan</button>
-        <button onclick="stopScan()">Stop Scan</button>
+        <button onclick="toggleScan()">Start/Stop Scan</button>
     </div>
+    <div id="logs" style="margin-top: 20px; color: red;"></div> <!-- Loggebied -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.0.3/html5-qrcode.min.js"></script>
     <script src="scannerscript.js"></script>
 </body>
