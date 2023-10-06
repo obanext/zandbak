@@ -4,12 +4,16 @@ function startScan() {
     scanner.start(
         { facingMode: "environment" },
         (decodedText, decodedResult) => {
+            console.log("QR-code succesvol gescand:", decodedText);
             handleScannedData(decodedText);
+            stopScan();  // Stop de scanner na het scannen van een QR-code
         },
         (errorMessage) => {
-            console.error(errorMessage);
+            console.error("Fout tijdens het scannen:", errorMessage);
         }
-    );
+    ).catch(error => {
+        console.error("Fout bij het starten van de scanner:", error);
+    });
 }
 
 function stopScan() {
