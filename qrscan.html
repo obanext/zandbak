@@ -18,14 +18,14 @@
     <h1>next uitlenen</h1>
     <video id="preview" width="300" height="200"></video>
     <div class="chat-input">
-        <button onclick="toggleScan()">Start/Stop Scan</button>
+        <button onclick="toggleScan()">scan</button>
     </div>
     <input type="file" id="fileInput" onchange="loadInitialFile()" style="display: none;">
     <div class="chat-input">
-        <button onclick="document.getElementById('fileInput').click()">Laad Initieel Bestand</button>
+        <button onclick="document.getElementById('fileInput').click()">lokaal</button>
     </div>
     <div class="chat-input">
-        <button onclick="restoreBackup()">Herstel van Backup</button>
+        <button onclick="restoreBackup()">backup</button>
     </div>
     <div id="logs" style="margin-top: 20px; color: red;"></div>
     <script src="https://unpkg.com/@zxing/library@latest"></script>
