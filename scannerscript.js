@@ -44,8 +44,13 @@ function stopScan() {
 }
 
 function handleScannedData(data) {
+    logMessage("Gescande data: " + data);
+
     let items = JSON.parse(localStorage.getItem('items')) || [];
+    logMessage("Items uit localStorage: " + JSON.stringify(items));
+
     let item = items.find(i => i.id === data);
+    logMessage("Gevonden item: " + JSON.stringify(item));
 
     if (!item) {
         logMessage("Item niet gevonden!");
