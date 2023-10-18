@@ -1,83 +1,76 @@
 <!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="locaties.css" />
-    <title>Locaties</title>
-  </head>
-  <body>
-    <header>
-      <nav>
-        <ul>
-          <li><a href="index.html">Collectie</a></li>
-          <li><a href="#">Locaties</a></li>
-          <li><a href="#">Agenda</a></li>
-        </ul>
-      </nav>
-      <img src="leefenleer.png" alt="leefenleer logo" id="leefenleer logo" />
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="styles.css" rel="stylesheet"/>
+<link href="locaties.css" rel="stylesheet"/>
+<title>Locaties</title>
+</head>
+<body>
+<header>
+<nav>
+<ul>
+<li><a href="index.html">Collectie</a></li>
+<li><a href="#">Locaties</a></li>
+<li><a href="#">Agenda</a></li>
+</ul>
+</nav>
+<img alt="leefenleer logo" id="leefenleer logo" src="leefenleer.png"/>
 <div id="digital-options" style="display: none;">
-  <!-- Opties voor digitaal kunnen hier worden toegevoegd -->
+<!-- Opties voor digitaal kunnen hier worden toegevoegd -->
 </div>
-    </header>
-    <div class="main-container">
-      <div class="options-container">
-        <div class="option-group">
-          <h3>Waar?</h3>
-          <label><input type="checkbox" value="Centrum" /> Centrum</label>
-          <label><input type="checkbox" value="Noord" /> Noord</label>
-          <label><input type="checkbox" value="Zuid" /> Zuid</label>
-          <label><input type="checkbox" value="Zuidoost" /> Zuidoost</label>
-          <label><input type="checkbox" value="Nieuw-West" /> Nieuw-West</label>
-          <label><input type="checkbox" value="West" /> West</label>
-          <label><input type="checkbox" value="Oost" /> Oost</label>
-        </div>
-        <div class="option-group">
-          <h3>Wat?</h3>
-          <label><input type="checkbox" value="taal" /> taal</label>
+</header>
+<div class="main-container">
+<div class="options-container">
+<div class="option-group">
+<h3>Waar?</h3>
+<label><input id="Centrum" type="checkbox" value="Centrum"/> Centrum</label>
+<label><input id="Noord" type="checkbox" value="Noord"/> Noord</label>
+<label><input id="Zuid" type="checkbox" value="Zuid"/> Zuid</label>
+<label><input id="Zuidoost" type="checkbox" value="Zuidoost"/> Zuidoost</label>
+<label><input id="Nieuw-West" type="checkbox" value="Nieuw-West"/> Nieuw-West</label>
+<label><input id="West" type="checkbox" value="West"/> West</label>
+<label><input id="Oost" type="checkbox" value="Oost"/> Oost</label>
+</div>
+<div class="option-group">
+<h3>Wat?</h3>
+<label><input id="taal" type="checkbox" value="taal"/> taal</label>
 <div id="language-options" style="display: none;">
-  <label><input type="checkbox" value="A1" /> A1</label>
-  <label><input type="checkbox" value="A2" /> A2</label>
-  <label><input type="checkbox" value="B1" /> B1</label>
-  <label><input type="checkbox" value="B2" /> B2</label>
-  <label><input type="checkbox" value="C1" /> C1</label>
-  <label><input type="checkbox" value="C2" /> C2</label>
+<label><input id="A1" type="checkbox" value="A1"/> A1</label>
+<label><input id="A2" type="checkbox" value="A2"/> A2</label>
+<label><input id="B1" type="checkbox" value="B1"/> B1</label>
+<label><input id="B2" type="checkbox" value="B2"/> B2</label>
+<label><input id="C1" type="checkbox" value="C1"/> C1</label>
+<label><input id="C2" type="checkbox" value="C2"/> C2</label>
 </div>
-
 <div id="taalOptions" style="display: none;">
-    <label><input type="checkbox" value="A1" /> A1</label>
-    <!-- andere opties -->
+<label><input id="A1" type="checkbox" value="A1"/> A1</label>
+<!-- andere opties -->
 </div>
-          <label><input type="checkbox" value="geld" /> geld</label>
+<label><input id="geld" type="checkbox" value="geld"/> geld</label>
 <div id="geldOptions" style="display: none;">
-    <label><input type="checkbox" value="beginner" /> beginner</label>
-    <!-- andere opties -->
+<label><input id="beginner" type="checkbox" value="beginner"/> beginner</label>
+<!-- andere opties -->
 </div>
-          <label><input type="checkbox" value="digitaal" /> digitaal</label>
+<label><input id="digitaal" type="checkbox" value="digitaal"/> digitaal</label>
 <div id="digital-options" style="display: none;">
-  <label><input type="checkbox" value="beginner" /> beginner</label>
-  <label><input type="checkbox" value="gevorderd" /> gevorderd</label>
-  <label><input type="checkbox" value="expert" /> expert</label>
+<label><input id="beginner" type="checkbox" value="beginner"/> beginner</label>
+<label><input id="gevorderd" type="checkbox" value="gevorderd"/> gevorderd</label>
+<label><input id="expert" type="checkbox" value="expert"/> expert</label>
 </div>
-
-        </div>
-        <div class="option-group">
-          <h3>Opties</h3>
-          <label>Zoek op postcode</label>
-          <input type="text" id="postcode" placeholder="Postcode" maxlength="4" />
-        </div>
-      </div>
-      <div class="map-container">
-        <iframe
-          id="map"
-          src="https://localfocuswidgets.net/65304593175a2?hide=dropdowns"
-          frameborder="0"
-          scrolling="no"
-          style="border: 0; width: 100%; height: 100%;"
-        ></iframe>
-      </div>
-    </div>
-    <script src="leefenleerkaart.js"></script>
-  </body>
+</div>
+<div class="option-group">
+<h3>Opties</h3>
+<label>Zoek op postcode</label>
+<input id="postcode" maxlength="4" placeholder="Postcode" type="text"/>
+</div>
+</div>
+<div class="map-container">
+<iframe frameborder="0" id="map" scrolling="no" src="https://localfocuswidgets.net/65304593175a2?hide=dropdowns" style="border: 0; width: 100%; height: 100%;"></iframe>
+</div>
+</div>
+<script src="leefenleerkaart.js"></script>
+</body>
 </html>
