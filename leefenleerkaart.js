@@ -1,23 +1,3 @@
-// Functie om de zichtbaarheid van optiecontainers te schakelen
-function toggleOptionContainer(checkboxElement, containerId) {
-  const container = document.getElementById(containerId);
-  checkboxElement.addEventListener('change', function() {
-    container.style.display = this.checked ? 'block' : 'none';
-  });
-}
-
-// Zet de rest van de code die afhankelijk is van de DOMContentLoaded hier...
-document.addEventListener('DOMContentLoaded', () => {
-  // ... bestaande 'DOMContentLoaded' code ...
-
-  // Vind de checkboxes en pas de toggle-functie toe
-  const taalCheckbox = document.querySelector('input[value="taal"]');
-  const digitaalCheckbox = document.querySelector('input[value="digitaal"]');
-  
-  // Roep de toggle-functie aan met de juiste elementen en IDs
-  toggleOptionContainer(taalCheckbox, 'language-options'); // Dit ID moet bestaan in uw HTML
-  toggleOptionContainer(digitaalCheckbox, 'digital-options'); // Dit ID moet bestaan in uw HTML
-});
 document.addEventListener('DOMContentLoaded', () => {
   const locationCheckboxes = document.querySelectorAll('input[type="checkbox"]');
   const postcodeInput = document.getElementById('postcode');
@@ -105,8 +85,38 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Toegevoegde functie om de weergave van opties te beheren
-  // Functie om de zichtbaarheid van optiecontainers te schakelen
+
+    
+    function toggleOptionContainer(checkboxElement, containerId) {
+        const container = document.getElementById(containerId);
+        checkboxElement.addEventListener('change', function() {
+            if (this.checked) {
+                container.style.display = 'block'; // Als aangevinkt, toon de container
+            } else {
+                container.style.display = 'none';  // Als niet aangevinkt, verberg de container
+            }
+        });
+    }
+
+    // Vind de checkboxes en pas de toggle-functie toe
+    const taalCheckbox = document.querySelector('input[value="taal"]');
+    const digitaalCheckbox = document.querySelector('input[value="digitaal"]');
+    
+    // Roep de toggle-functie aan met de juiste elementen en IDs
+    toggleOptionContainer(taalCheckbox, 'language-options'); // ID aangepast
+    toggleOptionContainer(digitaalCheckbox, 'digital-options'); // ID toegevoegd
+    
+// Verwijderde functie
+  const optionsElement = document.getElementById(optionsId);
+  checkbox.addEventListener('change', function() {
+    if (this.checked) {
+      optionsElement.style.display = "block";
+    } else {
+      optionsElement.style.display = "none";
+    }
+  
+
+  
   function toggleOptionContainer(checkboxElement, containerId) {
     const container = document.getElementById(containerId);
     checkboxElement.addEventListener('change', function() {
