@@ -65,6 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const categories = selectedCategories.length === 0 ? [''] : selectedCategories;
       for (const category of categories) {
         combinations.push(`${location}${category}`);
+        // Corrected URL parameter addition for selected district
+        if (selectedLocations.length > 0) {
+            for (const location of selectedLocations) {
+                queryParams.append("activate|geo", locationGeoParams[location]);
+            }
+        }
       }
     }
 
@@ -99,8 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Vind de checkboxes en pas de toggle-functie toe
-    const taalCheckbox = document.querySelector('input[value="taal"]');
-    const digitaalCheckbox = document.querySelector('input[value="digitaal"]');
+    const taalCheckbox = document.getElementById('input[value="taal"]');
+    const digitaalCheckbox = document.getElementById('input[value="digitaal"]');
     
     // Roep de toggle-functie aan met de juiste elementen en IDs
     toggleOptionContainer(taalCheckbox, 'language-options'); // ID aangepast
@@ -117,7 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
 
   
-  function toggleOptionContainer(checkboxElement, containerId) {
     const container = document.getElementById(containerId);
     checkboxElement.addEventListener('change', function() {
       if (this.checked) {
@@ -129,8 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Vind de checkboxes en pas de toggle-functie toe
-  const taalCheckbox = document.querySelector('input[value="taal"]');
-  const digitaalCheckbox = document.querySelector('input[value="digitaal"]');
+  const taalCheckbox = document.getElementById('input[value="taal"]');
+  const digitaalCheckbox = document.getElementById('input[value="digitaal"]');
   
   // Roep de toggle-functie aan met de juiste elementen en IDs
   toggleOptionContainer(taalCheckbox, 'language-options');
@@ -140,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 // Vind de checkboxes
-const taalCheckbox = document.querySelector('input[value="taal"]');
+const taalCheckbox = document.getElementById('input[value="taal"]');
 const geldCheckbox = document.querySelector('input[value="geld"]');
 
 // Roep de functie aan voor beide sets van opties
