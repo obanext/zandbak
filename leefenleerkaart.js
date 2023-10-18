@@ -83,3 +83,46 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('map').src = generateUrl();
   }
 });
+
+
+// Toegevoegde functie om de weergave van opties te beheren
+function toggleOptions(checkbox, optionsId) {
+  const optionsElement = document.getElementById(optionsId);
+  checkbox.addEventListener('change', function() {
+    if (this.checked) {
+      optionsElement.style.display = "block";
+    } else {
+      optionsElement.style.display = "none";
+    }
+  
+
+  // Functie om de zichtbaarheid van optiecontainers te schakelen
+  function toggleOptionContainer(checkboxElement, containerId) {
+    const container = document.getElementById(containerId);
+    checkboxElement.addEventListener('change', function() {
+      if (this.checked) {
+        container.style.display = 'block'; // Als aangevinkt, toon de container
+      } else {
+        container.style.display = 'none';  // Als niet aangevinkt, verberg de container
+      }
+    });
+  }
+
+  // Vind de checkboxes en pas de toggle-functie toe
+  const taalCheckbox = document.querySelector('input[value="taal"]');
+  const digitaalCheckbox = document.querySelector('input[value="digitaal"]');
+  
+  // Roep de toggle-functie aan met de juiste elementen en IDs
+  toggleOptionContainer(taalCheckbox, 'language-options');
+  toggleOptionContainer(digitaalCheckbox, 'digital-options');
+
+});
+}
+
+// Vind de checkboxes
+const taalCheckbox = document.querySelector('input[value="taal"]');
+const geldCheckbox = document.querySelector('input[value="geld"]');
+
+// Roep de functie aan voor beide sets van opties
+toggleOptions(taalCheckbox, 'taalOptions');
+toggleOptions(geldCheckbox, 'geldOptions');
