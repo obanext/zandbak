@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
       taal: 't',
       geld: 'g',
       digitaal: 'd',
-      informatiepunt: 'i',
     };
 
     const selectedLocations = Array.from(locationCheckboxes)
