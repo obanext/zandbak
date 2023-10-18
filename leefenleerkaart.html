@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="locaties.css" />
+    <title>Locaties</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="index.html">Collectie</a></li>
+          <li><a href="#">Locaties</a></li>
+          <li><a href="#">Agenda</a></li>
+        </ul>
+      </nav>
+      <img src="leefenleer.png" alt="leefenleer logo" id="leefenleer logo" />
+    </header>
+    <div class="main-container">
+      <div class="options-container">
+        <div class="option-group">
+          <h3>Waar?</h3>
+          <label><input type="checkbox" value="Centrum" /> Centrum</label>
+          <label><input type="checkbox" value="Noord" /> Noord</label>
+          <label><input type="checkbox" value="Zuid" /> Zuid</label>
+          <label><input type="checkbox" value="Zuidoost" /> Zuidoost</label>
+          <label><input type="checkbox" value="Nieuw-West" /> Nieuw-West</label>
+          <label><input type="checkbox" value="West" /> West</label>
+          <label><input type="checkbox" value="Oost" /> Oost</label>
+        </div>
+        <div class="option-group">
+          <h3>Wat?</h3>
+          <label><input type="checkbox" value="taal" /> taal</label>
+          <label><input type="checkbox" value="rekenen" /> rekenen</label>
+          <label><input type="checkbox" value="digitaal" /> digitaal</label>
+        </div>
+        <div class="option-group">
+          <h3>Opties</h3>
+          <label>Zoek op postcode</label>
+          <input type="text" id="postcode" placeholder="Postcode" maxlength="4" />
+        </div>
+      </div>
+      <div class="map-container">
+        <iframe
+          id="map"
+          src="https://localfocuswidgets.net/65304593175a2?hide=dropdowns"
+          frameborder="0"
+          scrolling="no"
+          style="border: 0; width: 100%; height: 100%;"
+        ></iframe>
+      </div>
+    </div>
+    <script src="locaties.js"></script>
+  </body>
+</html>
