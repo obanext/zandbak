@@ -3,62 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leef en Leer</title>
+    <title>Leef en Leer Kaart</title>
+    <link rel="stylesheet" href="leefenleerkaart.css">
 </head>
 <body>
-    <!-- Gebieden en grenzen -->
-    <h3>Gebieden en Grenzen</h3>
-    <select id="geo">
-        <option value="ac">Centrum</option>
-        <option value="an">Noord</option>
-        <option value="az">Zuid</option>
-        <option value="azo">Zuidoost</option>
-        <option value="anw">Nieuw-West</option>
-        <option value="aw">West</option>
-        <option value="ao">Oost</option>
-        <option value="we">Weesp</option>
-        <option value="ad">Diemen</option>
-    </select>
-
-    <!-- Activiteiten -->
-    <h3>Activiteiten</h3>
-    <select id="activiteiten" onchange="showOptions(this.value)">
-        <option value="aa">Alle activiteiten</option>
-        <option value="t">Taal</option>
-        <option value="d">Digitaal</option>
-        <option value="g">Geld</option>
-    </select>
-
-    <!-- Taalopties -->
-    <div id="taalOptions" style="display: none;">
-        <h4>Taalopties</h4>
-        <select id="taal">
-            <option value="a1">A1</option>
-            <option value="a2">A2</option>
-            <option value="b1">B1</option>
-            <option value="b2">B2</option>
-            <option value="c1">C1</option>
-            <option value="c2">C2</option>
-            <option value="in">Instroom</option>
-            <option value="1f">1F</option>
-            <option value="2f">2F</option>
-        </select>
+    <div class="container">
+        <div class="options">
+            <div class="geonaam-selector">
+                <h3>Geonaam en Selector Activiteiten:</h3>
+                <label><input type="checkbox" id="ac" value="ac"> Centrum</label>
+                <label><input type="checkbox" id="an" value="an"> Noord</label>
+                <label><input type="checkbox" id="az" value="az"> Zuid</label>
+                <label><input type="checkbox" id="azo" value="azo"> Zuidoost</label>
+                <label><input type="checkbox" id="anw" value="anw"> Nieuw-West</label>
+                <label><input type="checkbox" id="aw" value="aw"> West</label>
+                <label><input type="checkbox" id="ao" value="ao"> Oost</label>
+                <label><input type="checkbox" id="we" value="we"> Weesp</label>
+                <label><input type="checkbox" id="ad" value="ad"> Diemen</label>
+            </div>
+            <div class="activiteiten-soort">
+                <h3>Activiteiten Soort:</h3>
+                <label><input type="checkbox" id="aa" value="aa"> Alle Activiteiten</label>
+                <label><input type="checkbox" id="t" value="t"> Taal</label>
+                <label><input type="checkbox" id="d" value="d"> Digitaal</label>
+                <label><input type="checkbox" id="g" value="g"> Geld</label>
+            </div>
+            <div class="taal-opties">
+                <h3>Taalopties:</h3>
+                <label><input type="checkbox" id="a1" value="a1"> A1</label>
+                <label><input type="checkbox" id="a2" value="a2"> A2</label>
+                <label><input type="checkbox" id="b1" value="b1"> B1</label>
+                <label><input type="checkbox" id="b2" value="b2"> B2</label>
+                <label><input type="checkbox" id="c1" value="c1"> C1</label>
+                <label><input type="checkbox" id="c2" value="c2"> C2</label>
+                <label><input type="checkbox" id="in" value="in"> Instroom</label>
+                <label><input type="checkbox" id="1f" value="1f"> 1F</label>
+                <label><input type="checkbox" id="2f" value="2f"> 2F</label>
+            </div>
+            <div class="digitaal-opties">
+                <h3>Digitaalopties:</h3>
+                <label><input type="checkbox" id="b" value="b"> Beginner</label>
+                <label><input type="checkbox" id="g" value="g"> Gevorderd</label>
+                <label><input type="checkbox" id="e" value="e"> Expert</label>
+            </div>
+        </div>
+        <div class="map"></div>
     </div>
-
-    <!-- Digitaalopties -->
-    <div id="digitaalOptions" style="display: none;">
-        <h4>Digitaalopties</h4>
-        <select id="digitaal">
-            <option value="b">Beginner</option>
-            <option value="g">Gevorderd</option>
-            <option value="e">Expert</option>
-        </select>
-    </div>
-
-    <!-- Kaart -->
-    <h3>Kaart</h3>
-    <iframe id="kaart" src="https://localfocuswidgets.net/653113dfcf53f?hide=dropdowns" width="100%" height="600"></iframe>
-
-    <script src="leefenleer.js"></script>
+    <script src="leefenleerkaart.js"></script>
 </body>
 </html>
