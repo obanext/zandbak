@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
     function updateURL() {
-        const baseUrl = "https://localfocuswidgets.net/653118b473965?hide=dropdowns";
+        const baseUrl = "https://localfocuswidgets.net/65314588b3bb5?hide=dropdowns";
         const geonaamOptions = getSelectedOptions("geonaam-selector");
         const activiteitenSoortOptions = getSelectedOptions("activiteiten-soort");
         const taalOptions = getSelectedOptions("taal-opties");
@@ -18,8 +18,9 @@ document.addEventListener("DOMContentLoaded", function () {
         
         if (geonaamOptions.length > 0) {
             // Gebruik dezelfde optie voor 'selector' als voor 'geonaam'
-            const geoSelector = geonaamOptions.join('');
-            url += `&activate|geonaam=${geoSelector}&activate|selector=${geoSelector}`;
+            for (const geoOption of geonaamOptions) {
+                url += `&activate|geonaam=${geoOption}&activate|selector=${geoOption}`;
+            }
         } else if (activiteitenSoortOptions.length > 0) {
             // Geen 'geonaam' geselecteerd, gebruik alleen 'activiteiten-soort' voor 'selector'
             url += `&activate|selector=${activiteitenSoortOptions.join('')}`;
