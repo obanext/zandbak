@@ -1,153 +1,36 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const locationCheckboxes = document.querySelectorAll('input[type="checkbox"]');
-  const postcodeInput = document.getElementById('postcode');
+function showOptions(activity) {
+    const taalOptions = document.getElementById('taalOptions');
+    const digitaalOptions = document.getElementById('digitaalOptions');
 
-  locationCheckboxes.forEach((checkbox) => {
-    checkbox.addEventListener('change', updateMap);
-  });
+    // Verberg alle opties eerst
+    taalOptions.style.display = 'none';
+    digitaalOptions.style.display = 'none';
 
-  postcodeInput.addEventListener('input', updateMap);
-
-  function generateUrl() {
-    const locationParams = {
-      Centrum: 'ac',
-      Noord: 'an',
-      Zuid: 'az',
-      Zuidoost: 'azo',
-      'Nieuw-West': 'anw',
-      West: 'aw',
-      Oost: 'ao',
-    };
-
-    const locationGeoParams = {
-      Centrum: 'c',
-      Noord: 'n',
-      Zuid: 'z',
-      Zuidoost: 'zo',
-      'Nieuw-West': 'nw',
-      West: 'w',
-      Oost: 'o',
-    };
-
-    const categoryParams = {
-      taal: 't',
-      geld: 'g',
-      digitaal: 'd',
-    };
-
-    const selectedLocations = Array.from(locationCheckboxes)
-      .filter((checkbox) => checkbox.checked && locationParams.hasOwnProperty(checkbox.value))
-      .map((checkbox) => locationParams[checkbox.value]);
-
-    const selectedGeoLocations = Array.from(locationCheckboxes)
-      .filter((checkbox) => checkbox.checked && locationGeoParams.hasOwnProperty(checkbox.value))
-      .map((checkbox) => locationGeoParams[checkbox.value]);
-
-    const selectedCategories = Array.from(locationCheckboxes)
-      .filter((checkbox) => checkbox.checked && categoryParams.hasOwnProperty(checkbox.value))
-      .map((checkbox) => categoryParams[checkbox.value]);
-
-    const postcode = postcodeInput.value;
-
-    const allLocations = Object.values(locationParams);
-
-    const activateParams = selectedLocations.length === 0 ? allLocations : selectedLocations;
-    const queryParams = new URLSearchParams();
-
-    queryParams.append('hide', 'dropdowns');
-
-    if (postcode) queryParams.append('postcode', postcode);
-
-    const mapUrl = 'https://localfocuswidgets.net/64521d8435e0f';
-    const combinations = [];
-
-    for (const location of activateParams) {
-      const categories = selectedCategories.length === 0 ? [''] : selectedCategories;
-      for (const category of categories) {
-        combinations.push(`${location}${category}`);
-        // Corrected URL parameter addition for selected district
-        if (selectedLocations.length > 0) {
-            for (const location of selectedLocations) {
-                queryParams.append("activate|geo", locationGeoParams[location]);
-            }
-        }
-      }
+    // Toon de relevante opties op basis van de geselecteerde activiteit
+    if (activity === 't') {
+        taalOptions.style.display = 'block';
+    } else if (activity === 'd') {
+        digitaalOptions.style.display = 'block';
     }
-
-    for (const combination of combinations) {
-      queryParams.append('activate|sa', combination);
-    }
-
-    for (const geoLocation of selectedGeoLocations) {
-      queryParams.append('activate|geo', geoLocation);
-    }
-
-    return `${mapUrl}?${queryParams.toString()}`;
-  }
-
-  function updateMap() {
-    document.getElementById('map').src = generateUrl();
-  }
-});
-
-
-
-    
-    function toggleOptionContainer(checkboxElement, containerId) {
-        const container = document.getElementById(containerId);
-        checkboxElement.addEventListener('change', function() {
-            if (this.checked) {
-                container.style.display = 'block'; // Als aangevinkt, toon de container
-            } else {
-                container.style.display = 'none';  // Als niet aangevinkt, verberg de container
-            }
-        });
-    }
-
-    // Vind de checkboxes en pas de toggle-functie toe
-    const taalCheckbox = document.getElementById('input[value="taal"]');
-    const digitaalCheckbox = document.getElementById('input[value="digitaal"]');
-    
-    // Roep de toggle-functie aan met de juiste elementen en IDs
-    toggleOptionContainer(taalCheckbox, 'language-options'); // ID aangepast
-    toggleOptionContainer(digitaalCheckbox, 'digital-options'); // ID toegevoegd
-    
-// Verwijderde functie
-  const optionsElement = document.getElementById(optionsId);
-  checkbox.addEventListener('change', function() {
-    if (this.checked) {
-      optionsElement.style.display = "block";
-    } else {
-      optionsElement.style.display = "none";
-    }
-  
-
-  
-    const container = document.getElementById(containerId);
-    checkboxElement.addEventListener('change', function() {
-      if (this.checked) {
-        container.style.display = 'block'; // Als aangevinkt, toon de container
-      } else {
-        container.style.display = 'none';  // Als niet aangevinkt, verberg de container
-      }
-    });
-  }
-
-  // Vind de checkboxes en pas de toggle-functie toe
-  const taalCheckbox = document.getElementById('input[value="taal"]');
-  const digitaalCheckbox = document.getElementById('input[value="digitaal"]');
-  
-  // Roep de toggle-functie aan met de juiste elementen en IDs
-  toggleOptionContainer(taalCheckbox, 'language-options');
-  toggleOptionContainer(digitaalCheckbox, 'digital-options');
-
-});
 }
 
-// Vind de checkboxes
-const taalCheckbox = document.getElementById('input[value="taal"]');
-const geldCheckbox = document.querySelector('input[value="geld"]');
+document.getElementById('geo').addEventListener('change', updateURL);
+document.getElementById('activiteiten').addEventListener('change', updateURL);
+document.getElementById('taal').addEventListener('change', updateURL);
+document.getElementById('digitaal').addEventListener('change', updateURL);
 
-// Roep de functie aan voor beide sets van opties
-toggleOptions(taalCheckbox, 'taalOptions');
-toggleOptions(geldCheckbox, 'geldOptions');
+function updateURL() {
+    const geo = document.getElementById('geo').value;
+    const activiteit = document.getElementById('activiteiten').value;
+    let taal = '';
+    let digitaal = '';
+
+    if (activiteit === 't') {
+        taal = document.getElementById('taal').value;
+    } else if (activiteit === 'd') {
+        digitaal = document.getElementById('digitaal').value;
+    }
+
+    const url = `https://localfocuswidgets.net/653113dfcf53f?hide=dropdowns&activate|geo=${geo}&activate|aa=${geo}${activiteit}${taal}${digitaal}`;
+    document.getElementById('kaart').src = url;
+}
