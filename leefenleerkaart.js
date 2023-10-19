@@ -17,14 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
         let url = baseUrl;
         
         if (geonaamOptions.length > 0) {
-            // Gebruik dezelfde optie voor 'selector' als voor 'geonaam'
+            // Gebruik dezelfde optie voor 'geonaam' en 'selector'
             const geoSelector = geonaamOptions.join('');
-            url += `&activate|geonaam=${geoSelector}`;
-            
-            if (activiteitenSoortOptions.length > 0) {
-                // Voeg de activiteiten-soort toe aan 'selector'
-                url += `|${activiteitenSoortOptions.join('')}`;
-            }
+            url += `&activate|geonaam=${geoSelector}&activate|selector=${geoSelector}`;
         } else if (activiteitenSoortOptions.length > 0) {
             // Geen 'geonaam' geselecteerd, gebruik alleen 'activiteiten-soort' voor 'selector'
             url += `&activate|selector=${activiteitenSoortOptions.join('')}`;
