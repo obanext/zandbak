@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const checkboxes = document.querySelectorAll("input[type='checkbox']");
     const taalOpties = document.querySelector(".taal-opties");
     const digitaalOpties = document.querySelector(".digitaal-opties");
+    const geonaamSelector = document.querySelector(".geonaam-selector");
     
     checkboxes.forEach(function (checkbox) {
         checkbox.addEventListener("change", updateURL);
@@ -17,11 +18,16 @@ document.addEventListener("DOMContentLoaded", function () {
         let url = baseUrl;
         
         if (geonaamOptions.length > 0) {
+            // Gebruik dezelfde optie voor 'selector' als voor 'geonaam'
             url += `&activate|geonaam=${geonaamOptions.join('')}`;
-        }
-        
-        if (activiteitenSoortOptions.length > 0) {
-            url += `&activate|selector=${geonaamOptions.join('')}${activiteitenSoortOptions.join('')}`;
+            
+            if (activiteitenSoortOptions.length > 0) {
+                // Voeg de activiteiten-soort toe aan 'selector'
+                url += `&activate|selector=${geonaamOptions.join('')}${activiteitenSoortOptions.join('')}`;
+            }
+        } else if (activiteitenSoortOptions.length > 0) {
+            // Geen 'geonaam' geselecteerd, gebruik alleen 'activiteiten-soort' voor 'selector'
+            url += `&activate|selector=${activiteitenSoortOptions.join('')}`;
         }
         
         if (taalOptions.length > 0 && activiteitenSoortOptions.includes('t')) {
