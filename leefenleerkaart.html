@@ -1,128 +1,64 @@
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selectie voor Kaart</title>
-    <style>
-        /* enkele basisstijlen voor overzichtelijkheid */
-        .container {
-            display: flex;
-        }
-
-        .options {
-            flex: 1;
-        }
-
-        .map {
-            flex: 2;
-            height: 600px;
-            border: 1px solid #ddd;
-        }
-
-        .hidden {
-            display: none;
-        }
-    </style>
+    <title>Leef en Leer</title>
 </head>
-
 <body>
-    <div class="container">
-        <div class="options">
-            <!-- Gebieden en grenzen -->
-            <label for="geo">Kies een gebied:</label>
-            <select id="geo">
-                <option value="ac">Centrum</option>
-                <option value="an">Noord</option>
-                <!-- ... andere gebieden ... -->
-            </select>
+    <!-- Gebieden en grenzen -->
+    <h3>Gebieden en Grenzen</h3>
+    <select id="geo">
+        <option value="ac">Centrum</option>
+        <option value="an">Noord</option>
+        <option value="az">Zuid</option>
+        <option value="azo">Zuidoost</option>
+        <option value="anw">Nieuw-West</option>
+        <option value="aw">West</option>
+        <option value="ao">Oost</option>
+        <option value="we">Weesp</option>
+        <option value="ad">Diemen</option>
+    </select>
 
-            <!-- Activiteiten -->
-            <label for="activities">Kies een activiteit:</label>
-            <select id="activities">
-                <option value="aa">Alle activiteiten</option>
-                <option value="t">Taal</option>
-                <!-- ... andere activiteiten ... -->
-            </select>
+    <!-- Activiteiten -->
+    <h3>Activiteiten</h3>
+    <select id="activiteiten" onchange="showOptions(this.value)">
+        <option value="aa">Alle activiteiten</option>
+        <option value="t">Taal</option>
+        <option value="d">Digitaal</option>
+        <option value="g">Geld</option>
+    </select>
 
-            <!-- Taalopties (standaard verborgen) -->
-            <div id="language-options" class="hidden">
-                <label for="language-level">Kies een taalniveau:</label>
-                <select id="language-level">
-                    <option value="a1">A1</option>
-                    <!-- ... andere taalniveaus ... -->
-                </select>
-            </div>
-
-            <!-- Digitaalopties (standaard verborgen) -->
-            <div id="digital-options" class="hidden">
-                <label for="digital-level">Kies een digitaal niveau:</label>
-                <select id="digital-level">
-                    <option value="b">Beginner</option>
-                    <!-- ... andere digitale niveaus ... -->
-                </select>
-            </div>
-        </div>
-
-        <iframe id="map" class="map" src="https://localfocuswidgets.net/653113dfcf53f?hide=dropdowns"></iframe>
+    <!-- Taalopties -->
+    <div id="taalOptions" style="display: none;">
+        <h4>Taalopties</h4>
+        <select id="taal">
+            <option value="a1">A1</option>
+            <option value="a2">A2</option>
+            <option value="b1">B1</option>
+            <option value="b2">B2</option>
+            <option value="c1">C1</option>
+            <option value="c2">C2</option>
+            <option value="in">Instroom</option>
+            <option value="1f">1F</option>
+            <option value="2f">2F</option>
+        </select>
     </div>
 
-    <script>
-        // Referenties naar de DOM-elementen
-const geoSelect = document.getElementById('geo');
-const activitiesSelect = document.getElementById('activities');
-const languageOptions = document.getElementById('language-options');
-const languageLevelSelect = document.getElementById('language-level');
-const digitalOptions = document.getElementById('digital-options');
-const digitalLevelSelect = document.getElementById('digital-level');
-const mapIframe = document.getElementById('map');
+    <!-- Digitaalopties -->
+    <div id="digitaalOptions" style="display: none;">
+        <h4>Digitaalopties</h4>
+        <select id="digitaal">
+            <option value="b">Beginner</option>
+            <option value="g">Gevorderd</option>
+            <option value="e">Expert</option>
+        </select>
+    </div>
 
-// Event listeners
-activitiesSelect.addEventListener('change', function() {
-    // Verberg alle subopties
-    languageOptions.classList.add('hidden');
-    digitalOptions.classList.add('hidden');
+    <!-- Kaart -->
+    <h3>Kaart</h3>
+    <iframe id="kaart" src="https://localfocuswidgets.net/653113dfcf53f?hide=dropdowns" width="100%" height="600"></iframe>
 
-    // Toon relevante subopties op basis van de geselecteerde activiteit
-    switch (activitiesSelect.value) {
-        case 't':
-            languageOptions.classList.remove('hidden');
-            break;
-        case 'd':
-            digitalOptions.classList.remove('hidden');
-            break;
-        // ... andere cases indien nodig ...
-    }
-
-    updateMapURL();
-});
-
-geoSelect.addEventListener('change', updateMapURL);
-languageLevelSelect.addEventListener('change', updateMapURL);
-digitalLevelSelect.addEventListener('change', updateMapURL);
-
-function updateMapURL() {
-    // Basis URL
-    let url = "https://localfocuswidgets.net/653113dfcf53f?hide=dropdowns";
-
-    // Voeg geo-parameter toe
-    url += `&activate|geo=${geoSelect.value}`;
-
-    // Voeg activiteit en eventuele subopties toe
-    let activity = activitiesSelect.value;
-    if (activity === 't') {
-        activity += languageLevelSelect.value;
-    } else if (activity === 'd') {
-        activity += digitalLevelSelect.value;
-    }
-    url += `&activate|selector=${geoSelect.value}${activity}`;
-
-    // Update de iframe src
-    mapIframe.src = url;
-}
-
-    </script>
+    <script src="leefenleer.js"></script>
 </body>
-
 </html>
