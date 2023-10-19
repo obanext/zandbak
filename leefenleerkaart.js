@@ -19,11 +19,12 @@ document.addEventListener("DOMContentLoaded", function () {
         
         if (geonaamOptions.length > 0) {
             // Gebruik dezelfde optie voor 'selector' als voor 'geonaam'
-            url += `&activate|geonaam=${geonaamOptions.join('')}`;
+            const geoSelector = geonaamOptions.join('');
+            url += `&activate|geonaam=${geoSelector}&activate|selector=${geoSelector}`;
             
             if (activiteitenSoortOptions.length > 0) {
                 // Voeg de activiteiten-soort toe aan 'selector'
-                url += `&activate|selector=${geonaamOptions.join('')}${activiteitenSoortOptions.join('')}`;
+                url += `${activiteitenSoortOptions.join('')}`;
             }
         } else if (activiteitenSoortOptions.length > 0) {
             // Geen 'geonaam' geselecteerd, gebruik alleen 'activiteiten-soort' voor 'selector'
