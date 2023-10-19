@@ -43,4 +43,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         
         // Toon of verberg Digitaalopties op basis van Digitaal checkbox
-        if (activiteitenSoort
+        if (activiteitenSoortOptions.includes('d')) {
+            digitaalOpties.style.display = "block";
+        } else {
+            digitaalOpties.style.display = "none";
+        }
+    }
+    
+    function getSelectedOptions(optionName) {
+        const selectedOptions = [];
+        const checkboxes = document.querySelectorAll(`.${optionName} input[type='checkbox']:checked`);
+        
+        checkboxes.forEach(function (checkbox) {
+            selectedOptions.push(checkbox.value);
+        });
+        
+        return selectedOptions;
+    }
+});
