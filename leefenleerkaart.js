@@ -1,36 +1,46 @@
-function showOptions(activity) {
-    const taalOptions = document.getElementById('taalOptions');
-    const digitaalOptions = document.getElementById('digitaalOptions');
-
-    // Verberg alle opties eerst
-    taalOptions.style.display = 'none';
-    digitaalOptions.style.display = 'none';
-
-    // Toon de relevante opties op basis van de geselecteerde activiteit
-    if (activity === 't') {
-        taalOptions.style.display = 'block';
-    } else if (activity === 'd') {
-        digitaalOptions.style.display = 'block';
+document.addEventListener("DOMContentLoaded", function () {
+    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener("change", updateURL);
+    });
+    
+    function updateURL() {
+        const baseUrl = "https://localfocuswidgets.net/653118b473965?hide=dropdowns";
+        const geonaamOptions = getSelectedOptions("geonaam-selector");
+        const activiteitenSoortOptions = getSelectedOptions("activiteiten-soort");
+        const taalOptions = getSelectedOptions("taal-opties");
+        const digitaalOptions = getSelectedOptions("digitaal-opties");
+        
+        let url = baseUrl;
+        
+        if (geonaamOptions.length > 0) {
+            url += `&activate|geonaam=${geonaamOptions.join('')}`;
+        }
+        
+        if (activiteitenSoortOptions.length > 0) {
+            url += `&activate|selector=${activiteitenSoortOptions.join('')}`;
+        }
+        
+        if (taalOptions.length > 0 && activiteitenSoortOptions.includes('t')) {
+            url += `|${taalOptions[0]}`;
+        }
+        
+        if (digitaalOptions.length > 0 && activiteitenSoortOptions.includes('d')) {
+            url += `|${digitaalOptions[0]}`;
+        }
+        
+        window.location.href = url;
     }
-}
-
-document.getElementById('geo').addEventListener('change', updateURL);
-document.getElementById('activiteiten').addEventListener('change', updateURL);
-document.getElementById('taal').addEventListener('change', updateURL);
-document.getElementById('digitaal').addEventListener('change', updateURL);
-
-function updateURL() {
-    const geo = document.getElementById('geo').value;
-    const activiteit = document.getElementById('activiteiten').value;
-    let taal = '';
-    let digitaal = '';
-
-    if (activiteit === 't') {
-        taal = document.getElementById('taal').value;
-    } else if (activiteit === 'd') {
-        digitaal = document.getElementById('digitaal').value;
+    
+    function getSelectedOptions(optionName) {
+        const selectedOptions = [];
+        const checkboxes = document.querySelectorAll(`.${optionName} input[type='checkbox']:checked`);
+        
+        checkboxes.forEach(function (checkbox) {
+            selectedOptions.push(checkbox.value);
+        });
+        
+        return selectedOptions;
     }
-
-    const url = `https://localfocuswidgets.net/653113dfcf53f?hide=dropdowns&activate|geo=${geo}&activate|aa=${geo}${activiteit}${taal}${digitaal}`;
-    document.getElementById('kaart').src = url;
-}
+});
