@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    const taalOpties = document.querySelector(".taal-opties");
+    const digitaalOpties = document.querySelector(".digitaal-opties");
     
     checkboxes.forEach(function (checkbox) {
         checkbox.addEventListener("change", updateURL);
@@ -19,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         
         if (activiteitenSoortOptions.length > 0) {
-            url += `&activate|selector=${activiteitenSoortOptions.join('')}`;
+            url += `&activate|selector=${geonaamOptions.join('')}${activiteitenSoortOptions.join('')}`;
         }
         
         if (taalOptions.length > 0 && activiteitenSoortOptions.includes('t')) {
@@ -30,7 +32,22 @@ document.addEventListener("DOMContentLoaded", function () {
             url += `|${digitaalOptions[0]}`;
         }
         
-        window.location.href = url;
+        const iframe = document.querySelector(".map iframe");
+        iframe.src = url;
+        
+        // Toon of verberg Taalopties op basis van Taal checkbox
+        if (activiteitenSoortOptions.includes('t')) {
+            taalOpties.style.display = "block";
+        } else {
+            taalOpties.style.display = "none";
+        }
+        
+        // Toon of verberg Digitaalopties op basis van Digitaal checkbox
+        if (activiteitenSoortOptions.includes('d')) {
+            digitaalOpties.style.display = "block";
+        } else {
+            digitaalOpties.style.display = "none";
+        }
     }
     
     function getSelectedOptions(optionName) {
