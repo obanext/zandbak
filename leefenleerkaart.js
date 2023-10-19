@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let url = baseUrl;
         
         if (geonaamOptions.length > 0) {
-            // Gebruik dezelfde optie voor 'geonaam' en 'selector'
+            // Gebruik dezelfde optie voor 'selector' als voor 'geonaam'
             const geoSelector = geonaamOptions.join('');
             url += `&activate|geonaam=${geoSelector}&activate|selector=${geoSelector}`;
         } else if (activiteitenSoortOptions.length > 0) {
@@ -49,6 +49,9 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             digitaalOpties.style.display = "none";
         }
+
+        // Console-log de gegenereerde URL voor testdoeleinden
+        console.log(url);
     }
     
     function getSelectedOptions(optionName) {
