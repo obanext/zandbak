@@ -1,76 +1,128 @@
 <!DOCTYPE html>
+<html lang="nl">
 
-<html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="styles.css" rel="stylesheet"/>
-<link href="locaties.css" rel="stylesheet"/>
-<title>Locaties</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selectie voor Kaart</title>
+    <style>
+        /* enkele basisstijlen voor overzichtelijkheid */
+        .container {
+            display: flex;
+        }
+
+        .options {
+            flex: 1;
+        }
+
+        .map {
+            flex: 2;
+            height: 600px;
+            border: 1px solid #ddd;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
-<header>
-<nav>
-<ul>
-<li><a href="index.html">Collectie</a></li>
-<li><a href="#">Locaties</a></li>
-<li><a href="#">Agenda</a></li>
-</ul>
-</nav>
-<img alt="leefenleer logo" id="leefenleer logo" src="leefenleer.png"/>
-<div id="digital-options" style="display: none;">
-<!-- Opties voor digitaal kunnen hier worden toegevoegd -->
-</div>
-</header>
-<div class="main-container">
-<div class="options-container">
-<div class="option-group">
-<h3>Waar?</h3>
-<label><input id="Centrum" type="checkbox" value="Centrum"/> Centrum</label>
-<label><input id="Noord" type="checkbox" value="Noord"/> Noord</label>
-<label><input id="Zuid" type="checkbox" value="Zuid"/> Zuid</label>
-<label><input id="Zuidoost" type="checkbox" value="Zuidoost"/> Zuidoost</label>
-<label><input id="Nieuw-West" type="checkbox" value="Nieuw-West"/> Nieuw-West</label>
-<label><input id="West" type="checkbox" value="West"/> West</label>
-<label><input id="Oost" type="checkbox" value="Oost"/> Oost</label>
-</div>
-<div class="option-group">
-<h3>Wat?</h3>
-<label><input id="taal" type="checkbox" value="taal"/> taal</label>
-<div id="language-options" style="display: none;">
-<label><input id="A1" type="checkbox" value="A1"/> A1</label>
-<label><input id="A2" type="checkbox" value="A2"/> A2</label>
-<label><input id="B1" type="checkbox" value="B1"/> B1</label>
-<label><input id="B2" type="checkbox" value="B2"/> B2</label>
-<label><input id="C1" type="checkbox" value="C1"/> C1</label>
-<label><input id="C2" type="checkbox" value="C2"/> C2</label>
-</div>
-<div id="taalOptions" style="display: none;">
-<label><input id="A1" type="checkbox" value="A1"/> A1</label>
-<!-- andere opties -->
-</div>
-<label><input id="geld" type="checkbox" value="geld"/> geld</label>
-<div id="geldOptions" style="display: none;">
-<label><input id="beginner" type="checkbox" value="beginner"/> beginner</label>
-<!-- andere opties -->
-</div>
-<label><input id="digitaal" type="checkbox" value="digitaal"/> digitaal</label>
-<div id="digital-options" style="display: none;">
-<label><input id="beginner" type="checkbox" value="beginner"/> beginner</label>
-<label><input id="gevorderd" type="checkbox" value="gevorderd"/> gevorderd</label>
-<label><input id="expert" type="checkbox" value="expert"/> expert</label>
-</div>
-</div>
-<div class="option-group">
-<h3>Opties</h3>
-<label>Zoek op postcode</label>
-<input id="postcode" maxlength="4" placeholder="Postcode" type="text"/>
-</div>
-</div>
-<div class="map-container">
-<iframe frameborder="0" id="map" scrolling="no" src="https://localfocuswidgets.net/65304593175a2?hide=dropdowns" style="border: 0; width: 100%; height: 100%;"></iframe>
-</div>
-</div>
-<script src="leefenleerkaart.js"></script>
+    <div class="container">
+        <div class="options">
+            <!-- Gebieden en grenzen -->
+            <label for="geo">Kies een gebied:</label>
+            <select id="geo">
+                <option value="ac">Centrum</option>
+                <option value="an">Noord</option>
+                <!-- ... andere gebieden ... -->
+            </select>
+
+            <!-- Activiteiten -->
+            <label for="activities">Kies een activiteit:</label>
+            <select id="activities">
+                <option value="aa">Alle activiteiten</option>
+                <option value="t">Taal</option>
+                <!-- ... andere activiteiten ... -->
+            </select>
+
+            <!-- Taalopties (standaard verborgen) -->
+            <div id="language-options" class="hidden">
+                <label for="language-level">Kies een taalniveau:</label>
+                <select id="language-level">
+                    <option value="a1">A1</option>
+                    <!-- ... andere taalniveaus ... -->
+                </select>
+            </div>
+
+            <!-- Digitaalopties (standaard verborgen) -->
+            <div id="digital-options" class="hidden">
+                <label for="digital-level">Kies een digitaal niveau:</label>
+                <select id="digital-level">
+                    <option value="b">Beginner</option>
+                    <!-- ... andere digitale niveaus ... -->
+                </select>
+            </div>
+        </div>
+
+        <iframe id="map" class="map" src="https://localfocuswidgets.net/653113dfcf53f?hide=dropdowns"></iframe>
+    </div>
+
+    <script>
+        // Referenties naar de DOM-elementen
+const geoSelect = document.getElementById('geo');
+const activitiesSelect = document.getElementById('activities');
+const languageOptions = document.getElementById('language-options');
+const languageLevelSelect = document.getElementById('language-level');
+const digitalOptions = document.getElementById('digital-options');
+const digitalLevelSelect = document.getElementById('digital-level');
+const mapIframe = document.getElementById('map');
+
+// Event listeners
+activitiesSelect.addEventListener('change', function() {
+    // Verberg alle subopties
+    languageOptions.classList.add('hidden');
+    digitalOptions.classList.add('hidden');
+
+    // Toon relevante subopties op basis van de geselecteerde activiteit
+    switch (activitiesSelect.value) {
+        case 't':
+            languageOptions.classList.remove('hidden');
+            break;
+        case 'd':
+            digitalOptions.classList.remove('hidden');
+            break;
+        // ... andere cases indien nodig ...
+    }
+
+    updateMapURL();
+});
+
+geoSelect.addEventListener('change', updateMapURL);
+languageLevelSelect.addEventListener('change', updateMapURL);
+digitalLevelSelect.addEventListener('change', updateMapURL);
+
+function updateMapURL() {
+    // Basis URL
+    let url = "https://localfocuswidgets.net/653113dfcf53f?hide=dropdowns";
+
+    // Voeg geo-parameter toe
+    url += `&activate|geo=${geoSelect.value}`;
+
+    // Voeg activiteit en eventuele subopties toe
+    let activity = activitiesSelect.value;
+    if (activity === 't') {
+        activity += languageLevelSelect.value;
+    } else if (activity === 'd') {
+        activity += digitalLevelSelect.value;
+    }
+    url += `&activate|selector=${geoSelect.value}${activity}`;
+
+    // Update de iframe src
+    mapIframe.src = url;
+}
+
+    </script>
 </body>
+
 </html>
