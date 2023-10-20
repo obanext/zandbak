@@ -2,24 +2,15 @@
     display: flex;
     justify-content: space-between;
 }
-
 .options {
-    flex: 1;
-    padding-right: 20px; /* Afstand tussen de opties en de kaart */
+    width: 33%;
 }
-
 .map {
-    flex: 2;
+    width: 67%;
 }
-
-.options .geonaam-selector,
-.options .activiteiten-soort,
-.options .taal-opties,
-.options .digitaal-opties {
-    display: block;
-    margin-bottom: 20px; /* Ruimte tussen groepen checkboxes */
+.geonaam-selector, .activiteiten-soort, .taal-opties, .digitaal-opties {
+    margin-bottom: 20px;
 }
-
-.taal-opties, .digitaal-opties {
-    display: none; /* Verbergt de taal en digitaal niveau checkboxes initieel */
+.hidden {
+    display: none;
 }
