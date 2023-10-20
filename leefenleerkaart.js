@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var checkboxes = document.querySelectorAll('.geonaam, .activiteit, .niveau');
+    var checkboxes = document.querySelectorAll('.geonaam, .activiteit');
     var iframe = document.getElementById('map');
     var baseUrl = 'https://localfocuswidgets.net/65314588b3bb5?hide=dropdowns';
 
@@ -10,42 +10,45 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function updateMap() {
-        var geonaamValues = [];
-        var activiteitValues = [];
-        var niveauValues = [];
-
-        // Verzamel geselecteerde geonamen, activiteiten en niveaus.
-        document.querySelectorAll('.geonaam:checked').forEach(function (checkbox) {
-            geonaamValues.push(checkbox.getAttribute('data-geonaam'));
-        });
-
-        document.querySelectorAll('.activiteit:checked').forEach(function (checkbox) {
-            activiteitValues.push(checkbox.getAttribute('data-activiteit'));
-        });
-
-        document.querySelectorAll('.niveau:checked').forEach(function (checkbox) {
-            niveauValues.push(checkbox.getAttribute('data-niveau'));
-        });
-
-        // Begin met het opbouwen van de URL
+        var geonaamCheckboxes = document.querySelectorAll('.geonaam:checked');
+        var activiteitCheckboxes = document.querySelectorAll('.activiteit:checked');
+        
+        // Basis URL voor de kaart.
         var newUrl = baseUrl;
 
-        // Bouw de URL op voor elke combinatie van geonaam, activiteit en niveau.
-        geonaamValues.forEach(function (geonaam) {
-            activiteitValues.forEach(function (activiteit) {
-                niveauValues.forEach(function (niveau) {
-                    newUrl += '&activate|geonaam=' + geonaam;
-                    newUrl += '&activate|selector=' + geonaam + activiteit + niveau;
-                });
+        // Als er geen geonaam is geselecteerd, voegen we de activiteiten toe aan de selector.
+        if (geonaamCheckboxes.length === 0) {
+            var activiteiten = [];
+            activiteitCheckboxes.forEach(function (checkbox) {
+                activiteiten.push(checkbox.getAttribute('data-activiteit'));
             });
-        });
+            newUrl += '&activate|selector=' + activiteiten.join('');
+        } else {
+            // We bouwen de URL op door elke geonaam te doorlopen.
+            geonaamCheckboxes.forEach(function (geonaamCheckbox) {
+                var geonaam = geonaamCheckbox.getAttribute('data-geonaam');
+                
+                newUrl += '&activate|geonaam=' + geonaam;
 
-        // Als er geen geonamen, activiteiten of niveaus zijn geselecteerd, gebruik dan de standaardwaarde.
-        if (!geonaamValues.length && !activiteitValues.length && !niveauValues.length) {
-            newUrl += '&activate|selector=aa';
+                // Binnen elke geonaam, voegen we de relevante activiteiten toe.
+                var selectors = [geonaam]; // De geonaam wordt ook als selector opgenomen.
+
+                activiteitCheckboxes.forEach(function (activiteitCheckbox) {
+                    var activiteit = activiteitCheckbox.getAttribute('data-activiteit');
+
+                    // Controleer of de activiteit relevant is voor de geonaam.
+                    if ((activiteit === 't' && geonaamCheckbox.getAttribute('data-taaloptie')) ||
+                        (activiteit === 'd' && geonaamCheckbox.getAttribute('data-digitaaloptie')) ||
+                        (activiteit !== 't' && activiteit !== 'd')) {
+                        selectors.push(activiteit);
+                    }
+                });
+
+                newUrl += '&activate|selector=' + selectors.join('');
+            });
         }
 
-        // Update de iframe URL
+        // Update de iframe URL.
         iframe.src = newUrl;
     }
 });
