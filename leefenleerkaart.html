@@ -12,7 +12,7 @@
             <div class="geonaam-selector">
                 <h3>Geonaam en Selector Activiteiten:</h3>
                 <label><input type="checkbox" id="ac" value="ac"> Centrum</label><br>
-                <label><input type="checkbox" id="an" value="an"> Noord</label><br>
+                <label><input type= "checkbox" id="an" value="an"> Noord</label><br>
                 <label><input type="checkbox" id="az" value="az"> Zuid</label><br>
                 <label><input type="checkbox" id="azo" value="azo"> Zuidoost</label><br>
                 <label><input type="checkbox" id="anw" value="anw"> Nieuw-West</label><br>
@@ -24,11 +24,11 @@
             <div class="activiteiten-soort">
                 <h3>Activiteiten Soort:</h3>
                 <label><input type="checkbox" id="aa" value="aa"> Alle Activiteiten</label><br>
-                <label><input type="checkbox" id="t" value="t"> Taal</label><br>
-                <label><input type="checkbox" id="d" value="d"> Digitaal</label><br>
+                <label><input type="checkbox" id="t" value="t" onclick="showOptions('taal')"> Taal</label><br>
+                <label><input type="checkbox" id="d" value="d" onclick="showOptions('digitaal')"> Digitaal</label><br>
                 <label><input type="checkbox" id="g" value="g"> Geld</label><br>
             </div>
-            <div class="taal-opties">
+            <div id="taal" class="hidden taal-opties">
                 <h3>Taalopties:</h3>
                 <label><input type="checkbox" id="a1" value="a1"> A1</label><br>
                 <label><input type="checkbox" id="a2" value="a2"> A2</label><br>
@@ -40,7 +40,7 @@
                 <label><input type="checkbox" id="1f" value="1f"> 1F</label><br>
                 <label><input type="checkbox" id="2f" value="2f"> 2F</label><br>
             </div>
-            <div class="digitaal-opties">
+            <div id="digitaal" class="hidden digitaal-opties">
                 <h3>Digitaalopties:</h3>
                 <label><input type="checkbox" id="b" value="b"> Beginner</label><br>
                 <label><input type="checkbox" id="g" value="g"> Gevorderd</label><br>
