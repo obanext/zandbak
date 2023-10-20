@@ -1,17 +1,15 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Functie om de zichtbaarheid van taal- en digitaalopties te regelen
-    function manageOptionsVisibility() {
-        var taalCheckbox = document.querySelector("#t");
-        var digitaalCheckbox = document.querySelector("#d");
-        var taalOpties = document.querySelector(".taal-opties");
-        var digitaalOpties = document.querySelector(".digitaal-opties");
+document.addEventListener("DOMContentLoaded", function() {
+    // Functie om de zichtbaarheid van de opties te schakelen
+    function toggleOptions(checkboxId, optionsId) {
+        var checkbox = document.getElementById(checkboxId);
+        var options = document.getElementById(optionsId);
 
-        // Controleer de status van de checkboxes en pas de zichtbaarheid van de opties aan
-        taalOpties.style.display = taalCheckbox.checked ? 'block' : 'none';
-        digitaalOpties.style.display = digitaalCheckbox.checked ? 'block' : 'none';
+        checkbox.addEventListener("change", function() {
+            options.style.display = checkbox.checked ? "block" : "none";
+        });
     }
 
-    // Voeg event listeners toe aan de "Taal" en "Digitaal" checkboxes
-    document.querySelector("#t").addEventListener('change', manageOptionsVisibility);
-    document.querySelector("#d").addEventListener('change', manageOptionsVisibility);
+    // Taal en Digitaal opties in-/uitklappen
+    toggleOptions("t", "taal-options");
+    toggleOptions("d", "digitaal-options");
 });
