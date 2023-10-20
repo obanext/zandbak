@@ -32,16 +32,17 @@ document.addEventListener('DOMContentLoaded', function () {
             newUrl += '&activate|geonaam=' + geonaam;
         });
 
-        // Als er activiteiten zijn, voeg ze toe als selectors. Als er geen activiteiten zijn, gebruik dan de geonamen als selectors.
-        if (activiteiten.length > 0) {
+        // Voor elke geonaam, voeg elke activiteit toe als een aparte selector.
+        // Als er geen activiteiten zijn, gebruik dan de geonaam als selector.
+        if (activiteiten.length === 0 && geonamen.length > 0) {
             geonamen.forEach(function (geonaam) {
-                activiteiten.forEach(function (activiteit) {
-                    newUrl += '&activate|selector=' + geonaam + activiteit;
-                });
+                newUrl += '&activate|selector=' + geonaam;  // Gebruik geonaam als selector als er geen activiteiten zijn.
             });
         } else {
             geonamen.forEach(function (geonaam) {
-                newUrl += '&activate|selector=' + geonaam;
+                activiteiten.forEach(function (activiteit) {
+                    newUrl += '&activate|selector=' + geonaam + activiteit;  // Elke combinatie van geonaam en activiteit is een unieke selector.
+                });
             });
         }
 
