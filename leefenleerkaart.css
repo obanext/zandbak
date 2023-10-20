@@ -1,17 +1,25 @@
-/* Voeg de volgende CSS-stijlen toe om de kaart en checkboxes naast elkaar te plaatsen */
-
 .container {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
 }
 
 .options {
-    width: 33.33%; /* 1/3 breedte voor checkboxes */
-    padding: 10px; /* Optioneel: voeg wat ruimte toe tussen checkboxes en kaart */
+    flex: 1;
+    padding-right: 20px; /* Afstand tussen de opties en de kaart */
 }
 
 .map {
-    width: 66.66%; /* 2/3 breedte voor de kaart */
+    flex: 2;
 }
 
-/* Voeg hier andere CSS-stijlen toe zoals gewenst */
+.options .geonaam-selector,
+.options .activiteiten-soort,
+.options .taal-opties,
+.options .digitaal-opties {
+    display: block;
+    margin-bottom: 20px; /* Ruimte tussen groepen checkboxes */
+}
+
+.taal-opties, .digitaal-opties {
+    display: none; /* Verbergt de taal en digitaal niveau checkboxes initieel */
+}
