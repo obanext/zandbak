@@ -1,15 +1,18 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Functie om de zichtbaarheid van de opties te schakelen
     function toggleOptions(checkboxId, optionsId) {
         var checkbox = document.getElementById(checkboxId);
         var options = document.getElementById(optionsId);
 
+        // Stel de initiële display-status in op basis van de checkbox-status
+        options.style.display = checkbox.checked ? "block" : "none";
+
+        // Voeg een event listener toe voor wijzigingen
         checkbox.addEventListener("change", function() {
             options.style.display = checkbox.checked ? "block" : "none";
         });
     }
 
-    // Taal en Digitaal opties in-/uitklappen
+    // Initialisatie van de toggle-functie voor de relevante elementen
     toggleOptions("t", "taal-options");
     toggleOptions("d", "digitaal-options");
 });
