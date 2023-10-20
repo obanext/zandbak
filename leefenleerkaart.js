@@ -1,37 +1,66 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // ... [Eerder initiatiegedeelte van de code blijft ongewijzigd]
+    var checkboxes = document.querySelectorAll('.geonaam-selector input, .activiteiten-soort input, .taal-opties input, .digitaal-opties input');
+    var iframe = document.getElementById('map');
+    var baseUrl = 'https://localfocuswidgets.net/65314588b3bb5?hide=dropdowns';
+
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            updateMap();
+        });
+    });
 
     function updateMap() {
-        // ... [Begin van de functie blijft ongewijzigd]
+        var geonaamCheckboxes = document.querySelectorAll('.geonaam-selector input:checked');
+        var activiteitCheckboxes = document.querySelectorAll('.activiteiten-soort input:checked');
+        var taalOpties = document.querySelectorAll('.taal-opties input:checked');
+        var digitaalOpties = document.querySelectorAll('.digitaal-opties input:checked');
 
-        geonamen.forEach(function (geonaam) {
-            newUrl += '&activate|geonaam=' + geonaam;
-            
-            // Als er geen activiteit is geselecteerd, gebruik dan alleen de geonaam als selector.
-            if (activiteiten.length === 0) {
-                newUrl += '&activate|selector=' + geonaam;
-            } else {
-                // Als er activiteiten zijn, voeg dan voor elke activiteit een selector toe.
-                activiteiten.forEach(function (activiteit) {
-                    var opties = (activiteit === 't') ? taalOpties : digitaalOpties;
-
-                    // Als er geen specifieke opties zijn geselecteerd, gebruik dan de activiteit.
-                    if (opties.length === 0) {
-                        newUrl += '&activate|selector=' + geonaam + activiteit;
-                    } else {
-                        // Voeg voor elke optie een aparte selector toe.
-                        opties.forEach(function (optie) {
-                            newUrl += '&activate|selector=' + geonaam + activiteit + optie + '&'; // Veranderd om individuele selectors toe te voegen
-                        });
-                    }
-                });
-            }
+        var geonamen = [];
+        geonaamCheckboxes.forEach(function (checkbox) {
+            geonamen.push(checkbox.value);
         });
 
-        // Verwijder de laatste '&' als deze bestaat om URL-formatting problemen te voorkomen
-        newUrl = newUrl.endsWith('&') ? newUrl.slice(0, -1) : newUrl;
+        var activiteiten = [];
+        activiteitCheckboxes.forEach(function (checkbox) {
+            activiteiten.push(checkbox.value);
+        });
 
-        // Update de iframe URL.
-        iframe.src = newUrl;
+        var taalOptieWaarden = [];
+        taalOpties.forEach(function (checkbox) {
+            taalOptieWaarden.push(checkbox.value);
+        });
+
+        var digitaalOptieWaarden = [];
+        digitaalOpties.forEach(function (checkbox) {
+            digitaalOptieWaarden.push(checkbox.value);
+        });
+
+        var newUrl = baseUrl;
+
+        if (geonamen.length === 0 && activiteiten.length === 0) {
+            newUrl += '&activate|selector=aa'; // default selector wanneer niets is geselecteerd
+        } else {
+            geonamen.forEach(function (geonaam) {
+                newUrl += '&activate|geonaam=' + geonaam;
+                if (activiteiten.length === 0) {
+                    newUrl += '&activate|selector=' + geonaam;
+                } else {
+                    activiteiten.forEach(function (activiteit) {
+                        var opties = activiteit === 't' ? taalOptieWaarden : digitaalOptieWaarden;
+
+                        if (opties.length === 0) {
+                            newUrl += '&activate|selector=' + geonaam + activiteit;
+                        } else {
+                            opties.forEach(function (optie) {
+                                newUrl += '&activate|selector=' + geonaam + activiteit + optie + '&';
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        newUrl = newUrl.endsWith('&') ? newUrl.slice(0, -1) : newUrl; // Verwijder het laatste '&' teken
+        iframe.src = newUrl; // Stel de nieuwe URL in voor de iframe
     }
 });
