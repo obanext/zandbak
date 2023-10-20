@@ -1,52 +1,17 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const checkboxes = document.querySelectorAll("input[type='checkbox']");
-    
-    checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener("change", updateURL);
-    });
-    
-    function updateURL() {
-        const baseUrl = "https://localfocuswidgets.net/65314588b3bb5?hide=dropdowns";
-        const geonaamOptions = getSelectedOptions("geonaam-selector");
-        const activiteitenSoortOptions = getSelectedOptions("activiteiten-soort");
-        const taalOptions = getSelectedOptions("taal-opties");
-        const digitaalOptions = getSelectedOptions("digitaal-opties");
-        
-        let url = baseUrl;
-        
-        if (geonaamOptions.length > 0) {
-            // Gebruik dezelfde optie voor 'selector' als voor 'geonaam'
-            for (const geoOption of geonaamOptions) {
-                url += `&activate|geonaam=${geoOption}&activate|selector=${geoOption}`;
-            }
-        } else if (activiteitenSoortOptions.length > 0) {
-            // Geen 'geonaam' geselecteerd, gebruik alleen 'activiteiten-soort' voor 'selector'
-            url += `&activate|selector=${activiteitenSoortOptions.join('')}`;
-        }
-        
-        if (taalOptions.length > 0 && activiteitenSoortOptions.includes('t')) {
-            url += `|${taalOptions[0]}`;
-        }
-        
-        if (digitaalOptions.length > 0 && activiteitenSoortOptions.includes('d')) {
-            url += `|${digitaalOptions[0]}`;
-        }
-        
-        const iframe = document.querySelector(".map iframe");
-        iframe.src = url;
+document.addEventListener('DOMContentLoaded', function() {
+    // Functie om de zichtbaarheid van taal- en digitaalopties te regelen
+    function manageOptionsVisibility() {
+        var taalCheckbox = document.querySelector("#t");
+        var digitaalCheckbox = document.querySelector("#d");
+        var taalOpties = document.querySelector(".taal-opties");
+        var digitaalOpties = document.querySelector(".digitaal-opties");
 
-        // Console-log de gegenereerde URL voor testdoeleinden
-        console.log(url);
+        // Controleer de status van de checkboxes en pas de zichtbaarheid van de opties aan
+        taalOpties.style.display = taalCheckbox.checked ? 'block' : 'none';
+        digitaalOpties.style.display = digitaalCheckbox.checked ? 'block' : 'none';
     }
-    
-    function getSelectedOptions(optionName) {
-        const selectedOptions = [];
-        const checkboxes = document.querySelectorAll(`.${optionName} input[type='checkbox']:checked`);
-        
-        checkboxes.forEach(function (checkbox) {
-            selectedOptions.push(checkbox.value);
-        });
-        
-        return selectedOptions;
-    }
+
+    // Voeg event listeners toe aan de "Taal" en "Digitaal" checkboxes
+    document.querySelector("#t").addEventListener('change', manageOptionsVisibility);
+    document.querySelector("#d").addEventListener('change', manageOptionsVisibility);
 });
