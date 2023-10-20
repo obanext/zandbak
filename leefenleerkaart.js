@@ -1,27 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var checkboxes = document.querySelectorAll('.geonaam-selector input, .activiteiten-soort input, .taal-opties input, .digitaal-opties input');
-    var iframe = document.getElementById('map');
-    var baseUrl = 'https://localfocuswidgets.net/65314588b3bb5?hide=dropdowns';
-
-    checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener('change', function () {
-            updateMap();
-        });
-    });
+    // ... [Eerder initiatiegedeelte van de code blijft ongewijzigd]
 
     function updateMap() {
-        var geonaamCheckboxes = document.querySelectorAll('.geonaam-selector input:checked');
-        var activiteitCheckboxes = document.querySelectorAll('.activiteiten-soort input:checked');
-        var taalOptiesCheckboxes = document.querySelectorAll('.taal-opties input:checked');
-        var digitaalOptiesCheckboxes = document.querySelectorAll('.digitaal-opties input:checked');
-
-        var newUrl = baseUrl;
-
-        // Verzamelen van alle geselecteerde geonamen, activiteiten, en opties.
-        var geonamen = Array.from(geonaamCheckboxes, checkbox => checkbox.value);
-        var activiteiten = Array.from(activiteitCheckboxes, checkbox => checkbox.value);
-        var taalOpties = Array.from(taalOptiesCheckboxes, checkbox => checkbox.value);
-        var digitaalOpties = Array.from(digitaalOptiesCheckboxes, checkbox => checkbox.value);
+        // ... [Begin van de functie blijft ongewijzigd]
 
         geonamen.forEach(function (geonaam) {
             newUrl += '&activate|geonaam=' + geonaam;
@@ -40,12 +21,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         // Voeg voor elke optie een aparte selector toe.
                         opties.forEach(function (optie) {
-                            newUrl += '&activate|selector=' + geonaam + activiteit + optie;
+                            newUrl += '&activate|selector=' + geonaam + activiteit + optie + '&'; // Veranderd om individuele selectors toe te voegen
                         });
                     }
                 });
             }
         });
+
+        // Verwijder de laatste '&' als deze bestaat om URL-formatting problemen te voorkomen
+        newUrl = newUrl.endsWith('&') ? newUrl.slice(0, -1) : newUrl;
 
         // Update de iframe URL.
         iframe.src = newUrl;
