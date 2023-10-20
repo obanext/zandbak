@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var checkboxes = document.querySelectorAll('.geonaam, .activiteit, .optie');
+    var checkboxes = document.querySelectorAll('.geonaam-selector input, .activiteiten-soort input, .taal-opties input, .digitaal-opties input');
     var iframe = document.getElementById('map');
     var baseUrl = 'https://localfocuswidgets.net/65314588b3bb5?hide=dropdowns';
 
@@ -10,47 +10,35 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function updateMap() {
-        var geonaamCheckboxes = document.querySelectorAll('.geonaam:checked');
-        var activiteitCheckboxes = document.querySelectorAll('.activiteit:checked');
-        var optieCheckboxes = document.querySelectorAll('.optie:checked');
+        var geonaamCheckboxes = document.querySelectorAll('.geonaam-selector input:checked');
+        var activiteitCheckboxes = document.querySelectorAll('.activiteiten-soort input:checked');
+        var taalOptiesCheckboxes = document.querySelectorAll('.taal-opties input:checked');
+        var digitaalOptiesCheckboxes = document.querySelectorAll('.digitaal-opties input:checked');
 
-        // Basis URL voor de kaart.
         var newUrl = baseUrl;
 
-        // Verzamelen van geselecteerde geonamen, activiteiten, en opties.
-        var geonamen = [];
-        geonaamCheckboxes.forEach(function (checkbox) {
-            geonamen.push(checkbox.getAttribute('data-geonaam'));
-        });
+        // Verzamelen van alle geselecteerde geonamen, activiteiten, en opties.
+        var geonamen = Array.from(geonaamCheckboxes, checkbox => checkbox.value);
+        var activiteiten = Array.from(activiteitCheckboxes, checkbox => checkbox.value);
+        var taalOpties = Array.from(taalOptiesCheckboxes, checkbox => checkbox.value);
+        var digitaalOpties = Array.from(digitaalOptiesCheckboxes, checkbox => checkbox.value);
 
-        var activiteiten = [];
-        activiteitCheckboxes.forEach(function (checkbox) {
-            activiteiten.push(checkbox.getAttribute('data-activiteit'));
-        });
-
-        var opties = [];
-        optieCheckboxes.forEach(function (checkbox) {
-            opties.push(checkbox.getAttribute('data-optie'));
-        });
-
-        // Toevoegen van geonamen aan de URL.
         geonamen.forEach(function (geonaam) {
             newUrl += '&activate|geonaam=' + geonaam;
-        });
-
-        // Logica voor het toevoegen van selectors op basis van geselecteerde geonamen, activiteiten, en opties.
-        geonamen.forEach(function (geonaam) {
-            if (activiteiten.length === 0 && opties.length === 0) {
-                // Als er geen activiteiten of opties zijn geselecteerd, wordt de geonaam de selector.
+            
+            // Als er geen activiteit is geselecteerd, gebruik dan alleen de geonaam als selector.
+            if (activiteiten.length === 0) {
                 newUrl += '&activate|selector=' + geonaam;
             } else {
-                // Voor elke combinatie van geonaam en activiteit, voeg een selector toe.
+                // Als er activiteiten zijn, voeg dan voor elke activiteit een selector toe.
                 activiteiten.forEach(function (activiteit) {
+                    var opties = (activiteit === 't') ? taalOpties : digitaalOpties;
+
+                    // Als er geen specifieke opties zijn geselecteerd, gebruik dan de activiteit.
                     if (opties.length === 0) {
-                        // Als er geen opties zijn geselecteerd, combineer geonaam met activiteit.
                         newUrl += '&activate|selector=' + geonaam + activiteit;
                     } else {
-                        // Als er opties zijn geselecteerd, voeg deze toe aan de selector.
+                        // Voeg voor elke optie een aparte selector toe.
                         opties.forEach(function (optie) {
                             newUrl += '&activate|selector=' + geonaam + activiteit + optie;
                         });
@@ -58,13 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             }
         });
-
-        // Als er geen geonamen zijn, voeg dan alleen activiteiten toe.
-        if (geonamen.length === 0) {
-            activiteiten.forEach(function (activiteit) {
-                newUrl += '&activate|selector=' + activiteit;
-            });
-        }
 
         // Update de iframe URL.
         iframe.src = newUrl;
