@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     const checkboxes = document.querySelectorAll("input[type='checkbox']");
-    const taalOpties = document.querySelector(".taal-opties");
-    const digitaalOpties = document.querySelector(".digitaal-opties");
     
     checkboxes.forEach(function (checkbox) {
         checkbox.addEventListener("change", updateURL);
@@ -36,20 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
         
         const iframe = document.querySelector(".map iframe");
         iframe.src = url;
-        
-        // Toon of verberg Taalopties op basis van Taal checkbox
-        if (activiteitenSoortOptions.includes('t')) {
-            taalOpties.style.display = "block";
-        } else {
-            taalOpties.style.display = "none";
-        }
-        
-        // Toon of verberg Digitaalopties op basis van Digitaal checkbox
-        if (activiteitenSoortOptions.includes('d')) {
-            digitaalOpties.style.display = "block";
-        } else {
-            digitaalOpties.style.display = "none";
-        }
 
         // Console-log de gegenereerde URL voor testdoeleinden
         console.log(url);
