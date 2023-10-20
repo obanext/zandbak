@@ -16,35 +16,34 @@ document.addEventListener('DOMContentLoaded', function () {
         // Basis URL voor de kaart.
         var newUrl = baseUrl;
 
-        // Als er geen geonaam is geselecteerd, voegen we de activiteiten toe aan de selector.
-        if (geonaamCheckboxes.length === 0) {
-            var activiteiten = [];
-            activiteitCheckboxes.forEach(function (checkbox) {
-                activiteiten.push(checkbox.getAttribute('data-activiteit'));
+        // Verzamelen van geselecteerde geonamen en activiteiten.
+        var geonamen = [];
+        geonaamCheckboxes.forEach(function (checkbox) {
+            geonamen.push(checkbox.getAttribute('data-geonaam'));
+        });
+
+        var activiteiten = [];
+        activiteitCheckboxes.forEach(function (checkbox) {
+            activiteiten.push(checkbox.getAttribute('data-activiteit'));
+        });
+
+        // Toevoegen van geonamen aan de URL.
+        geonamen.forEach(function (geonaam) {
+            newUrl += '&activate|geonaam=' + geonaam;
+        });
+
+        // Voor elke geonaam, voeg elke activiteit toe als een aparte selector.
+        geonamen.forEach(function (geonaam) {
+            activiteiten.forEach(function (activiteit) {
+                // Hier maken we een unieke selector voor elke combinatie van geonaam en activiteit.
+                newUrl += '&activate|selector=' + geonaam + activiteit;
             });
-            newUrl += '&activate|selector=' + activiteiten.join('');
-        } else {
-            // We bouwen de URL op door elke geonaam te doorlopen.
-            geonaamCheckboxes.forEach(function (geonaamCheckbox) {
-                var geonaam = geonaamCheckbox.getAttribute('data-geonaam');
-                
-                newUrl += '&activate|geonaam=' + geonaam;
+        });
 
-                // Binnen elke geonaam, voegen we de relevante activiteiten toe.
-                var selectors = [geonaam]; // De geonaam wordt ook als selector opgenomen.
-
-                activiteitCheckboxes.forEach(function (activiteitCheckbox) {
-                    var activiteit = activiteitCheckbox.getAttribute('data-activiteit');
-
-                    // Controleer of de activiteit relevant is voor de geonaam.
-                    if ((activiteit === 't' && geonaamCheckbox.getAttribute('data-taaloptie')) ||
-                        (activiteit === 'd' && geonaamCheckbox.getAttribute('data-digitaaloptie')) ||
-                        (activiteit !== 't' && activiteit !== 'd')) {
-                        selectors.push(activiteit);
-                    }
-                });
-
-                newUrl += '&activate|selector=' + selectors.join('');
+        // Als er geen geonamen zijn, voeg dan alleen activiteiten toe.
+        if (geonamen.length === 0) {
+            activiteiten.forEach(function (activiteit) {
+                newUrl += '&activate|selector=' + activiteit;
             });
         }
 
