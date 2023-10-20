@@ -27,23 +27,21 @@ document.addEventListener('DOMContentLoaded', function () {
             activiteiten.push(checkbox.getAttribute('data-activiteit'));
         });
 
-        // Als er geen activiteiten zijn geselecteerd, gebruiken we de geonamen als selectors.
-        if (activiteiten.length === 0) {
-            geonamen.forEach(function (geonaam) {
-                newUrl += '&activate|geonaam=' + geonaam;
-                newUrl += '&activate|selector=' + geonaam;  // Geonaam wordt gebruikt als selector.
-            });
-        } else {
-            // Toevoegen van geonamen aan de URL.
-            geonamen.forEach(function (geonaam) {
-                newUrl += '&activate|geonaam=' + geonaam;
-            });
+        // Toevoegen van geonamen aan de URL.
+        geonamen.forEach(function (geonaam) {
+            newUrl += '&activate|geonaam=' + geonaam;
+        });
 
-            // Voor elke geonaam, voeg elke activiteit toe als een aparte selector.
+        // Als er activiteiten zijn, voeg ze toe als selectors. Als er geen activiteiten zijn, gebruik dan de geonamen als selectors.
+        if (activiteiten.length > 0) {
             geonamen.forEach(function (geonaam) {
                 activiteiten.forEach(function (activiteit) {
                     newUrl += '&activate|selector=' + geonaam + activiteit;
                 });
+            });
+        } else {
+            geonamen.forEach(function (geonaam) {
+                newUrl += '&activate|selector=' + geonaam;
             });
         }
 
