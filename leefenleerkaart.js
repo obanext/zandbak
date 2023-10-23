@@ -3,14 +3,24 @@ document.addEventListener('DOMContentLoaded', function () {
     var checkboxes = document.querySelectorAll('.geonaam-selector input, .activiteiten-soort input, .taal-opties input, .digitaal-opties input');
     
     // Basis URL voor de kaart
-    var baseUrl = 'https://localfocuswidgets.net/65365e9f122eb?hide=dropdowns&activate|selector=aa';
+    var baseUrl = 'https://localfocuswidgets.net/6536375936ee8?hide=dropdowns';
 
     // Referentie naar de iframe
     var iframe = document.getElementById('map');
 
-    // Functie die de initiële kaart laadt
+    // Selecteer de "Alle gebieden" checkbox
+    var allAreasCheckbox = document.querySelector('#all-areas');
+
+    // Functie die de initiële kaart laadt met alle gebieden geselecteerd
     function loadInitialMap() {
-        iframe.src = baseUrl; // Dit stelt de initiële URL van de iframe in
+        var allAreasUrl = baseUrl;
+        var allGeonamen = ['ac', 'an', 'az', 'azo', 'anw', 'aw', 'ao', 'awe', 'ad']; // Alle gebieden
+
+        allGeonamen.forEach(function(geonaam) {
+            allAreasUrl += '&activate|geonaam=' + geonaam + '&activate|selector=' + geonaam;
+        });
+
+        iframe.src = allAreasUrl; // Dit stelt de URL van de iframe in op alle gebieden
     }
 
     // Voeg event listeners toe aan alle checkboxes
@@ -18,6 +28,15 @@ document.addEventListener('DOMContentLoaded', function () {
         checkbox.addEventListener('change', function () {
             updateMap(); // Update de kaart bij elke verandering
         });
+    });
+
+    // Event listener voor de "Alle gebieden" checkbox
+    allAreasCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            loadInitialMap();
+        } else {
+            updateMap();
+        }
     });
 
     // Functie die de kaart update op basis van de geselecteerde opties
@@ -35,29 +54,32 @@ document.addEventListener('DOMContentLoaded', function () {
         var taalOpties = Array.from(taalOptiesCheckboxes, checkbox => checkbox.value);
         var digitaalOpties = Array.from(digitaalOptiesCheckboxes, checkbox => checkbox.value);
 
-        geonamen.forEach(function (geonaam) {
-            newUrl += '&activate|geonaam=' + geonaam;
-            
-            // Als er geen activiteit is geselecteerd, gebruik dan alleen de geonaam als selector
-            if (activiteiten.length === 0) {
-                newUrl += '&activate|selector=' + geonaam;
-            } else {
-                // Als er activiteiten zijn, voeg dan voor elke activiteit een selector toe
-                activiteiten.forEach(function (activiteit) {
-                    var opties = (activiteit === 't') ? taalOpties : digitaalOpties;
+        // Als "Alle gebieden" niet is geselecteerd, volg dan de normale update logica
+        if (!allAreasCheckbox.checked) {
+            geonamen.forEach(function (geonaam) {
+                newUrl += '&activate|geonaam=' + geonaam;
 
-                    // Als er geen specifieke opties zijn geselecteerd, gebruik dan de activiteit
-                    if (opties.length === 0) {
-                        newUrl += '&activate|selector=' + geonaam + activiteit;
-                    } else {
-                        // Voeg voor elke optie een aparte selector toe
-                        opties.forEach(function (optie) {
-                            newUrl += '&activate|selector=' + geonaam + activiteit + optie;
-                        });
-                    }
-                });
-            }
-        });
+                // Als er geen activiteit is geselecteerd, gebruik dan alleen de geonaam als selector
+                if (activiteiten.length === 0) {
+                    newUrl += '&activate|selector=' + geonaam;
+                } else {
+                    // Als er activiteiten zijn, voeg dan voor elke activiteit een selector toe
+                    activiteiten.forEach(function (activiteit) {
+                        var opties = (activiteit === 't') ? taalOpties : digitaalOpties;
+
+                        // Als er geen specifieke opties zijn geselecteerd, gebruik dan de activiteit
+                        if (opties.length === 0) {
+                            newUrl += '&activate|selector=' + geonaam + activiteit;
+                        } else {
+                            // Voeg voor elke optie een aparte selector toe
+                            opties.forEach(function (optie) {
+                                newUrl += '&activate|selector=' + geonaam + activiteit + optie;
+                            });
+                        }
+                    });
+                }
+            });
+        }
 
         // Update de iframe URL met de nieuwe URL
         iframe.src = newUrl;
