@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     var checkboxes = document.querySelectorAll('.geonaam, .activiteit, .activiteit-optie');
     var iframe = document.getElementById('map');
-    var baseUrl = 'https://localfocuswidgets.net/65314588b3bb5?hide=dropdowns';
+    var baseUrl = 'https://localfocuswidgets.net/6536375936ee8?hide=dropdowns';
 
     checkboxes.forEach(function (checkbox) {
         checkbox.addEventListener('change', function () {
