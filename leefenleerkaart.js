@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Functie die de kaart laadt met alle gebieden geselecteerd
     function loadInitialMap() {
-        // Stel de URL samen voor alle gebieden
         var allAreasUrl = baseUrl + 
             '&activate|geonaam=ac&activate|selector=ac' +
             '&activate|geonaam=an&activate|selector=an' +
@@ -26,9 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // Event listeners voor alle checkboxes
     checkboxes.forEach(function (checkbox) {
         checkbox.addEventListener('change', function () {
-            // Als 'Alle gebieden' niet is geselecteerd, update dan de kaart
             if (!allAreasCheckbox.checked) {
                 updateMap();
+            }
+            // Inschakelen van "Alle gebieden" wanneer een andere checkbox wordt geselecteerd
+            if (this !== allAreasCheckbox) {
+                allAreasCheckbox.disabled = false;
             }
         });
     });
@@ -44,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             updateMap(); // Als 'Alle gebieden' is uitgeschakeld, update dan de kaart
         }
+        allAreasCheckbox.disabled = true;  // Schakel "Alle gebieden" uit nadat het is geselecteerd om herselectie te voorkomen.
     });
 
     // Functie die de kaart update op basis van de geselecteerde opties
