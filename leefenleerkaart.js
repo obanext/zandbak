@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var checkboxes = document.querySelectorAll('.geonaam-selector input, .activiteiten-soort input, .taal-opties input, .digitaal-opties input');
     
     // Basis URL voor de kaart
-    var baseUrl = 'https://localfocuswidgets.net/6536375936ee8?hide=dropdowns&activate|selector=aa';
+    var baseUrl = 'https://localfocuswidgets.net/65365e9f122eb?hide=dropdowns&activate|selector=aa';
 
     // Referentie naar de iframe
     var iframe = document.getElementById('map');
