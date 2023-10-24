@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var iframe = document.getElementById('map');
 
     // Basis URL voor de kaart
-    var baseUrl = 'https://localfocuswidgets.net/65367ce7b3c77?hide=dropdowns';
+    var baseUrl = 'https://localfocuswidgets.net/65376eb705de9?hide=dropdowns';
 
     // Selecteer de elementen die de taal- en digitaalopties bevatten
     const taalCheckbox = document.querySelector('.activiteiten-soort input[data-activiteit="t"]');
