@@ -16,10 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Verzamel parameters van geselecteerde checkboxes
         geonaamCheckboxes.forEach((checkbox) => {
-            if (checkbox.checked) {
-                const geonaamValue = checkbox.dataset.geonaam;
-                geonaamParams.push(`&activate|geonaam=${geonaamValue}`);
-            }
+            const geonaamValue = checkbox.dataset.geonaam;
+            geonaamParams.push(`&activate|geonaam=${geonaamValue}`);
         });
 
         activiteitCheckboxes.forEach((checkbox) => {
@@ -56,8 +54,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Nu bouwen we de volledige selector parameters op basis van de geonaam en verzamelde activiteiten
         let fullSelectorParams = [];
-        geonaamParams.forEach((geonaamParam) => {
-            const geonaamValue = geonaamParam.split('=')[1];
+        geonaamCheckboxes.forEach((checkbox) => {
+            const geonaamValue = checkbox.dataset.geonaam;
             selectorParams.forEach((selectorValue) => {
                 fullSelectorParams.push(`&activate|selector=${geonaamValue}${selectorValue}`);
             });
@@ -84,17 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event listeners op checkboxes
     geonaamCheckboxes.forEach((checkbox) => {
         checkbox.addEventListener('change', (e) => {
-            if (checkbox.dataset.geonaam === 'all') {
-                // Logica voor exclusieve selectie
-                if (checkbox.checked) {
-                    geonaamCheckboxes.forEach((box) => {
-                        if (box !== checkbox) box.checked = false;
-                    });
-                }
-            } else {
-                // Als een ander dan 'all' is geselecteerd, deselecteer 'all'
-                document.querySelector('.geonaam[data-geonaam="all"]').checked = false;
-            }
             updateMap();
         });
     });
