@@ -133,9 +133,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         var correspondingCheckbox = document.querySelector(`input[data-geonaam="${geonaam}"]`);
-        if (correspondingCheckbox) {
-            correspondingCheckbox.checked = true;
-            correspondingCheckbox.dispatchEvent(new Event('change'));
+    if (correspondingCheckbox) {
+        correspondingCheckbox.checked = true;
         }
     }
 
