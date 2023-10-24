@@ -1,7 +1,5 @@
 * {
     font-family: Arial, sans-serif;
-    border: 2px solid black;
-    border-radius: 10px;
 }
 
 .container {
@@ -10,12 +8,18 @@
 }
 .options {
     width: 33%;
+   border: 2px solid black;
+    border-radius: 10px;
 }
 .map {
     width: 67%;
+   border: 2px solid black;
+    border-radius: 10px;
 }
 .geonaam-selector, .activiteiten-soort, .taal-opties, .digitaal-opties {
     margin-bottom: 20px;
+   border: 2px solid black;
+    border-radius: 10px;
 }
 .hidden {
     display: none;
