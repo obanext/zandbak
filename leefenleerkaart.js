@@ -13,16 +13,45 @@ document.addEventListener('DOMContentLoaded', function () {
     const taalOpties = document.querySelector('.taal-opties');
     const digitaalOpties = document.querySelector('.digitaal-opties');
 
+    // Postcode-zoekveld en knop
+    var postcodeInput = document.getElementById('postcode');
+    var searchButton = document.getElementById('search-button');
+
+    // Overeenkomen van postcodes met geonamen
+   const postcodeMapping = {
+    "1000": "AC", "1001": "AC", "1002": "AC", "1003": "AC", "1004": "AC", 
+    "1005": "AC", "1006": "AC", "1007": "AC", "1008": "AC", "1009": "AC", 
+    "1010": "AC", "1011": "AC", "1012": "AC", "1013": "AC", "1014": "AC", 
+    "1015": "AC", "1016": "AC", "1017": "AC", "1018": "AC", "1019": "AO",
+    "1020": "AN", "1021": "AN", "1022": "AN", "1023": "AN", "1024": "AN",
+    "1025": "AN", "1026": "AN", "1027": "AN", "1028": "AN", "1029": "AN",
+    "1030": "AN", "1031": "AN", "1032": "AN", "1033": "AN", "1034": "AN",
+    "1035": "AN", "1036": "AN", "1037": "AN", "1038": "AN", "1039": "AN",
+    "1040": "AW", "1041": "AW", "1042": "AW", "1043": "AW", "1044": "AW",
+    "1045": "AW", "1046": "AW", "1047": "AW", "1048": "AW", "1049": "AW",
+    "1050": "AW", "1051": "AW", "1052": "AW", "1053": "AW", "1054": "AW",
+    "1055": "AW", "1056": "AW", "1057": "AW", "1058": "AW", "1059": "AW",
+    "1060": "ANW", "1061": "ANW", "1062": "ANW", "1063": "ANW", "1064": "ANW",
+    "1065": "ANW", "1066": "ANW", "1067": "ANW", "1068": "ANW", "1069": "ANW",
+    "1070": "AZ", "1071": "AZ", "1072": "AZ", "1073": "AZ", "1074": "AZ",
+    "1075": "AZ", "1076": "AZ", "1077": "AZ", "1078": "AZ", "1079": "AZ",
+    "1080": "AZ", "1081": "AZ", "1082": "AZ", "1083": "AZ", "1086": "AO",
+    "1087": "AO", "1088": "AO", "1089": "AO", "1090": "AO", "1091": "AO",
+    "1092": "AO", "1093": "AO", "1094": "AO", "1095": "AO", "1096": "AO",
+    "1097": "AO", "1098": "AO", "1099": "AO", "1100": "AZO", "1101": "AZO",
+    "1102": "AZO", "1103": "AZO", "1104": "AZO", "1105": "AZO", "1106": "AZO",
+    "1107": "AZO", "1108": "AZO", "1110": "AD", "1112": "AD", "1113": "AD",
+    "1114": "AD", "1115": "AD", "1380": "AWP", "1382": "AWP", "1383": "AWP",
+    "1384": "AWP"
+};
+
     function updateOptionVisibility() {
         taalOpties.style.display = taalCheckbox.checked ? 'block' : 'none';
         digitaalOpties.style.display = digitaalCheckbox.checked ? 'block' : 'none';
     }
 
-    // Functie die de kaart laadt met alle gebieden geselecteerd
     function loadInitialMap() {
-        // Stel de URL samen voor alle gebieden
-        var allAreasUrl = baseUrl +
-            '&activate|geonaam=ac&activate|selector=ac' +
+        var allAreasUrl = baseUrl + '&activate|geonaam=ac&activate|selector=ac' +
             '&activate|geonaam=an&activate|selector=an' +
             '&activate|geonaam=az&activate|selector=az' +
             '&activate|geonaam=azo&activate|selector=azo' +
@@ -31,52 +60,43 @@ document.addEventListener('DOMContentLoaded', function () {
             '&activate|geonaam=ao&activate|selector=ao' +
             '&activate|geonaam=awe&activate|selector=awe' +
             '&activate|geonaam=ad&activate|selector=ad';
-        iframe.src = allAreasUrl; // Update de iframe met de nieuwe URL
+        iframe.src = allAreasUrl;
     }
 
-    // Event listeners voor alle checkboxes
     checkboxes.forEach(function (checkbox) {
         checkbox.addEventListener('change', function () {
-            // Als 'Alle gebieden' niet is geselecteerd, update dan de kaart
             if (!allAreasCheckbox.checked) {
                 updateMap();
             }
-            // Update de zichtbaarheid van de opties op basis van de staat van de checkboxes
             updateOptionVisibility();
         });
     });
 
-    // Event listener voor 'Alle gebieden' checkbox
     allAreasCheckbox.addEventListener('change', function() {
         if (this.checked) {
-            // Deselecteer andere checkboxes als 'Alle gebieden' is geselecteerd
             checkboxes.forEach(function(checkbox) {
                 checkbox.checked = false;
             });
-            loadInitialMap(); // Laad de kaart met alle gebieden
+            loadInitialMap();
         } else {
-            updateMap(); // Als 'Alle gebieden' is uitgeschakeld, update dan de kaart
+            updateMap();
         }
-        // Update de zichtbaarheid van de opties op basis van de staat van de checkboxes
         updateOptionVisibility();
     });
 
-    // Functie die de kaart update op basis van de geselecteerde opties
     function updateMap() {
         var geonaamCheckboxes = document.querySelectorAll('.geonaam-selector input:checked');
         var activiteitCheckboxes = document.querySelectorAll('.activiteiten-soort input:checked');
         var taalOptiesCheckboxes = document.querySelectorAll('.taal-opties input:checked');
         var digitaalOptiesCheckboxes = document.querySelectorAll('.digitaal-opties input:checked');
 
-        var newUrl = baseUrl; // Start met de basis URL
+        var newUrl = baseUrl;
 
-        // Verzamelen van alle geselecteerde geonamen, activiteiten, en opties
         var geonamen = Array.from(geonaamCheckboxes, checkbox => checkbox.value);
         var activiteiten = Array.from(activiteitCheckboxes, checkbox => checkbox.value);
         var taalOpties = Array.from(taalOptiesCheckboxes, checkbox => checkbox.value);
         var digitaalOpties = Array.from(digitaalOptiesCheckboxes, checkbox => checkbox.value);
 
-        // Bouw de nieuwe URL op basis van de geselecteerde opties
         geonamen.forEach(function(geonaam) {
             newUrl += '&activate|geonaam=' + geonaam;
             if (activiteiten.length === 0) {
@@ -95,13 +115,31 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Update de URL van de iframe
         iframe.src = newUrl;
     }
 
-    // Update de zichtbaarheid van de opties wanneer de pagina laadt
-    updateOptionVisibility();
+    function handlePostcodeSearch() {
+        var postcode = postcodeInput.value;
+        if (postcode.length !== 4 || isNaN(postcode)) {
+            alert("Voer een geldige viercijferige postcode in.");
+            return;
+        }
 
-    // Laad de initiële kaart wanneer de pagina wordt geladen
+        var geonaam = postcodeMapping[postcode];
+        if (!geonaam) {
+            alert("Geen gebied gevonden met deze postcode.");
+            return;
+        }
+
+        var correspondingCheckbox = document.querySelector(`input[data-geonaam="${geonaam}"]`);
+        if (correspondingCheckbox) {
+            correspondingCheckbox.checked = true;
+            correspondingCheckbox.dispatchEvent(new Event('change'));
+        }
+    }
+
+    searchButton.addEventListener('click', handlePostcodeSearch);
+
+    updateOptionVisibility();
     loadInitialMap();
 });
