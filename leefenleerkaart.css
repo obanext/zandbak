@@ -5,16 +5,16 @@
 .container {
     display: flex;
     justify-content: space-between;
-   border: 2px solid black;
-    border-radius: 10px;
 }
 .options {
     width: 33%;
-
+  border: 2px solid black;
+    border-radius: 10px;
 }
 .map {
     width: 67%;
- 
+   border: 2px solid black;
+    border-radius: 10px;
 }
 .geonaam-selector, .activiteiten-soort, .taal-opties, .digitaal-opties {
     margin-bottom: 20px;
