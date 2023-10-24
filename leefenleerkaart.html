@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leef en Leer Kaart</title>
-    <link rel="stylesheet" href="leefenleerkaart.css">
-    <script src="leefenleerkaart.js" defer></script>
+    <title>Interactive Map Selector</title>
+    <link rel="stylesheet" href="leefenleerkaart.css"> <!-- Verwijs naar uw stylesheet -->
+    <script src="leefenleerkaart.js" defer></script>  <!-- Verwijs naar uw JavaScript-bestand -->
 </head>
 <body>
     <div class="container">
         <div class="options">
+            <!-- Waar sectie -->
             <div class="geonaam-selector">
-                <h3>Geonaam en Selector Activiteiten:</h3>
-                <label><input type="checkbox" id="all-areas" checked> Alle Gebieden</label><br>
+                <h3>Waar:</h3>
+                <label><input type="checkbox" class="geonaam" data-geonaam="all" value="all"> Alle Gebieden</label><br>
                 <label><input type="checkbox" class="geonaam" data-geonaam="ac" value="ac"> Centrum</label><br>
                 <label><input type="checkbox" class="geonaam" data-geonaam="an" value="an"> Noord</label><br>
                 <label><input type="checkbox" class="geonaam" data-geonaam="az" value="az"> Zuid</label><br>
@@ -23,34 +25,41 @@
                 <label><input type="checkbox" class="geonaam" data-geonaam="awe" value="awe"> Weesp</label><br>
                 <label><input type="checkbox" class="geonaam" data-geonaam="ad" value="ad"> Diemen</label><br>
             </div>
+
+            <!-- Wat sectie -->
             <div class="activiteiten-soort">
-                <h3>Activiteiten Soort:</h3>
+                <h3>Wat:</h3>
                 <label><input type="checkbox" class="activiteit" data-activiteit="aa" value="aa"> Alle Activiteiten</label><br>
                 <label><input type="checkbox" class="activiteit" data-activiteit="t" value="t"> Taal</label><br>
                 <label><input type="checkbox" class="activiteit" data-activiteit="d" value="d"> Digitaal</label><br>
                 <label><input type="checkbox" class="activiteit" data-activiteit="g" value="g"> Geld</label><br>
             </div>
+
+            <!-- Taalniveau sectie -->
             <div class="taal-opties">
                 <h3>Taalopties:</h3>
-                <label><input type="checkbox" class="activiteit" data-activiteit="a1" value="a1"> A1</label><br>
-                <label><input type="checkbox" class="activiteit" data-activiteit="a2" value="a2"> A2</label><br>
-                <label><input type="checkbox" class="activiteit" data-activiteit="b1" value="b1"> B1</label><br>
-                <label><input type="checkbox" class="activiteit" data-activiteit="b2" value="b2"> B2</label><br>
-                <label><input type="checkbox" class="activiteit" data-activiteit="c1" value="c1"> C1</label><br>
-                <label><input type="checkbox" class="activiteit" data-activiteit="c2" value="c2"> C2</label><br>
-                <label><input type="checkbox" class="activiteit" data-activiteit="in" value="in"> Instroom</label><br>
-                <label><input type="checkbox" class="activiteit" data-activiteit="1f" value="1f"> 1F</label><br>
-                <label><input type="checkbox" class="activiteit" data-activiteit="2f" value="2f"> 2F</label><br>
+                <label><input type="checkbox" class="taalniveau" data-taalniveau="a1" value="a1"> A1</label><br>
+                <label><input type="checkbox" class="taalniveau" data-taalniveau="a2" value="a2"> A2</label><br>
+                <label><input type="checkbox" class="taalniveau" data-taalniveau="b1" value="b1"> B1</label><br>
+                <label><input type="checkbox" class="taalniveau" data-taalniveau="b2" value="b2"> B2</label><br>
+                <label><input type="checkbox" class="taalniveau" data-taalniveau="c1" value="c1"> C1</label><br>
+                <label><input type="checkbox" class="taalniveau" data-taalniveau="c2" value="c2"> C2</label><br>
+                <label><input type="checkbox" class="taalniveau" data-taalniveau="in" value="in"> Instroom</label><br>
+                <label><input type="checkbox" class="taalniveau" data-taalniveau="1f" value="1f"> 1F</label><br>
+                <label><input type="checkbox" class="taalniveau" data-taalniveau="2f" value="2f"> 2F</label><br>
             </div>
+
+            <!-- Digitaal niveau sectie -->
             <div class="digitaal-opties">
                 <h3>Digitaalopties:</h3>
-                <label><input type="checkbox" class="activiteit" data-activiteit="b" value="b"> Beginner</label><br>
-                <label><input type="checkbox" class="activiteit" data-activiteit="g" value="g"> Gevorderd</label><br>
-                <label><input type="checkbox" class="activiteit" data-activiteit="e" value="e"> Expert</label><br>
+                <label><input type="checkbox" class="digitaalniveau" data-digitaalniveau="b" value="b"> Beginner</label><br>
+                <label><input type="checkbox" class="digitaalniveau" data-digitaalniveau="g" value="g"> Gevorderd</label><br>
+                <label><input type="checkbox" class="digitaalniveau" data-digitaalniveau="e" value="e"> Expert</label><br>
             </div>
         </div>
         <div class="map">
-            <iframe id="map" src="" width="100%" height="600" frameborder="0"></iframe>
+            <!-- De kaart wordt hier ingeladen via JavaScript -->
+            <iframe id="mapFrame" src="" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
         </div>
     </div>
 </body>
