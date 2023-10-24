@@ -1,36 +1,16 @@
-body, html {
-    height: 100%;
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-
 .container {
     display: flex;
-    height: 100%;
+    justify-content: space-between;
 }
-
 .options {
-    flex: 1;
-    padding: 10px;
-    background-color: #f0f0f0;
-    overflow-y: auto; /* Enable scroll if content overflows */
+    width: 33%;
 }
-
 .map {
-    flex: 2;
+    width: 67%;
 }
-
-/* Style voor checkboxes en labels */
-.geonaam, .activiteit, .taalniveau, .digitaalniveau {
-    cursor: pointer;
-    margin-bottom: 5px;
+.geonaam-selector, .activiteiten-soort, .taal-opties, .digitaal-opties {
+    margin-bottom: 20px;
 }
-
-h3 {
-    margin-top: 0;
-}
-
-/* Verberg de taal- en digitaalopties aanvankelijk. Ze worden zichtbaar gemaakt via JavaScript als de relevante opties zijn geselecteerd. */
-.taal-opties, .digitaal-opties {
+.hidden {
     display: none;
 }
