@@ -14,30 +14,52 @@ document.addEventListener("DOMContentLoaded", function() {
     return selectedGeonamen;
   }
 
+  // Functie om de geselecteerde activiteitstypen op te halen
+  function getSelectedActiviteiten() {
+    var selectedActiviteiten = [];
+    var activiteitCheckboxes = document.querySelectorAll(".activiteit:checked");
+
+    activiteitCheckboxes.forEach(function(checkbox) {
+      selectedActiviteiten.push(checkbox.value);
+    });
+
+    return selectedActiviteiten;
+  }
+
   // Functie om de URL-componenten voor geonamen en selectors samen te stellen
   function buildGeonamenSelectorsUrl() {
     var selectedGeonamen = getSelectedGeonamen();
+    var selectedActiviteiten = getSelectedActiviteiten();
     var urlComponents = [];
 
     selectedGeonamen.forEach(function(geonaam) {
-      urlComponents.push("&activate|geonaam=" + geonaam);
-      urlComponents.push("&activate|selector=" + geonaam);
+      selectedActiviteiten.forEach(function(activiteit) {
+        var selector = geonaam + activiteit;
+        urlComponents.push("&activate|geonaam=" + geonaam);
+        urlComponents.push("&activate|selector=" + selector);
+      });
     });
 
     return urlComponents.join("");
   }
 
-  // Functie om de kaart te updaten met de geselecteerde geonamen
-  function updateMapWithGeonamen() {
+  // Functie om de kaart te updaten met de geselecteerde geonamen en activiteitstypen
+  function updateMapWithGeonamenAndActiviteiten() {
     var geonamenSelectorsUrl = buildGeonamenSelectorsUrl();
     var finalUrl = baseUrl + geonamenSelectorsUrl;
     mapIframe.src = finalUrl;
   }
 
-  // Voeg een eventlistener toe aan de geonaam-checkboxes om de kaart bij te werken wanneer er wijzigingen zijn
+  // Voeg eventlisteners toe aan de geonaam- en activiteit-checkboxes om de kaart bij te werken wanneer er wijzigingen zijn
   var geonamCheckboxes = document.querySelectorAll(".geonaam");
+  var activiteitCheckboxes = document.querySelectorAll(".activiteit");
+  
   geonamCheckboxes.forEach(function(checkbox) {
-    checkbox.addEventListener("change", updateMapWithGeonamen);
+    checkbox.addEventListener("change", updateMapWithGeonamenAndActiviteiten);
+  });
+
+  activiteitCheckboxes.forEach(function(checkbox) {
+    checkbox.addEventListener("change", updateMapWithGeonamenAndActiviteiten);
   });
 
   // Initialiseer de kaart met de standaard URL
