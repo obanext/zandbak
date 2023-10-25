@@ -42,6 +42,9 @@ document.addEventListener("DOMContentLoaded", function() {
           var selector = geonaam + activiteit;
           urlComponents.push("&activate|selector=" + selector);
         });
+      } else {
+        // Voeg de selector-component toe voor elke geonaamselectie zonder activiteitstype
+        urlComponents.push("&activate|selector=" + geonaam);
       }
     });
 
