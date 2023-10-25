@@ -26,90 +26,66 @@ document.addEventListener("DOMContentLoaded", function() {
     return selectedActiviteiten;
   }
 
-  // Functie om de geselecteerde taalopties op te halen
-  function getSelectedTaalOpties() {
-    var selectedTaalOpties = [];
-    var taalOptieCheckboxes = document.querySelectorAll(".taal-optie:checked");
+  // Functie om de weergave van de taalopties en digitaalopties te beheren
+  function toggleOptionsVisibility() {
+    var taalOptiesDiv = document.querySelector(".taal-opties");
+    var digitaalOptiesDiv = document.querySelector(".digitaal-opties");
+    var activiteitCheckboxes = document.querySelectorAll(".activiteit:checked");
 
-    taalOptieCheckboxes.forEach(function(checkbox) {
-      selectedTaalOpties.push(checkbox.value);
-    });
+    // Controleer of "Taal" is geselecteerd
+    if (activiteitCheckboxes.some(function(checkbox) { return checkbox.value === "t"; })) {
+      taalOptiesDiv.style.display = "block";
+    } else {
+      taalOptiesDiv.style.display = "none";
+    }
 
-    return selectedTaalOpties;
+    // Controleer of "Digitaal" is geselecteerd
+    if (activiteitCheckboxes.some(function(checkbox) { return checkbox.value === "d"; })) {
+      digitaalOptiesDiv.style.display = "block";
+    } else {
+      digitaalOptiesDiv.style.display = "none";
+    }
   }
 
-  // Functie om de geselecteerde digitaalopties op te halen
-  function getSelectedDigitaalOpties() {
-    var selectedDigitaalOpties = [];
-    var digitaalOptieCheckboxes = document.querySelectorAll(".digitaal-optie:checked");
-
-    digitaalOptieCheckboxes.forEach(function(checkbox) {
-      selectedDigitaalOpties.push(checkbox.value);
-    });
-
-    return selectedDigitaalOpties;
-  }
-
-  // Functie om de URL-componenten voor geonamen, selectors, activiteitstypen, en taalopties/digitaalopties samen te stellen
-  function buildUrlComponents() {
+  // Functie om de URL-componenten voor geonamen en selectors samen te stellen
+  function buildGeonamenSelectorsUrl() {
     var selectedGeonamen = getSelectedGeonamen();
     var selectedActiviteiten = getSelectedActiviteiten();
-    var selectedTaalOpties = getSelectedTaalOpties();
-    var selectedDigitaalOpties = getSelectedDigitaalOpties();
     var urlComponents = [];
 
     selectedGeonamen.forEach(function(geonaam) {
-      urlComponents.push("&activate|geonaam=" + geonaam);
-
-      if (selectedActiviteiten.length > 0) {
-        selectedActiviteiten.forEach(function(activiteit) {
-          urlComponents.push("&activate|selector=" + geonaam + activiteit);
-          
-          if (activiteit === 't' && selectedTaalOpties.length > 0) {
-            selectedTaalOpties.forEach(function(taalOptie) {
-              urlComponents.push("&activate|selector=" + geonaam + activiteit + taalOptie);
-            });
-          }
-
-          if (activiteit === 'd' && selectedDigitaalOpties.length > 0) {
-            selectedDigitaalOpties.forEach(function(digitaalOptie) {
-              urlComponents.push("&activate|selector=" + geonaam + activiteit + digitaalOptie);
-            });
-          }
-        });
-      }
+      selectedActiviteiten.forEach(function(activiteit) {
+        var selector = geonaam + activiteit;
+        urlComponents.push("&activate|geonaam=" + geonaam);
+        urlComponents.push("&activate|selector=" + selector);
+      });
     });
 
     return urlComponents.join("");
   }
 
-  // Functie om de kaart te updaten met de geselecteerde geonamen, activiteitstypen, taalopties en digitaalopties
-  function updateMapWithSelections() {
-    var urlComponents = buildUrlComponents();
-    var finalUrl = baseUrl + urlComponents;
+  // Functie om de kaart te updaten met de geselecteerde geonamen en activiteitstypen
+  function updateMapWithGeonamenAndActiviteiten() {
+    var geonamenSelectorsUrl = buildGeonamenSelectorsUrl();
+    var finalUrl = baseUrl + geonamenSelectorsUrl;
     mapIframe.src = finalUrl;
   }
 
-  // Voeg eventlisteners toe aan de geonaam- en activiteit-checkboxes om de kaart bij te werken wanneer er wijzigingen zijn
-  var geonamCheckboxes = document.querySelectorAll(".geonaam");
-  var activiteitCheckboxes = document.querySelectorAll(".activiteit");
-  var taalOptieCheckboxes = document.querySelectorAll(".taal-optie");
-  var digitaalOptieCheckboxes = document.querySelectorAll(".digitaal-optie");
+  // Voeg een eventlistener toe aan de geonaam-checkboxes om de kaart bij te werken wanneer er wijzigingen zijn
+  var geonaamCheckboxes = document.querySelectorAll(".geonaam");
 
-  geonamCheckboxes.forEach(function(checkbox) {
-    checkbox.addEventListener("change", updateMapWithSelections);
+  geonaamCheckboxes.forEach(function(checkbox) {
+    checkbox.addEventListener("change", updateMapWithGeonamenAndActiviteiten);
   });
+
+  // Voeg een eventlistener toe aan de activiteit-checkboxes om de optiesweergave bij te werken
+  var activiteitCheckboxes = document.querySelectorAll(".activiteit");
 
   activiteitCheckboxes.forEach(function(checkbox) {
-    checkbox.addEventListener("change", updateMapWithSelections);
-  });
-
-  taalOptieCheckboxes.forEach(function(checkbox) {
-    checkbox.addEventListener("change", updateMapWithSelections);
-  });
-
-  digitaalOptieCheckboxes.forEach(function(checkbox) {
-    checkbox.addEventListener("change", updateMapWithSelections);
+    checkbox.addEventListener("change", function() {
+      updateMapWithGeonamenAndActiviteiten();
+      toggleOptionsVisibility();
+    });
   });
 
   // Initialiseer de kaart met de standaard URL
