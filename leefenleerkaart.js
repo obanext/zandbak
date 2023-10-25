@@ -33,11 +33,16 @@ document.addEventListener("DOMContentLoaded", function() {
     var urlComponents = [];
 
     selectedGeonamen.forEach(function(geonaam) {
-      selectedActiviteiten.forEach(function(activiteit) {
-        var selector = geonaam + activiteit;
-        urlComponents.push("&activate|geonaam=" + geonaam);
-        urlComponents.push("&activate|selector=" + selector);
-      });
+      // Voeg de geonaam toe zonder activiteitstype
+      urlComponents.push("&activate|geonaam=" + geonaam);
+
+      // Voeg de selector-component toe als er een activiteitstype is geselecteerd
+      if (selectedActiviteiten.length > 0) {
+        selectedActiviteiten.forEach(function(activiteit) {
+          var selector = geonaam + activiteit;
+          urlComponents.push("&activate|selector=" + selector);
+        });
+      }
     });
 
     return urlComponents.join("");
