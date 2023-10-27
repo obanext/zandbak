@@ -3,20 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leef en Leer Kaart</title>
+    <title>Leefenleer! Kaart</title>
     <link rel="stylesheet" href="leefenleerkaart.css">
     <script src="leefenleerkaart.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="options">
-  <div class="postcode-search">
-                <h3>Zoeken op postcode:</h3>
-                <input type="text" id="postcode" placeholder="Voer de vier cijfers van uw postcode in">
-                <button id="search-button">Zoeken</button>
-            </div>
             <div class="geonaam-selector">
-                <h3>Geonaam en Selector Activiteiten:</h3>
+                <h5>Waar?</h5>
                 <label><input type="checkbox" id="all-areas" checked> Alle Gebieden</label><br>
                 <label><input type="checkbox" class="geonaam" data-geonaam="ac" value="ac"> Centrum</label><br>
                 <label><input type="checkbox" class="geonaam" data-geonaam="an" value="an"> Noord</label><br>
@@ -29,13 +24,13 @@
                 <label><input type="checkbox" class="geonaam" data-geonaam="ad" value="ad"> Diemen</label><br>
             </div>
             <div class="activiteiten-soort">
-                <h3>Activiteiten Soort:</h3>
+                <h5>Wat?</h5>
                 <label><input type="checkbox" class="activiteit" data-activiteit="t" value="t"> Taal</label><br>
                 <label><input type="checkbox" class="activiteit" data-activiteit="d" value="d"> Digitaal</label><br>
                 <label><input type="checkbox" class="activiteit" data-activiteit="g" value="g"> Geld</label><br>
             </div>
             <div class="taal-opties">
-                <h3>Taalopties:</h3>
+                <h5>Taalopties:</h5>
                 <label><input type="checkbox" class="activiteit" data-activiteit="a1" value="a1"> A1</label><br>
                 <label><input type="checkbox" class="activiteit" data-activiteit="a2" value="a2"> A2</label><br>
                 <label><input type="checkbox" class="activiteit" data-activiteit="b1" value="b1"> B1</label><br>
@@ -47,10 +42,15 @@
                 <label><input type="checkbox" class="activiteit" data-activiteit="2f" value="2f"> 2F</label><br>
             </div>
             <div class="digitaal-opties">
-                <h3>Digitaalopties:</h3>
+                <h5>Digitaalopties:</h5>
                 <label><input type="checkbox" class="activiteit" data-activiteit="b" value="b"> Beginner</label><br>
                 <label><input type="checkbox" class="activiteit" data-activiteit="g" value="g"> Gevorderd</label><br>
                 <label><input type="checkbox" class="activiteit" data-activiteit="e" value="e"> Expert</label><br>
+            </div>
+              <div class="postcode-search">
+                <h5>Zoeken op postcode:</h5>
+                <input type="text" id="postcode" placeholder="Voer de vier cijfers van uw postcode in">
+                <button id="search-button">Zoeken</button>
             </div>
         </div>
         <div class="map">
