@@ -1,5 +1,6 @@
 * {
     font-family: Arial, sans-serif;
+    font-size: small;
 }
 
 .container {
@@ -11,15 +12,15 @@
     width: 33%;
     border: 2px solid black;
     border-radius: 10px;
-    padding: 20px; /* Voeg padding toe om de tekst van de border af te duwen */
-    margin-right: 10px; /* Voeg een kleine marge toe aan de rechterkant */
+    padding: 20px; 
+    margin-right: 10px; 
 }
 
 .map {
     width: 67%;
     border: 2px solid black;
     border-radius: 10px;
-    padding: 20px; /* Voeg padding toe om de tekst van de border af te duwen */
+    padding: 20px; 
 }
 
 .geonaam-selector, .activiteiten-soort, .taal-opties, .digitaal-opties {
