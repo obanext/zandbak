@@ -80,6 +80,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 
-  // Dit is de nieuwe regel die ervoor zorgt dat de kaart initieel wordt bijgewerkt met alle gebieden geselecteerd.
+  
   updateMap();
 });
