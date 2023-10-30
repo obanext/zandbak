@@ -80,6 +80,26 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 
-  
   updateMap();
+});
+
+document.getElementById("postcode").addEventListener("input", function() {
+    var postcode = parseInt(this.value, 10);
+    var geonaam = null;
+    if (postcode >= 1000 && postcode <= 1018) geonaam = "AC";
+    if (postcode >= 1019 && postcode <= 1019) geonaam = "AO";
+    if (postcode >= 1020 && postcode <= 1039) geonaam = "AN";
+    if (postcode >= 1040 && postcode <= 1059) geonaam = "AW";
+    if (postcode >= 1060 && postcode <= 1069) geonaam = "ANW";
+    if (postcode >= 1070 && postcode <= 1083) geonaam = "AZ";
+    if (postcode >= 1084 && postcode <= 1099) geonaam = "AO";
+    if (postcode >= 1100 && postcode <= 1108) geonaam = "AZO";
+    if (postcode >= 1110 && postcode <= 1115) geonaam = "AD";
+    if (postcode >= 1380 && postcode <= 1384) geonaam = "AWP";
+    if (geonaam) {
+        var baseUrl = "https://localfocuswidgets.net/6538ef99859c1?hide=dropdowns";
+        var newUrl = baseUrl + "&activate|geonaam=" + geonaam.toLowerCase() + "&activate|selector=" + geonaam.toLowerCase();
+        // Update the iframe's src with the new URL
+        document.getElementById("map").src = newUrl;
+    }
 });
