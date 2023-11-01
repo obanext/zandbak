@@ -9,16 +9,16 @@
 
 .options {
     width: 33%;
- 
-    
+    border: 2px solid black;
+    border-radius: 10px;
     padding: 20px; 
     margin-right: 10px;
 }
 
 .map {
     width: 67%;
-   
-  
+    border: 2px solid black;
+    border-radius: 10px;
     padding: 20px;
 }
 
@@ -53,9 +53,9 @@
     border: 1px solid black;
     border-radius: 20px;
     margin-bottom: 20px;
-    padding: 5px 10px;
-    height: 15px;
+    padding: 10px;
 }
+
 input[type="checkbox"] {
     border: 1px solid rgba(0,100,200,1);
     margin-right: 10px;
