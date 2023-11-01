@@ -9,16 +9,15 @@
 
 .options {
     width: 33%;
-    border: 2px solid black;
-    border-radius: 10px;
+ 
+
     padding: 20px; 
     margin-right: 10px;
 }
 
 .map {
     width: 67%;
-    border: 2px solid black;
-    border-radius: 10px;
+
     padding: 20px;
 }
 
