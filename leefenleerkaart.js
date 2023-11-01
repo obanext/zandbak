@@ -79,11 +79,10 @@ document.addEventListener("DOMContentLoaded", function() {
       updateMap();
     });
   });
-
+  
   updateMap();
-});
-
-document.getElementById("postcode").addEventListener("input", function() {
+  
+  document.getElementById("postcode").addEventListener("input", function() {
     var postcode = parseInt(this.value, 10);
     var geonaam = null;
     if (postcode >= 1000 && postcode <= 1018) geonaam = "AC";
@@ -97,9 +96,8 @@ document.getElementById("postcode").addEventListener("input", function() {
     if (postcode >= 1110 && postcode <= 1115) geonaam = "AD";
     if (postcode >= 1380 && postcode <= 1384) geonaam = "AWP";
     if (geonaam) {
-        var baseUrl = "https://localfocuswidgets.net/6538ef99859c1?hide=dropdowns";
-        var newUrl = baseUrl + "&activate|geonaam=" + geonaam.toLowerCase() + "&activate|selector=" + geonaam.toLowerCase();
-        // Update the iframe's src with the new URL
-        document.getElementById("map").src = newUrl;
+      var newUrl = baseUrl + "&activate|geonaam=" + geonaam.toLowerCase() + "&activate|selector=" + geonaam.toLowerCase();
+      document.getElementById("map").src = newUrl;
     }
+  });
 });
