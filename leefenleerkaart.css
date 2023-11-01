@@ -53,9 +53,9 @@
     border: 1px solid black;
     border-radius: 20px;
     margin-bottom: 20px;
-    padding: 10px;
+    padding: 5px 10px;
+    height: 15px;
 }
-
 input[type="checkbox"] {
     border: 1px solid rgba(0,100,200,1);
     margin-right: 10px;
