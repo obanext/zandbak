@@ -10,12 +10,19 @@ document.addEventListener('DOMContentLoaded', function() {
         var geonaamComponents = [];
         var selectorComponents = [];
         var allAreasSelected = allAreasCheckbox.checked;
+        var geonaamSelected = document.querySelectorAll('.geonaam:checked').length > 0;
+        var activiteitSelected = document.querySelectorAll('.activiteit:checked').length > 0;
         
         // If 'Alle Gebieden' is selected, include all areas and selectors
         if (allAreasSelected) {
             document.querySelectorAll('.geonaam').forEach(function(checkbox) {
                 geonaamComponents.push(`&activate|geonaam=${checkbox.value}`);
                 selectorComponents.push(`&activate|selector=${checkbox.value}`);
+            });
+        } else if (!geonaamSelected && activiteitSelected) {
+            // If no geonaam is selected but an activiteit is, only include activiteit in the selector
+            document.querySelectorAll('.activiteit:checked').forEach(function(checkbox) {
+                selectorComponents.push(`&activate|selector=${checkbox.dataset.activiteit}`);
             });
         } else {
             // Collect selected geonaam and selectors
@@ -27,11 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.activiteit:checked').forEach(function(checkbox) {
                 var activity = checkbox.dataset.activiteit;
                 selectorComponents = selectorComponents.map(sc => `${sc}${activity}`);
-            });
-            // Append levels to selectors if any
-            document.querySelectorAll('.taalniveau:checked, .digitaalniveau:checked').forEach(function(checkbox) {
-                var level = checkbox.value;
-                selectorComponents = selectorComponents.map(sc => `${sc}${level}`);
             });
         }
 
