@@ -84,19 +84,20 @@ input[type="checkbox"]:checked {
 }
 
 
+
 .options {
-    width: 33%;
+    width: 32%; /* Slightly less to accommodate padding and border */
     border: 2px solid black;
-    border-radius: 20px; /* Updated to be consistent */
-    padding: 20px; /* Consistent padding */
-    margin-right: 10px; /* Keep the margin to separate from the map */
+    border-radius: 20px;
+    padding: 20px;
+    margin-right: 10px; /* Ensure margin does not cause wrapping */
     background-color: rgba(0,100,200,1);
     color: white;
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    /* Removed flex-wrap: wrap; to prevent wrapping */
     justify-content: space-between;
 }
+
 
 .container > .options, .container > .map {
     margin: 20px;
