@@ -40,12 +40,23 @@ body, html {
     accent-color: rgb(0, 100, 200);
 }
 
-.areas-row, .levels-row {
+.areas-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.areas-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.levels-row {
     display: flex;
     justify-content: space-between;
 }
 
-.areas-column, .levels-column {
+.levels-column {
     display: flex;
     flex-direction: column;
 }
