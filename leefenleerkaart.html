@@ -1,72 +1,76 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leef en Leer Kaart</title>
-    <link rel="stylesheet" href="leefenleerkaart.css">
-    <script src="leefenleerkaart.js" defer></script>
-</head>
-<body>
-    <div class="container">
-        <div class="options">
+<div class="container">
+    <div class="options">
+        <div class="left-column">
+            <!-- Zoeken op postcode -->
             <div class="postcode-search">
                 <h3>Zoeken op postcode:</h3>
                 <input type="text" id="postcode" placeholder="Voer de vier cijfers van uw postcode in">
                 <button id="search-button">Zoeken</button>
             </div>
-            <div class="left-column">
-                <div class="activiteiten-soort">
+
+            <!-- Vaardigheidsoort -->
+            <div class="activiteiten-soort">
                 <h3>Vaardigheid</h3>
                 <label><input type="checkbox" class="activiteit" data-activiteit="t" value="t"> Taal</label><br>
                 <label><input type="checkbox" class="activiteit" data-activiteit="d" value="d"> Digitaal</label><br>
                 <label><input type="checkbox" class="activiteit" data-activiteit="g" value="g"> Geld</label><br>
-           </div>
-                <div class="geonaam-selector">
-                    <h3>Geonaam en Selector Activiteiten:</h3>
-                    <label><input type="checkbox" id="all-areas" checked> Alle Gebieden</label><br>
-                    <label><input type="checkbox" class="geonaam" data-geonaam="ac" value="ac"> Centrum</label>
-                    <label><input type="checkbox" class="geonaam" data-geonaam="an" value="an"> Noord</label><br>
-                    <label><input type="checkbox" class="geonaam" data-geonaam="az" value="az"> Zuid</label>
-                    <label><input type="checkbox" class="geonaam" data-geonaam="azo" value="azo"> Zuidoost</label><br>
-                    <label><input type="checkbox" class="geonaam" data-geonaam="anw" value="anw"> Nieuw-West</label>
-                    <label><input type="checkbox" class="geonaam" data-geonaam="aw" value="aw"> West</label><br>
-                    <label><input type="checkbox" class="geonaam" data-geonaam="ao" value="ao"> Oost</label>
-                    <label><input type="checkbox" class="geonaam" data-geonaam="awe" value="awe"> Weesp</label><br>
-                    <label><input type="checkbox" class="geonaam" data-geonaam="ad" value="ad"> Diemen</label>
-                </div>
             </div>
-            <div class="right-column">
-                <div class="taal-opties">
-                    <h3>Taalniveau:</h3>
-                    <label><input type="checkbox" class="activiteit" data-activiteit="a1" value="a1"> A1</label><br>
-                    <label><input type="checkbox" class="activiteit" data-activiteit="a2" value="a2"> A2</label><br>
-                    <label><input type="checkbox" class="activiteit" data-activiteit="b1" value="b1"> B1</label><br>
-                    <label><input type="checkbox" class="activiteit" data-activiteit="b2" value="b2"> B2</label><br>
-                    <label><input type="checkbox" class="activiteit" data-activiteit="c1" value="c1"> C1</label><br>
-                    <label><input type="checkbox" class="activiteit" data-activiteit="c2" value="c2"> C2</label><br>
-                    <label><input type="checkbox" class="activiteit" data-activiteit="in" value="in"> Instroom</label><br>
-                    <label><input type="checkbox" class="activiteit" data-activiteit="1f" value="1f"> 1F</label><br>
-                    <label><input type="checkbox" class="activiteit" data-activiteit="2f" value="2f"> 2F</label><br>
-                </div>
-                <div class="digitaal-opties">
-                    <h3>Digitaalniveau:</h3>
-                    <label><input type="checkbox" class="activiteit" data-activiteit="b" value="b"> Beginner</label><br>
-                    <label><input type="checkbox" class="activiteit" data-activiteit="g" value="g"> Gevorderd</label><br>
-                    <label><input type="checkbox" class="activiteit" data-activiteit="e" value="e"> Expert</label><br>
-                </div>
+
+            <!-- Geonaam en Selector Activiteiten voor Centrum, Noord, Zuid, Zuidoost -->
+            <div class="geonaam-selector">
+                <h3>Geonaam en Selector Activiteiten:</h3>
+                <label><input type="checkbox" id="all-areas" checked> Alle Gebieden</label><br>
+                <label><input type="checkbox" class="geonaam" data-geonaam="ac" value="ac"> Centrum</label><br>
+                <label><input type="checkbox" class="geonaam" data-geonaam="an" value="an"> Noord</label><br>
+                <label><input type="checkbox" class="geonaam" data-geonaam="az" value="az"> Zuid</label><br>
+                <label><input type="checkbox" class="geonaam" data-geonaam="azo" value="azo"> Zuidoost</label><br>
             </div>
-            <div class="geldniveau">
-                <h3>Geldniveau:</h3>
-                <label><input type="checkbox" class="geldniveau" value="beginner"> Beginner</label><br>
-                <label><input type="checkbox" class="geldniveau" value="gemiddeld"> Gemiddeld</label><br>
-                <label><input type="checkbox" class="geldniveau" value="gevorderd"> Gevorderd</label><br>
-                <label><input type="checkbox" class="geldniveau" value="expert"> Expert</label><br>
+
+            <!-- Taalniveau -->
+            <div class="taalniveau">
+                <h3>Taalniveau:</h3>
+                <label><input type="checkbox" class="taalniveau" value="a1"> A1</label><br>
+                <label><input type="checkbox" class="taalniveau" value="a2"> A2</label><br>
+                <label><input type="checkbox" class="taalniveau" value="b1"> B1</label><br>
+                <label><input type="checkbox" class="taalniveau" value="b2"> B2</label><br>
+                <label><input type="checkbox" class="taalniveau" value="c1"> C1</label><br>
+                <label><input type="checkbox" class="taalniveau" value="c2"> C2</label><br>
+                <label><input type="checkbox" class="taalniveau" value="in"> Instroom</label><br>
+                <label><input type="checkbox" class="taalniveau" value="1f"> 1F</label><br>
+                <label><input type="checkbox" class="taalniveau" value="2f"> 2F</label><br>
             </div>
         </div>
-        <div class="map">
-            <iframe id="map" src="" width="100%" height="600" frameborder="0"></iframe>
+
+        <div class="right-column">
+            <!-- Geonaam en Selector Activiteiten voor Nieuw-West, West, Oost, Weesp, Diemen -->
+            <div class="geonaam-selector">
+                <!-- Geen titel nodig, want die staat al in de linker kolom -->
+                <label><input type="checkbox" class="geonaam" data-geonaam="anw" value="anw"> Nieuw-West</label><br>
+                <label><input type="checkbox" class="geonaam" data-geonaam="aw" value="aw"> West</label><br>
+                <label><input type="checkbox" class="geonaam" data-geonaam="ao" value="ao"> Oost</label><br>
+                <label><input type="checkbox" class="geonaam" data-geonaam="awe" value="awe"> Weesp</label><br>
+                <label><input type="checkbox" class="geonaam" data-geonaam="ad" value="ad"> Diemen</label><br>
+            </div>
+
+            <!-- Digitaalniveau en Geldniveau -->
+            <div class="niveau-opties">
+                <h3>Digitaalniveau:</h3>
+                <label><input type="checkbox" class="niveau" value="beginner"> Beginner</label><br>
+                <label><input type="checkbox" class="niveau" value="gemiddeld"> Gemiddeld</label><br>
+                <label><input type="checkbox" class="niveau" value="gevorderd"> Gevorderd</label><br>
+                <label><input type="checkbox" class="niveau" value="expert"> Expert</label><br>
+
+                <h3>Geldniveau:</h3>
+                <label><input type="checkbox" class="niveau" value="beginner"> Beginner</label><br>
+                <label><input type="checkbox" class="niveau" value="gemiddeld"> Gemiddeld</label><br>
+                <label><input type="checkbox" class="niveau" value="gevorderd"> Gevorderd</label><br>
+                <label><input type="checkbox" class="niveau" value="expert"> Expert</label><br>
+            </div>
         </div>
     </div>
-</body>
-</html>
+
+    <!-- Kaart sectie -->
+    <div class="map">
+        <iframe id="map" src="" width="100%" height="600" frameborder="0"></iframe>
+    </div>
+</div>
