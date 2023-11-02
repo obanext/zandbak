@@ -2,14 +2,14 @@ body, html {
     height: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
-    color: white
+    color: white;
 }
 
 .container {
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    gap: 10px; /* This creates the white space between containers */
+    gap: 10px;
 }
 
 .filter-options {
@@ -35,18 +35,21 @@ body, html {
 .activiteit input[type="checkbox"],
 .geonaam input[type="checkbox"],
 .taalniveau input[type="checkbox"],
-.digitaalniveau input[type="checkbox"] {
+.digitaalniveau input[type="checkbox"],
+.geldniveau input[type="checkbox"] {
     accent-color: rgb(0, 100, 200);
 }
 
 .activiteit input[type="checkbox"]:hover,
-.geonaam input[type="checkbox"]:hover,
+.geonaam input[type["checkbox"]:hover,
 .taalniveau input[type="checkbox"]:hover,
-.digitaalniveau input[type="checkbox"]:hover,
+.digitaalniveau input[type["checkbox"]:hover,
+.geldniveau input[type["checkbox"]:hover,
 .activiteit input[type="checkbox"]:checked,
-.geonaam input[type="checkbox"]:checked,
+.geonaam input[type["checkbox"]:checked,
 .taalniveau input[type="checkbox"]:checked,
-.digitaalniveau input[type="checkbox"]:checked {
+.digitaalniveau input[type["checkbox"]:checked,
+.geldniveau input[type["checkbox"]:checked {
     background-color: white;
 }
 
@@ -60,8 +63,19 @@ body, html {
     flex-direction: column;
 }
 
-.language-levels,
-.digital-levels {
+.levels-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.levels-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.levels-box {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
