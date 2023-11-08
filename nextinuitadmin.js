@@ -1,4 +1,6 @@
 
+const new_id_base = 'nextinuit00000';
+
 document.addEventListener('DOMContentLoaded', () => {
     loadFromLocalStorage();
     document.getElementById('objectForm').addEventListener('submit', addObject);
