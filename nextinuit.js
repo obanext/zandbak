@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.getElementById('qr-reader')) {
+    const qrReaderElement = document.getElementById('qr-reader');
+    if (qrReaderElement) {
         startQRScanner();
     }
 });
@@ -10,20 +11,18 @@ function startQRScanner() {
 
     function onScanSuccess(decodedText, decodedResult) {
         console.log(`QR code gedetecteerd: ${decodedText}`);
-        // Verwerk qrCode.data hier, bijvoorbeeld om de status van een object bij te werken
-        // Optioneel: stop de QR-code scanner als je wilt dat hij na één scan stopt
-        html5QrCode.stop();
+        // Doe iets met de gedecodeerde tekst, zoals het bijwerken van de status van een object.
+        // Je kunt ervoor kiezen om de scanner te stoppen of door te laten scannen.
+        // html5QrCode.stop(); // Uncomment deze lijn om de scanner te stoppen.
     }
 
     function onScanFailure(error) {
-        // Dit wordt aangeroepen bij elke scanpoging als er geen QR code is gevonden.
-        // Dit is een goede plek om een foutmelding of waarschuwing aan de gebruiker te tonen.
+        // Log errors, maar spam niet de console als er gewoon geen QR code gevonden wordt.
+        console.error(`QR scanfout: ${error}`);
     }
 
-    // Start de camera en begin met het scannen van QR-codes
     html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
         .catch((err) => {
-            // Foutmeldingen als de camera niet gevonden of gestart kan worden.
-            console.error(`Fout bij het starten van de QR-scanner: ${err}`);
+            console.error(`Fout bij het starten van de QR scanner: ${err}`);
         });
 }
