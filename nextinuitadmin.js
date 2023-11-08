@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     loadFromLocalStorage();
     document.getElementById('objectForm').addEventListener('submit', addObject);
@@ -10,7 +11,7 @@ function addObject(e) {
     const omschrijving = document.getElementById('omschrijving').value;
     const datumIn = new Date().toISOString().split('T')[0];
     const newObject = {
-        id: objectDatabase.length + 1,
+        id: `${new_id_base}${String(objectDatabase.length + 1).padStart(5, '0')}`,
         titel: titel,
         omschrijving: omschrijving,
         datumIn: datumIn,
@@ -59,9 +60,11 @@ function downloadObjectAsCsv(exportObj, exportName) {
 
 function convertToCSV(objArray) {
     const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
-    let csvStr = `${Object.keys(array[0]).join(',')}\r\n`;
+    let csvStr = `${Object.keys(array[0]).join(',')}
+`;
     for (const row of array) {
-        csvStr += `${Object.values(row).join(',')}\r\n`;
+        csvStr += `${Object.values(row).join(',')}
+`;
     }
     return csvStr;
 }
