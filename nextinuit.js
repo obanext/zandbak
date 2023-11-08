@@ -26,20 +26,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function startQRScanner() {
         html5QrCode = new Html5Qrcode("qr-reader");
-        const config = { fps: 10, qrbox: 300 }; // qrbox is even groot als de QR-reader
+        const readerWidth = qrReaderElement.offsetWidth;
+        const qrboxSize = Math.min(300, readerWidth);
+        const config = { fps: 10, qrbox: qrboxSize };
         
         function onScanSuccess(decodedText, decodedResult) {
             console.log(`QR code detected: ${decodedText}`);
             html5QrCode.stop().then(() => {
                 console.log("QR scanning stopped after successful scan.");
-                stopButton.click(); // Simuleer een klik op de stopknop
+                stopButton.click(); // Simulate a click on the stop button
             }).catch((err) => {
                 console.error(`Failed to stop QR scanner: ${err}`);
             });
 
-            // Voer hier verdere acties uit na een succesvolle scan
+            // Execute further actions after a successful scan
             const scannedId = parseInt(decodedText);
-            // Aannemende dat objectDatabase beschikbaar is in deze scope:
+            // Assuming objectDatabase is available in this scope:
             const objectIndex = objectDatabase.findIndex(obj => obj.id === scannedId);
             if (objectIndex !== -1) {
                 const object = objectDatabase[objectIndex];
@@ -53,17 +55,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 saveToLocalStorage();
                 displayObjects();
             } else {
-                console.error('Object ID niet gevonden in de database:', scannedId);
+                console.error('Object ID not found in the database:', scannedId);
             }
         }
         
         function onScanFailure(error) {
-            console.error(`QR scanfout: ${error}`);
+            console.error(`QR scan error: ${error}`);
         }
         
         html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
             .catch((err) => {
-                console.error(`Fout bij het starten van de QR scanner: ${err}`);
+                console.error(`Error in starting the QR scanner: ${err}`);
             });
     }
 });
