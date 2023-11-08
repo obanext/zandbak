@@ -27,12 +27,36 @@ function addObject(e) {
     displayObjects();
     
     e.target.reset();
-}
-
 function displayObjects() {
     const listContainer = document.getElementById('object-lijst');
-    listContainer.innerHTML = '';
-    // Code om de tabel te vullen met objectgegevens...
+    if (!listContainer) {
+        console.error('Element met ID "object-lijst" niet gevonden.');
+        return; // Stop de functie als het element niet gevonden wordt.
+    }
+
+    listContainer.innerHTML = ''; // Maak de container leeg voordat we nieuwe gegevens toevoegen
+
+    const table = document.createElement('table');
+    const thead = table.createTHead();
+    const headerRow = thead.insertRow();
+    const headers = ['ID', 'Titel', 'Omschrijving', 'Datum In', 'Datum Uit', 'Status'];
+
+    headers.forEach(headerText => {
+        const header = document.createElement('th');
+        header.textContent = headerText;
+        headerRow.appendChild(header);
+    });
+
+    const tbody = table.createTBody();
+    objectDatabase.forEach(obj => {
+        const row = tbody.insertRow();
+        Object.values(obj).forEach(val => {
+            const cell = row.insertCell();
+            cell.textContent = val;
+        });
+    });
+
+    listContainer.appendChild(table); // Voeg de voltooide tabel toe aan de lijstcontainer
 }
 
 function saveToLocalStorage() {
