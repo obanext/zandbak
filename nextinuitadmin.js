@@ -27,6 +27,8 @@ function addObject(e) {
     displayObjects();
     
     e.target.reset();
+} // Deze sluitende accolade ontbrak.
+
 function displayObjects() {
     const listContainer = document.getElementById('object-lijst');
     if (!listContainer) {
