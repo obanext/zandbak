@@ -6,8 +6,11 @@
     <title>QR Scanner MRE</title>
 </head>
 <body>
-    <div id="qr-reader" style="width: 500px; height: 500px;"></div>
-    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@latest/dist/html5-qrcode.min.js"></script>
-    <script src="mre.js"></script>
+    <video id="qr-video" style="display:none;"></video>
+    <canvas id="qr-canvas" style="width: 500px; height: 500px;"></canvas>
+    <script src="mre-script.js"></script>
+<script type="text/javascript" src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
+
+
 </body>
 </html>
