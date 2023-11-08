@@ -40,15 +40,17 @@ section {
 }
 
 #qr-scanner {
+    /* Changed to flex-direction: column to stack children vertically */
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center; /* Center children horizontally */
 }
 
 #qr-reader {
     max-width: 300px;
     width: 100%;
-    height: auto; /* Hoogte automatisch om de aspect ratio te behouden */
-    min-height: 310px; /* Vaste minimale hoogte plus 10px */
+    height: auto; /* Height automatic to maintain aspect ratio */
+    min-height: 310px; /* Fixed minimum height plus 10px */
     margin: auto;
     display: block;
     border: 1px solid #ddd;
@@ -72,7 +74,7 @@ button:hover {
     background-color: #0056b3;
 }
 
-/* Stijlen voor andere elementen die je wilt behouden */
+/* Styles for other elements you may want to maintain */
 .object-list-container {
     display: flex;
     flex-direction: column;
