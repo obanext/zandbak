@@ -1,5 +1,4 @@
 // nextinuit.js
-// This script assumes the objectDatabase is already populated from the database.js script.
 
 document.addEventListener('DOMContentLoaded', function () {
     const startButton = document.getElementById('start-button');
@@ -37,24 +36,38 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(`QR code detected: ${decodedText}`);
             html5QrCode.stop().then(() => {
                 console.log("QR scanning stopped after successful scan.");
-                stopButton.click(); // Simulate a click on the stop button
+                stopButton.click();
             }).catch((err) => {
                 console.error(`Failed to stop QR scanner: ${err}`);
             });
 
-            // Execute further actions after a successful scan
-            // Adjusted to account for the new ID structure
-            const scannedId = `${new_id_base}${String(decodedText).padStart(5, '0')}`;
-            const objectIndex = objectDatabase.findIndex(obj => obj.id === scannedId);
+            // Hier volgt de aangepaste logica voor het verwerken van de gescande QR-code
+            const scannedId = decodedText;
+            const objectIndex = objectDatabase.findIndex(obj => obj.id === scannedId && obj.status === 'in');
+
             if (objectIndex !== -1) {
+                // Het object is aanwezig en de status is 'in', dus update naar 'uit'
                 const object = objectDatabase[objectIndex];
-                // Toggle status between 'in' and 'uit'
-                object.status = (object.status === 'in') ? 'uit' : 'in';
+                object.status = 'uit';
                 object.datumUit = new Date().toISOString().split('T')[0];
                 saveToLocalStorage();
-                // Assuming displayObjects will be available and updated to show a confirmation message or update the UI.
             } else {
-                console.error('Object ID not found in the database:', scannedId);
+                // Als het object niet gevonden is of de status is 'uit', maak een nieuw 'in' record
+                const originalObject = objectDatabase.find(obj => obj.id === scannedId);
+                if (originalObject) {
+                    const newObject = {
+                        id: originalObject.id, // Gebruik hetzelfde ID
+                        titel: originalObject.titel,
+                        omschrijving: originalObject.omschrijving,
+                        datumIn: new Date().toISOString().split('T')[0],
+                        datumUit: '',
+                        status: 'in'
+                    };
+                    objectDatabase.push(newObject);
+                    saveToLocalStorage();
+                } else {
+                    console.error('Object ID not found in the database:', scannedId);
+                }
             }
         }
 
