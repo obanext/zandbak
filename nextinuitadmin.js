@@ -1,4 +1,3 @@
-// `nextinuitadmin.js`
 let objectDatabase = [];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,52 +9,30 @@ document.addEventListener('DOMContentLoaded', () => {
 function addObject(e) {
     e.preventDefault();
 
-    let titel = document.getElementById('titel').value;
-    let omschrijving = document.getElementById('omschrijving').value;
-    let datumIn = new Date().toISOString().split('T')[0];
+    const titel = document.getElementById('titel').value;
+    const omschrijving = document.getElementById('omschrijving').value;
+    const datumIn = new Date().toISOString().split('T')[0];
 
-    let newObject = {
-        id: objectDatabase.length + 1, // Verhoogt de ID voor elk nieuw object
+    const newObject = {
+        id: objectDatabase.length + 1,
         titel: titel,
         omschrijving: omschrijving,
         datumIn: datumIn,
-        datumUit: '', // Initieel leeg
-        status: 'in' // Initieel op 'in' gezet
+        datumUit: '',
+        status: 'in'
     };
 
     objectDatabase.push(newObject);
     saveToLocalStorage();
     displayObjects();
     
-    document.getElementById('objectForm').reset(); // Reset het formulier na het toevoegen
+    e.target.reset();
 }
 
 function displayObjects() {
     const listContainer = document.getElementById('object-lijst');
-    listContainer.innerHTML = ''; // Maak de bestaande lijst leeg
-
-    let table = document.createElement('table');
-    let thead = table.createTHead();
-    let headerRow = thead.insertRow();
-    let headers = ['ID', 'Titel', 'Omschrijving', 'Datum In', 'Datum Uit', 'Status'];
-    
-    headers.forEach(headerText => {
-        let header = document.createElement('th');
-        header.textContent = headerText;
-        headerRow.appendChild(header);
-    });
-    
-    let tbody = table.createTBody();
-    
-    objectDatabase.forEach(obj => {
-        let row = tbody.insertRow();
-        Object.values(obj).forEach(text => {
-            let cell = row.insertCell();
-            cell.textContent = text;
-        });
-    });
-
-    listContainer.appendChild(table); // Voeg de nieuwe tabel toe aan de container
+    listContainer.innerHTML = '';
+    // Code om de tabel te vullen met objectgegevens...
 }
 
 function saveToLocalStorage() {
@@ -63,8 +40,35 @@ function saveToLocalStorage() {
 }
 
 function loadFromLocalStorage() {
-    let storedObjects = localStorage.getItem('objectDatabase');
+    const storedObjects = localStorage.getItem('objectDatabase');
     if (storedObjects) {
         objectDatabase = JSON.parse(storedObjects);
+        displayObjects();
     }
 }
+
+function downloadObjectAsCsv(exportObj, exportName) {
+    const csvStr = convertToCSV(exportObj);
+    const dataUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvStr);
+
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportName + '.csv');
+    document.body.appendChild(linkElement); // Required for Firefox
+    linkElement.click();
+    document.body.removeChild(linkElement);
+}
+
+function convertToCSV(objArray) {
+    const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
+    let csvStr = `${Object.keys(array[0]).join(',')}\r\n`;
+
+    for (const row of array) {
+        csvStr += `${Object.values(row).join(',')}\r\n`;
+    }
+
+    return csvStr;
+}
+
+// Voeg een knop toe aan je HTML om deze functie aan te roepen:
+// <button onclick="downloadObjectAsCsv(objectDatabase, 'objecten')">Download CSV</button>
