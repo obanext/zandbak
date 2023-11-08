@@ -8,11 +8,35 @@ body {
 h1 {
     color: #333;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 nav {
     text-align: center;
     margin-bottom: 20px;
+}
+
+nav a {
+    color: #0275d8;
+    text-decoration: none;
+    padding: 8px 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease-in-out;
+}
+
+nav a:hover {
+    background-color: #e7e7e7;
+    border-color: #ddd;
+}
+
+section {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #qr-scanner {
@@ -21,9 +45,21 @@ nav {
 }
 
 #qr-reader {
-    max-width: 300px; /* Of een andere waarde die geschikt is voor de meeste mobiele apparaten */
-    width: 100%; /* Neemt de maximale breedte in tot 300px */
+    max-width: 300px;
+    width: 100%;
     height: auto; /* Hoogte automatisch om de aspect ratio te behouden */
 }
 
-/* Overige stijlen behouden zoals ze waren */
+/* Stijlen voor andere elementen die je wilt behouden */
+.object-list-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.object-item {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
