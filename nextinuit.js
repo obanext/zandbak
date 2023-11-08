@@ -1,5 +1,3 @@
-// Voeg deze regel toe aan de <head> van je HTML-document of net voor de sluitende </body> tag
-// <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@latest/dist/html5-qrcode.min.js"></script>
 
 document.addEventListener('DOMContentLoaded', () => {
     // Zorg ervoor dat dit element bestaat in je HTML
