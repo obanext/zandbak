@@ -30,16 +30,17 @@ section {
     background-color: #fafafa;
 }
 
-#qr-video {
-    width: 80%;
+/* Stijlen voor de QR-scanner */
+#qr-reader {
+    width: 100%; /* Volledige breedte binnen de container */
+    max-width: 300px; /* Maximale breedte voor mobiele apparaten */
     height: auto; /* Behoudt de aspectratio */
-    margin: auto; /* Centreert de video binnen zijn container */
+    margin: auto; /* Centreert de QR-scanner binnen zijn container */
     display: block; /* Zorgt ervoor dat de margin automatisch toegepast wordt */
-    max-width: 500px; /* Maximale breedte van de video */
     border-radius: 8px; /* Optioneel: afgeronde hoeken */
 }
 
-/* Media queries */
+/* Media queries voor aanpassingen aan kleinere schermen */
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -54,8 +55,8 @@ section {
         font-size: 14px;
     }
 
-    #qr-video {
-        max-width: 400px; /* Kleinere maximale breedte voor tablets */
+    #qr-reader {
+        max-width: 400px; /* Aanpassing voor tablets */
     }
 }
 
@@ -69,7 +70,7 @@ section {
         font-size: 12px;
     }
 
-    #qr-video {
-        max-width: 300px; /* Nog kleinere maximale breedte voor mobiele telefoons */
+    #qr-reader {
+        max-width: 300px; /* Aanpassing voor mobiele telefoons */
     }
 }
