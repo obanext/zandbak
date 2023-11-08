@@ -1,10 +1,10 @@
-
+// nextinuitadmin.js
+// The new_id_base constant should be defined within this script.
 const new_id_base = 'nextinuit00000';
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadFromLocalStorage();
+    displayObjects(); // We're assuming displayObjects will also handle loading from local storage.
     document.getElementById('objectForm').addEventListener('submit', addObject);
-    displayObjects();
 });
 
 function addObject(e) {
@@ -37,18 +37,7 @@ function displayObjects() {
     });
 }
 
-function saveToLocalStorage() {
-    localStorage.setItem('objectDatabase', JSON.stringify(objectDatabase));
-}
-
-function loadFromLocalStorage() {
-    const storedObjects = localStorage.getItem('objectDatabase');
-    if (storedObjects) {
-        objectDatabase = JSON.parse(storedObjects);
-        displayObjects();
-    }
-}
-
+// The downloadObjectAsCsv and convertToCSV functions remain unchanged.
 function downloadObjectAsCsv(exportObj, exportName) {
     const csvStr = convertToCSV(exportObj);
     const dataUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvStr);
@@ -62,13 +51,9 @@ function downloadObjectAsCsv(exportObj, exportName) {
 
 function convertToCSV(objArray) {
     const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
-    let csvStr = `${Object.keys(array[0]).join(',')}
-`;
+    let csvStr = `${Object.keys(array[0]).join(',')}\r\n`;
     for (const row of array) {
-        csvStr += `${Object.values(row).join(',')}
-`;
+        csvStr += `${Object.values(row).join(',')}\r\n`;
     }
     return csvStr;
 }
-
-let objectDatabase = [];
