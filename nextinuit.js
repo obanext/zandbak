@@ -1,26 +1,42 @@
 // `nextinuit.js`
 document.addEventListener('DOMContentLoaded', () => {
-    // De QR-scanner moet alleen initialiseren op de pagina met de qr-video element
     if (document.getElementById('qr-video')) {
-        initializeQRScanner();
+        startVideoStream();
     }
 });
 
-function initializeQRScanner() {
-    let scanner = new Instascan.Scanner({ video: document.getElementById('qr-video') });
-    scanner.addListener('scan', function (content) {
-        console.log('QR Code gescand:', content);
-        // Hier zou je de code plaatsen om de status van het object bij te werken
-        // Dit vereist dat je ofwel toegang hebt tot de objectDatabase of een andere manier om de data op te halen
-    });
+function startVideoStream() {
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+        .then(function(stream) {
+            const video = document.getElementById('qr-video');
+            video.srcObject = stream;
+            video.setAttribute("playsinline", true); // vereist om te zeggen tegen iOS safari dat we geen fullscreen willen
+            video.play();
+            requestAnimationFrame(scanQRCode);
+        })
+        .catch(function(err) {
+            console.error("Error accessing the camera", err);
+        });
+}
 
-    Instascan.Camera.getCameras().then(function (cameras) {
-        if (cameras.length > 0) {
-            scanner.start(cameras[0]);
-        } else {
-            console.error('Geen camera’s gevonden.');
+function scanQRCode() {
+    const video = document.getElementById('qr-video');
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.height = video.videoHeight;
+        canvas.width = video.videoWidth;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        const qrCode = jsQR(imageData.data, imageData.width, imageData.height, {
+          inversionAttempts: "dontInvert",
+        });
+        
+        if (qrCode) {
+            console.log("Gevonden QR code", qrCode.data);
+            // Verwerk qrCode.data hier, bijvoorbeeld om de status van een object bij te werken
         }
-    }).catch(function (e) {
-        console.error(e);
-    });
+    }
+    requestAnimationFrame(scanQRCode); // Blijf frames scannen
 }
