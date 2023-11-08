@@ -31,11 +31,11 @@ section {
 }
 
 #qr-video {
-    width: 200px;
+    width: 80%;
     height: auto; /* Behoudt de aspectratio */
     margin: auto; /* Centreert de video binnen zijn container */
     display: block; /* Zorgt ervoor dat de margin automatisch toegepast wordt */
-    max-width: 200px; /* Maximale breedte van de video */
+    max-width: 500px; /* Maximale breedte van de video */
     border-radius: 8px; /* Optioneel: afgeronde hoeken */
 }
 
