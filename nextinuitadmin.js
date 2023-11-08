@@ -27,38 +27,17 @@ function addObject(e) {
     displayObjects();
     
     e.target.reset();
-} // Deze sluitende accolade ontbrak.
+}
 
 function displayObjects() {
     const listContainer = document.getElementById('object-lijst');
-    if (!listContainer) {
-        console.error('Element met ID "object-lijst" niet gevonden.');
-        return; // Stop de functie als het element niet gevonden wordt.
-    }
-
-    listContainer.innerHTML = ''; // Maak de container leeg voordat we nieuwe gegevens toevoegen
-
-    const table = document.createElement('table');
-    const thead = table.createTHead();
-    const headerRow = thead.insertRow();
-    const headers = ['ID', 'Titel', 'Omschrijving', 'Datum In', 'Datum Uit', 'Status'];
-
-    headers.forEach(headerText => {
-        const header = document.createElement('th');
-        header.textContent = headerText;
-        headerRow.appendChild(header);
-    });
-
-    const tbody = table.createTBody();
+    listContainer.innerHTML = ''; 
     objectDatabase.forEach(obj => {
-        const row = tbody.insertRow();
-        Object.values(obj).forEach(val => {
-            const cell = row.insertCell();
-            cell.textContent = val;
-        });
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'object-item';
+        itemDiv.textContent = `ID: ${obj.id}, Titel: ${obj.titel}, Omschrijving: ${obj.omschrijving}, Datum In: ${obj.datumIn}, Datum Uit: ${obj.datumUit}, Status: ${obj.status}`;
+        listContainer.appendChild(itemDiv);
     });
-
-    listContainer.appendChild(table); // Voeg de voltooide tabel toe aan de lijstcontainer
 }
 
 function saveToLocalStorage() {
@@ -80,7 +59,7 @@ function downloadObjectAsCsv(exportObj, exportName) {
     const linkElement = document.createElement('a');
     linkElement.setAttribute('href', dataUri);
     linkElement.setAttribute('download', exportName + '.csv');
-    document.body.appendChild(linkElement); // Required for Firefox
+    document.body.appendChild(linkElement); 
     linkElement.click();
     document.body.removeChild(linkElement);
 }
@@ -96,5 +75,4 @@ function convertToCSV(objArray) {
     return csvStr;
 }
 
-// Voeg een knop toe aan je HTML om deze functie aan te roepen:
-// <button onclick="downloadObjectAsCsv(objectDatabase, 'objecten')">Download CSV</button>
+// De rest van de functionaliteiten blijft hetzelfde als je huidige script.
