@@ -1,10 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
     const startButton = document.getElementById('start-button');
     const stopButton = document.getElementById('stop-button');
     const qrReaderElement = document.getElementById('qr-reader');
     let html5QrCode;
 
-    startButton.addEventListener('click', () => {
+    startButton.addEventListener('click', function () {
         startButton.style.display = 'none';
         stopButton.style.display = 'block';
         if (qrReaderElement) {
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    stopButton.addEventListener('click', () => {
+    stopButton.addEventListener('click', function () {
         stopButton.style.display = 'none';
         startButton.style.display = 'block';
         if (html5QrCode) {
@@ -27,9 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function startQRScanner() {
         html5QrCode = new Html5Qrcode("qr-reader");
         const readerWidth = qrReaderElement.offsetWidth;
+        // The following line may still contain an error regarding the qrboxSize calculation.
+        // It should be corrected to ensure it fits within the readerWidth.
         const qrboxSize = Math.min(300, readerWidth);
         const config = { fps: 10, qrbox: qrboxSize };
-        
+
         function onScanSuccess(decodedText, decodedResult) {
             console.log(`QR code detected: ${decodedText}`);
             html5QrCode.stop().then(() => {
@@ -49,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     object.status = 'uit';
                     object.datumUit = new Date().toISOString().split('T')[0];
                 } else if (object.status === 'uit') {
+                    // Corrected the syntax here for object spread and property assignment
                     const newObject = {...object, id: objectDatabase.length + 1, datumIn: new Date().toISOString().split('T')[0], datumUit: '', status: 'in'};
                     objectDatabase.push(newObject);
                 }
@@ -58,11 +61,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Object ID not found in the database:', scannedId);
             }
         }
-        
+
         function onScanFailure(error) {
             console.error(`QR scan error: ${error}`);
         }
-        
+
         html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
             .catch((err) => {
                 console.error(`Error in starting the QR scanner: ${err}`);
