@@ -17,7 +17,6 @@ section {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Stijlen voor de object-lijst sectie */
 .object-list-container {
     display: flex;
     flex-direction: column;
@@ -29,6 +28,15 @@ section {
     padding: 10px;
     border-radius: 4px;
     background-color: #fafafa;
+}
+
+#qr-video {
+    width: 80%;
+    height: auto; /* Behoudt de aspectratio */
+    margin: auto; /* Centreert de video binnen zijn container */
+    display: block; /* Zorgt ervoor dat de margin automatisch toegepast wordt */
+    max-width: 500px; /* Maximale breedte van de video */
+    border-radius: 8px; /* Optioneel: afgeronde hoeken */
 }
 
 /* Media queries */
@@ -45,6 +53,10 @@ section {
         padding: 6px;
         font-size: 14px;
     }
+
+    #qr-video {
+        max-width: 400px; /* Kleinere maximale breedte voor tablets */
+    }
 }
 
 @media (max-width: 480px) {
@@ -55,5 +67,9 @@ section {
     .object-item {
         padding: 4px;
         font-size: 12px;
+    }
+
+    #qr-video {
+        max-width: 300px; /* Nog kleinere maximale breedte voor mobiele telefoons */
     }
 }
