@@ -3,41 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Objectbeheer Applicatie</title>
-    <link rel="stylesheet" href="nextinuit.css"> <!-- Voeg de link naar je externe CSS-bestand hier toe -->
-    <style>
-        /* Interne CSS of aanvullende stijlen kunnen hier nog steeds worden toegevoegd */
-    </style>
+    <title>QR Scanner - Objectbeheer</title>
+    <link rel="stylesheet" href="nextinuit.css">
 </head>
 <body>
-    <h1>Objectbeheer Applicatie</h1>
-    
-    <!-- Object Toevoegen Formulier -->
-    <section id="object-toevoegen">
-        <h2>Object Toevoegen</h2>
-        <form id="objectForm">
-    <label for="titel">Titel:</label>
-    <input type="text" id="titel" name="titel" required>
-    
-    <label for="omschrijving">Omschrijving:</label>
-    <textarea id="omschrijving" name="omschrijving" required></textarea>
-    
-    <button type="submit">Object Toevoegen</button>
-</form>
-    </section>
-    
-    <!-- Object Lijst Weergave -->
-    <section id="object-lijst">
-        <h2>Objecten Lijst</h2>
-        <!-- Objecten tabel komt hier -->
-    </section>
-    
-    <!-- QR Scanner Sectie -->
+    <h1>QR Scanner</h1>
+    <!-- Link naar de admin pagina -->
+    <nav>
+        <a href="nextinuitadmin.html">login</a>
+    </nav>
     <section id="qr-scanner">
-        <h2>QR Scanner</h2>
-        <!-- QR Scanner elementen komen hier -->
+        <video id="qr-video" style="width: 100%;"></video>
+        <!-- De QR-scanner functionaliteit wordt hier ingevoegd -->
     </section>
     
-    <script src="nextinuit.js"></script> <!-- Voeg de link naar je externe JavaScript-bestand hier toe -->
+    <script src="nextinuit.js"></script>
 </body>
 </html>
+
