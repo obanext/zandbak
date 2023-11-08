@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Scanner - Objectbeheer</title>
+    <title>QR Scanner</title>
     <link rel="stylesheet" href="nextinuit.css">
 </head>
 <body>
@@ -12,11 +12,14 @@
         <a href="nextinuitadmin.html">login</a>
     </nav>
     <section id="qr-scanner">
-        <div id="qr-reader" style="min-height: 310px;"></div>
+        <div id="qr-reader"></div>
+        <!-- Buttons are now below the qr-reader div -->
         <button id="start-button">Start QR-scanner</button>
         <button id="stop-button" style="display:none;">Stop QR-scanner</button>
     </section>
     
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@latest/dist/html5-qrcode.min.js"></script>
     <script src="nextinuit.js"></script>
 </body>
 </html>
+
