@@ -1,41 +1,36 @@
+// Voeg deze regel toe aan de <head> van je HTML-document of net voor de sluitende </body> tag
+// <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@latest/dist/html5-qrcode.min.js"></script>
+
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.getElementById('qr-reader')) {
+    // Zorg ervoor dat dit element bestaat in je HTML
+    const qrCodeRegion = document.getElementById('qr-reader');
+    if (qrCodeRegion) {
         startQRScanner();
     }
 });
 
 function startQRScanner() {
+    // Maak een nieuwe instance van Html5QrcodeScanner
     const html5QrCode = new Html5Qrcode("qr-reader");
     const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
-    // Deze functie wordt elke keer aangeroepen als er een QR-code wordt gescand.
-    const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-        console.log(`QR Code detected: ${decodedText}`);
-        // Voer hier de logica uit die je wilt uitvoeren na het scannen van de QR-code.
-    };
+    function onScanSuccess(decodedText, decodedResult) {
+        // Behandel de gedecodeerde tekst zoals nodig voor je applicatie
+        console.log(`QR code gedetecteerd: ${decodedText}`);
+        
+        // Stop QR Code scanning als je wilt dat het na één scan stopt.
+        html5QrCode.stop().then((ignore) => {
+          // QR Scanning is gestopt.
+        }).catch((err) => {
+          // Stoppen is mislukt, mogelijk vanwege een fout
+          console.warn('Fout bij het stoppen van QR scanning.', err);
+        });
+    }
 
-    // Als er een fout optreedt (bijv. camera toestemmingen zijn geweigerd)
-    const qrCodeErrorCallback = (errorMessage) => {
-        // Dit wordt aangeroepen bij fouten.
-        console.error(`QR Code no detected, error: ${errorMessage}`);
-    };
-
-    // Start met scannen van de camera.
-    Html5Qrcode.getCameras().then((cameras) => {
-        if (cameras && cameras.length) {
-            html5QrCode.start(
-                cameras[0].id, 
-                config, 
-                qrCodeSuccessCallback, 
-                qrCodeErrorCallback
-            ).catch((err) => {
-                console.error(`Unable to start QR scanner, error: ${err}`);
-            });
-        }
-    }).catch((err) => {
-        console.error(`Unable to get cameras, error: ${err}`);
-    });
+    // Start met het scannen van QR-codes. De camera wordt gestart en begint met scannen.
+    html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess)
+        .catch((err) => {
+            // Foutmeldingen als de camera niet gevonden of gestart kan worden.
+            console.error(`Fout bij het starten van de QR-scanner: ${err}`);
+        });
 }
-
-// Zorg ervoor dat je de juiste ID hebt voor je videocontainer.
-// In dit voorbeeld gebruiken we 'qr-reader' als ID voor de container waar de camera-invoer wordt getoond.
