@@ -1,3 +1,6 @@
+// nextinuit.js
+// This script assumes the objectDatabase is already populated from the database.js script.
+
 document.addEventListener('DOMContentLoaded', function () {
     const startButton = document.getElementById('start-button');
     const stopButton = document.getElementById('stop-button');
@@ -27,8 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function startQRScanner() {
         html5QrCode = new Html5Qrcode("qr-reader");
         const readerWidth = qrReaderElement.offsetWidth;
-        // The following line may still contain an error regarding the qrboxSize calculation.
-        // It should be corrected to ensure it fits within the readerWidth.
         const qrboxSize = Math.min(300, readerWidth);
         const config = { fps: 10, qrbox: qrboxSize };
 
@@ -42,21 +43,16 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             // Execute further actions after a successful scan
-            const scannedId = parseInt(decodedText);
-            // Assuming objectDatabase is available in this scope:
+            // Adjusted to account for the new ID structure
+            const scannedId = `${new_id_base}${String(decodedText).padStart(5, '0')}`;
             const objectIndex = objectDatabase.findIndex(obj => obj.id === scannedId);
             if (objectIndex !== -1) {
                 const object = objectDatabase[objectIndex];
-                if (object.status === 'in') {
-                    object.status = 'uit';
-                    object.datumUit = new Date().toISOString().split('T')[0];
-                } else if (object.status === 'uit') {
-                    // Corrected the syntax here for object spread and property assignment
-                    const newObject = {...object, id: objectDatabase.length + 1, datumIn: new Date().toISOString().split('T')[0], datumUit: '', status: 'in'};
-                    objectDatabase.push(newObject);
-                }
+                // Toggle status between 'in' and 'uit'
+                object.status = (object.status === 'in') ? 'uit' : 'in';
+                object.datumUit = new Date().toISOString().split('T')[0];
                 saveToLocalStorage();
-                displayObjects();
+                // Assuming displayObjects will be available and updated to show a confirmation message or update the UI.
             } else {
                 console.error('Object ID not found in the database:', scannedId);
             }
