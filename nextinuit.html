@@ -1,24 +1,29 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Scanner - Objectbeheer</title>
-    <link rel="stylesheet" href="nextinuit.css">
-</head>
-<body>
-    <h1>QR Scanner</h1>
-    <!-- Link naar de admin pagina -->
-    <nav>
-        <a href="nextinuitadmin.html">login</a>
-    </nav>
-    <!-- QR-scanner sectie -->
-    <section id="qr-scanner">
-        <div id="qr-reader" style="width: 300px; height: 300px;"></div>
-    </section>
-    
-    <!-- Scripts voor de QR-scanner functionaliteit -->
-    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@latest/dist/html5-qrcode.min.js"></script>
-    <script src="nextinuit.js"></script>
-</body>
-</html>
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+nav {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#qr-scanner {
+    display: flex;
+    justify-content: center;
+}
+
+#qr-reader {
+    max-width: 300px; /* Of een andere waarde die geschikt is voor de meeste mobiele apparaten */
+    width: 100%; /* Neemt de maximale breedte in tot 300px */
+    height: auto; /* Hoogte automatisch om de aspect ratio te behouden */
+}
+
+/* Overige stijlen behouden zoals ze waren */
