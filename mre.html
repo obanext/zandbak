@@ -2,15 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Scanner MRE</title>
+    <title>Minimal QR Scanner</title>
+    <style>
+        #qr-reader {
+            width: 300px;
+            height: 300px;
+            margin: auto;
+        }
+        button {
+            display: block;
+            margin: 15px auto;
+        }
+    </style>
 </head>
 <body>
-    <video id="qr-video" style="display:none;"></video>
-    <canvas id="qr-canvas" style="width: 500px; height: 500px;"></canvas>
-    <script src="mre.js"></script>
-<script type="text/javascript" src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
+    <h1>QR Scanner Test</h1>
+    <div id="qr-reader"></div>
+    <button id="start-button">Start QR-scanner</button>
+    <button id="stop-button" style="display:none;">Stop QR-scanner</button>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@latest/dist/html5-qrcode.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
