@@ -13,10 +13,6 @@ body {
     margin: 0;
     padding: 20px;
     background-color: #9b43fb;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
 }
 
 h1 {
@@ -56,29 +52,40 @@ section {
     margin: 0 auto;
 }
 
-#qr-reader, #placeholder-image {
+#qr-reader {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    min-height: 310px;
+    margin: 10px auto;
+    display: block;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+}
+
+#placeholder-image {
     max-width: 300px;
     height: auto;
     margin: 10px auto;
     display: block;
-    border: 1px solid white;
-    border-radius: 8px;
 }
 
-button, .custom-file-upload {
-    display: inline-block;
-    margin: 10px auto;
+button {
+    display: block;
+    margin: 30px auto;
     padding: 10px 20px;
     font-size: 16px;
     color: white;
-    background-color: #0275d8;
-    border: 1px solid white;
+    background-color: #9b43fb;
+    border: 1;
+	border-color: white;
     border-radius: 4px;
     cursor: pointer;
-    font-family: 'AvenirBlack', 'Arial', sans-serif; /* Aangepast naar Avenir Black */
+	 font-family: 'AvenirBlack', 'Arial', sans-serif;
 }
 
-button:hover, .custom-file-upload:hover {
+button:hover {
     background-color: #0056b3;
 }
 
@@ -94,3 +101,24 @@ button:hover, .custom-file-upload:hover {
     border-radius: 4px;
     background-color: #fafafa;
 }
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #9b43fb;
+    border: 1px solid white;
+    border-radius: 4px;
+    cursor: pointer;
+    
+}
+
+.custom-file-upload:hover {
+    background-color: #0056b3;
+	
+}
+.button-container {
+    display: flex;
+    justify-content: center; /* Horizontaal centreren */
+    align-items: center; /* Verticaal centreren */
+   
