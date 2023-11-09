@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Placeholder image element
     const placeholderImage = document.createElement('img');
     placeholderImage.id = 'placeholder-image';
-    placeholderImage.src = 'path-to-your-placeholder-image.jpg'; // Vervang met de URL van je afbeelding
+    placeholderImage.src = 'nextxbb.png'; 
     placeholderImage.alt = 'Start Scanner';
     placeholderImage.style.cursor = 'pointer';
     placeholderImage.style.display = 'block'; // Show by default
