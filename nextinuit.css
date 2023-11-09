@@ -12,34 +12,27 @@ body {
     font-family: 'AvenirBlack', 'Arial', sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #f4f4f4;
+    background-color: #9b43fb;
 }
 
 h1 {
-    color: #333;
+    color: white;
     text-align: center;
     margin-bottom: 20px;
 }
 
 nav {
-    text-align: center;
-    margin-bottom: 20px;
+    position: absolute; /* or 'fixed' if you want it to stay in place on scroll */
+    top: 0;
+    right: 0;
+    margin: 20px; /* Adjust as needed for spacing from the corner */
 }
 
 nav a {
-    font-family: 'AvenirLight', 'Arial', sans-serif; /* Using Avenir Light for navigation items */
-    color: #0275d8;
+    font-family: 'AvenirLight', 'Arial', sans-serif;
+    color: white;
     text-decoration: none;
     padding: 8px 15px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    background-color: #f8f9fa;
-    transition: all 0.3s ease-in-out;
-}
-
-nav a:hover {
-    background-color: #e7e7e7;
-    border-color: #ddd;
 }
 
 section {
