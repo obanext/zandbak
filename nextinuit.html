@@ -1,4 +1,4 @@
-t<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,20 +7,19 @@ t<!DOCTYPE html>
     <link rel="stylesheet" href="nextinuit.css">
 </head>
 <body>
-    <nav>
-        <a href="nextinuitadmin.html">login</a>
-    </nav>
-    <h1>check in / check out</h1>
-    <section id="qr-scanner">
-        <img id="overlay-image" src="nextxbb.png" alt="Start Scanner" />
-        <div id="qr-reader" style="display: none;"></div>
-        
-        <button id="start-button" style="display: none;">scan qr-code</button>
-        <button id="stop-button" style="display:none;">stop scan</button>
-    </section>
-    
-    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@latest/dist/html5-qrcode.min.js"></script>
-    <script src="nextinuitdatabase.js"></script>
-    <script src="nextinuit.js"></script>
+<nav>
+    <a href="nextinuitadmin.html">login</a>
+</nav>
+<h1>check in / check out</h1>
+<section id="qr-scanner">
+    <div id="qr-reader" style="display: none;"></div>
+    <img id="placeholder-image" src="nextxbb.png" alt="Start Scanner" style="cursor: pointer; width: 300px; height: auto;">
+    <button id="start-button">scan qr-code</button>
+    <button id="stop-button" style="display:none;">stop scan</button>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/html5-qrcode@latest/dist/html5-qrcode.min.js"></script>
+<script src="nextinuitdatabase.js"></script>
+<script src="nextinuit.js"></script>
 </body>
 </html>
