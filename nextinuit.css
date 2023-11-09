@@ -1,97 +1,91 @@
-// nextinuit.js
-document.addEventListener('DOMContentLoaded', function () {
-    const startButton = document.getElementById('start-button');
-    const stopButton = document.getElementById('stop-button');
-    const qrReaderElement = document.getElementById('qr-reader');
-    let html5QrCode;
+@font-face {
+    font-family: 'AvenirBlack';
+    src: url('https://obanext.github.io/zandbak/Avenir%20Black.ttf') format('truetype');
+}
 
-    // Placeholder image element
-    const placeholderImage = document.createElement('img');
-    placeholderImage.id = 'placeholder-image';
-    placeholderImage.src = 'path-to-your-placeholder-image.jpg'; // Replace with your image's URL
-    placeholderImage.alt = 'Start Scanner';
-    placeholderImage.style.cursor = 'pointer';
-    placeholderImage.style.display = 'block'; // Show by default
-    qrReaderElement.parentNode.insertBefore(placeholderImage, qrReaderElement);
+@font-face {
+    font-family: 'AvenirLight';
+    src: url('https://obanext.github.io/zandbak/Avenir%20Light.ttf') format('truetype');
+}
 
-    startButton.addEventListener('click', function () {
-        startButton.style.display = 'none';
-        stopButton.style.display = 'block';
-        qrReaderElement.style.display = 'block';
-        placeholderImage.style.display = 'none';
-        if (qrReaderElement) {
-            startQRScanner();
-        }
-    });
+body {
+    font-family: 'AvenirBlack', 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #9b43fb;
+}
 
-    stopButton.addEventListener('click', function () {
-        stopButton.style.display = 'none';
-        startButton.style.display = 'block';
-        qrReaderElement.style.display = 'none';
-        placeholderImage.style.display = 'block';
-        if (html5QrCode) {
-            html5QrCode.stop().then(() => {
-                console.log("QR scanning stopped.");
-            }).catch((err) => {
-                console.error(`Failed to stop QR scanner: ${err}`);
-            });
-        }
-    });
+h1 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-    placeholderImage.addEventListener('click', function () {
-        startButton.click();
-    });
+nav {
+    position: absolute; /* or 'fixed' if you want it to stay in place on scroll */
+    top: 0;
+    right: 0;
+    margin: 20px; /* Adjust as needed for spacing from the corner */
+}
 
-    function startQRScanner() {
-        html5QrCode = new Html5Qrcode("qr-reader");
-        const readerWidth = qrReaderElement.offsetWidth;
-        const qrboxSize = Math.min(300, readerWidth);
-        const config = { fps: 10, qrbox: qrboxSize };
+nav a {
+    font-family: 'AvenirLight', 'Arial', sans-serif;
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+}
 
-        function onScanSuccess(decodedText, decodedResult) {
-            console.log(`QR code detected: ${decodedText}`);
-            html5QrCode.stop().then(() => {
-                console.log("QR scanning stopped after successful scan.");
-                stopButton.click();
-            }).catch((err) => {
-                console.error(`Failed to stop QR scanner: ${err}`);
-            });
+section {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-            // Process the scanned QR code
-            const scannedId = decodedText;
-            const objectIndex = objectDatabase.findIndex(obj => obj.id === scannedId && obj.status === 'in');
+#qr-scanner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-            if (objectIndex !== -1) {
-                const object = objectDatabase[objectIndex];
-                object.status = 'uit';
-                object.datumUit = new Date().toISOString().split('T')[0];
-                saveToLocalStorage();
-            } else {
-                const originalObject = objectDatabase.find(obj => obj.id === scannedId);
-                if (originalObject) {
-                    const newObject = {
-                        id: originalObject.id,
-                        titel: originalObject.titel,
-                        omschrijving: originalObject.omschrijving,
-                        datumIn: new Date().toISOString().split('T')[0],
-                        datumUit: '',
-                        status: 'in'
-                    };
-                    objectDatabase.push(newObject);
-                    saveToLocalStorage();
-                } else {
-                    console.error('Object ID not found in the database:', scannedId);
-                }
-            }
-        }
+#qr-reader {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    min-height: 310px;
+    margin: auto;
+    display: block;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+}
 
-        function onScanFailure(error) {
-            console.error(`QR scan error: ${error}`);
-        }
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #0275d8;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
-        html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
-            .catch((err) => {
-                console.error(`Error in starting the QR scanner: ${err}`);
-            });
-    }
-});
+button:hover {
+    background-color: #0056b3;
+}
+
+.object-list-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.object-item {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
