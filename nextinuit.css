@@ -22,10 +22,10 @@ h1 {
 }
 
 nav {
-    position: absolute; /* or 'fixed' if you want it to stay in place on scroll */
+    position: absolute;
     top: 0;
     right: 0;
-    margin: 20px; /* Adjust as needed for spacing from the corner */
+    margin: 20px;
 }
 
 nav a {
@@ -47,6 +47,9 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 #qr-reader {
@@ -54,11 +57,18 @@ section {
     width: 100%;
     height: auto;
     min-height: 310px;
-    margin: auto;
+    margin: 10px auto;
     display: block;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+}
+
+#placeholder-image {
+    max-width: 300px;
+    height: auto;
+    margin: 10px auto;
+    display: block;
 }
 
 button {
