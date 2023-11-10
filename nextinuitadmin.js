@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     displayObjects();
     document.getElementById('objectForm').addEventListener('submit', addObject);
     document.getElementById('csvFileInput').addEventListener('change', importCsv);
-    // Toevoegen van event listener voor de zoekfunctie.
     document.getElementById('search-button').addEventListener('click', performSearch);
+    document.getElementById('clear-button').addEventListener('click', clearSearch);
 });
 
 function addObject(e) {
@@ -25,10 +25,10 @@ function addObject(e) {
     e.target.reset();
 }
 
-function displayObjects() {
+function displayObjects(objects = objectDatabase) {
     const listContainer = document.getElementById('object-lijst');
     listContainer.innerHTML = '';
-    objectDatabase.forEach(obj => {
+    objects.forEach(obj => {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'object-item';
         itemDiv.textContent = `ID: ${obj.id} Titel: ${obj.titel} Datum In: ${obj.datumIn} Datum Uit: ${obj.datumUit} Status: ${obj.status}`;
@@ -36,7 +36,7 @@ function displayObjects() {
     });
 }
 
-function importCsv() {
+function importCsv(e) {
     const fileInput = document.getElementById('csvFileInput');
     const file = fileInput.files[0];
     if (file) {
@@ -89,6 +89,10 @@ function convertToCSV(objArray) {
     return csvStr;
 }
 
+function saveToLocalStorage() {
+    localStorage.setItem('objectDatabase', JSON.stringify(objectDatabase));
+}
+
 // Nieuwe filterfuncties
 function filterById(id) {
     return objectDatabase.filter(obj => obj.id.toLowerCase().includes(id.toLowerCase()));
@@ -128,15 +132,12 @@ function performSearch() {
     displayObjects(results);
 }
 
-// Functie om de lokale opslag te updaten met de huidige objectDatabase
-function saveToLocalStorage() {
-    localStorage.setItem('objectDatabase', JSON.stringify(objectDatabase));
+// Wisfunctie om zoekvelden te legen en de volledige lijst weer te geven
+function clearSearch() {
+    document.getElementById('search-id').value = '';
+    document.getElementById('search-title').value = '';
+    document.getElementById('status-in').checked = false;
+    document.getElementById('status-uit').checked = false;
+    displayObjects(); // Toont alle objecten
 }
 
-// Functie om de lokale opslag te controleren en te laden bij het starten
-function loadFromLocalStorage() {
-    const storedObjects = localStorage.getItem('objectDatabase');
-    if (storedObjects) {
-        objectDatabase = JSON.parse(storedObjects);
-    }
-}
