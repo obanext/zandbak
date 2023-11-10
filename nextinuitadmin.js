@@ -1,92 +1,61 @@
-const new_id_base = 'nextinuit00000';
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>objectbeheer</title>
+    <link rel="stylesheet" href="nextinuit.css">
+</head>
+<body>
+<nav>
+    <a href="nextinuitadmin.html">qr-scanner</a>
+</nav>
+<h1>objectbeheer</h1>
 
-document.addEventListener('DOMContentLoaded', () => {
-    displayObjects();
-    document.getElementById('objectForm').addEventListener('submit', addObject);
-    document.getElementById('csvFileInput').addEventListener('change', importCsv); // Gewijzigd
-});
+<!-- Object Toevoegen Formulier -->
+<section id="object-toevoegen">
+    <h2>object toevoegen</h2>
+    <form id="objectForm">
+        <label for="titel">Titel:</label>
+        <input type="text" id="titel" name="titel" required>
+        <button type="submit">object toevoegen</button>
+    </form>
+</section>
 
-function addObject(e) {
-    e.preventDefault();
-    const titel = document.getElementById('titel').value;
-    const datumIn = new Date().toISOString().split('T')[0];
-    const newObject = {
-        id: `${new_id_base}${String(objectDatabase.length + 1).padStart(5, '0')}`,
-        titel: titel,
-        datumIn: datumIn,
-        datumUit: '',
-        status: 'in'
-    };
-    objectDatabase.push(newObject);
-    saveToLocalStorage();
-    displayObjects();
-    e.target.reset();
-}
+<!-- Zoek- en filtersectie -->
+<section id="search-and-filter">
+    <label for="search-id">Zoeken op ID:</label>
+    <input type="text" id="search-id" placeholder="nextinuitxxxxxxxxxx">
 
-function displayObjects() {
-    const listContainer = document.getElementById('object-lijst');
-    listContainer.innerHTML = '';
-    objectDatabase.forEach(obj => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'object-item';
-        itemDiv.textContent = `ID: ${obj.id} Titel: ${obj.titel} Datum In: ${obj.datumIn} Datum Uit: ${obj.datumUit} Status: ${obj.status}`;
-        listContainer.appendChild(itemDiv);
-    });
-}
+    <label for="search-titel">Zoeken op Titel:</label>
+    <input type="text" id="search-titel" placeholder="Malcolm X">
 
-function importCsv() {
-    const fileInput = document.getElementById('csvFileInput');
-    const file = fileInput.files[0];
+    <label for="status-in">Status In</label>
+    <input type="radio" id="status-in" name="status-filter" value="in">
+    
+    <label for="status-uit">Status Uit</label>
+    <input type="radio" id="status-uit" name="status-filter" value="uit">
 
-    if (file) {
-        const reader = new FileReader();
-        reader.readAsText(file);
-        reader.onload = function(event) {
-            const csvData = event.target.result;
-            objectDatabase = parseCsv(csvData); // Overschrijft de huidige database
-            saveToLocalStorage(); // Opslaan in lokale opslag
-            displayObjects(); // Update de weergave
-        };
-    } else {
-        alert('Geen bestand geselecteerd');
-    }
-}
+    <button onclick="performSearch()">Zoek</button>
+</section>
 
-function parseCsv(data) {
-    const csvRows = data.split(/\r\n|\n/); // Splits de rijen
-    const headers = csvRows[0].split(','); // Haal de headers op
+<!-- Object Lijst Weergave -->
+<section id="object-lijst">
+    <h2>objectenlijst</h2>
+    <div class="object-list-container">
+        <!-- Dynamisch gegenereerde object-items zullen hier ingevoegd worden -->
+    </div>
+</section>
 
-    return csvRows.slice(1).map(row => {
-        const values = row.split(',');
-        const obj = headers.reduce((object, header, index) => {
-            object[header] = values[index];
-            return object;
-        }, {});
-        return obj;
-    });
-}
+<button onclick="downloadObjectAsCsv(objectDatabase, 'objecten')">export CSV</button>
+<div class="button-container">
+    <label for="csvFileInput" class="custom-file-upload">
+        import CSV
+    </label>
+    <input type="file" id="csvFileInput" accept=".csv" style="display: none;" />
+</div>
 
-function downloadObjectAsCsv(exportObj, exportName) {
-    const csvStr = convertToCSV(exportObj);
-    const dataUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvStr);
-    const linkElement = document.createElement('a');
-    linkElement.setAttribute('href', dataUri);
-    linkElement.setAttribute('download', exportName + '.csv');
-    document.body.appendChild(linkElement);
-    linkElement.click();
-    document.body.removeChild(linkElement);
-}
-
-function convertToCSV(objArray) {
-    const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
-    let csvStr = '';
-    // Verwijder 'omschrijving' van de headers
-    const headers = Object.keys(array[0]).filter(header => header !== 'omschrijving');
-    csvStr += headers.join(',') + '\r\n';
-    for (const row of array) {
-        // Verwijder 'omschrijving' van elke rij
-        const filteredRow = headers.map(header => row[header]);
-        csvStr += filteredRow.join(',') + '\r\n';
-    }
-    return csvStr;
-}
+<script src="nextinuitdatabase.js"></script>
+<script src="nextinuitadmin.js"></script>
+</body>
+</html>
