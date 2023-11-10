@@ -70,6 +70,14 @@ section {
     margin: 10px auto;
     display: block;
 }
+#scan-result {
+    color: white;         
+    margin-top: 20px;     
+    margin-bottom: 20px;  
+    font-size: 1.5em;    
+    padding: 10px;        /
+    background-color: #333;
+}
 
 button {
     display: block;
@@ -121,4 +129,6 @@ button:hover {
     display: flex;
     justify-content: center; /* Horizontaal centreren */
     align-items: center; /* Verticaal centreren */
+
+
    
