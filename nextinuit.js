@@ -10,14 +10,14 @@ document.addEventListener('DOMContentLoaded', function () {
     placeholderImage.src = 'nextxbb.png';
     placeholderImage.alt = 'Start Scanner';
     placeholderImage.style.cursor = 'pointer';
-    placeholderImage.style.display = 'block'; // Show by default
+    placeholderImage.style.display = 'block'; 
     qrReaderElement.parentNode.insertBefore(placeholderImage, qrReaderElement);
 
     startButton.addEventListener('click', function () {
         startButton.style.display = 'none';
         stopButton.style.display = 'block';
         qrReaderElement.style.display = 'block';
-        placeholderImage.style.display = 'none'; // Verberg de placeholder afbeelding
+        placeholderImage.style.display = 'none'; 
         if (qrReaderElement) {
             startQRScanner();
         }
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         stopButton.style.display = 'none';
         startButton.style.display = 'block';
         qrReaderElement.style.display = 'none';
-        placeholderImage.style.display = 'block'; // Toon de placeholder afbeelding
+        placeholderImage.style.display = 'block'; 
         if (html5QrCode) {
             html5QrCode.stop().then(() => {
                 console.log("QR scanning stopped.");
@@ -57,8 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(`QR code detected: ${decodedText}`);
         html5QrCode.stop().then(() => {
             console.log("QR scanning stopped after successful scan.");
-            stopButton.click(); // Simuleer een klik op de stop-knop
-            // Update de resultaten display logica hier
+            stopButton.click(); 
             const resultElement = document.getElementById('scan-result');
             const objectIndex = objectDatabase.findIndex(obj => obj.id === decodedText);
             if (objectIndex !== -1) {
@@ -66,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (object.status === 'in') {
                     object.status = 'uit';
                     object.datumUit = new Date().toISOString().split('T')[0];
-                    resultElement.textContent = `Enjoy: [${object.titel}]`;
+                    resultElement.textContent = `Enjoy: ${object.titel}`;
                 } else {
                     const newObject = {
                         id: object.id,
@@ -77,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         status: 'in'
                     };
                     objectDatabase.push(newObject);
-                    resultElement.textContent = `Thanks for returning [${object.titel}]`;
+                    resultElement.textContent = `Thanks for returning: ${object.titel}`;
                 }
                 saveToLocalStorage();
             } else {
@@ -93,6 +92,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Set initial visibility state
-    qrReaderElement.style.display = 'none'; // Verberg de QR-reader element
-    placeholderImage.style.display = 'block'; // Toon de placeholder afbeelding
+    qrReaderElement.style.display = 'none'; 
+    placeholderImage.style.display = 'block'; 
 });
