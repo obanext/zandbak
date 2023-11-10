@@ -22,13 +22,13 @@
     </form>
 </section>
 
-<!-- Zoek- en filtersectie -->
+<!-- Zoek- en Filtersectie -->
 <section id="search-and-filter">
     <label for="search-id">Zoeken op ID:</label>
     <input type="text" id="search-id" placeholder="nextinuitxxxxxxxxxx">
 
-    <label for="search-titel">Zoeken op Titel:</label>
-    <input type="text" id="search-titel" placeholder="Malcolm X">
+    <label for="search-title">Zoeken op Titel:</label>
+    <input type="text" id="search-title" placeholder="Malcolm X">
 
     <label for="status-in">Status In</label>
     <input type="radio" id="status-in" name="status-filter" value="in">
@@ -36,7 +36,8 @@
     <label for="status-uit">Status Uit</label>
     <input type="radio" id="status-uit" name="status-filter" value="uit">
 
-    <button onclick="performSearch()">Zoek</button>
+    <button id="search-button">Zoek</button>
+    <button id="clear-button">Wis</button>
 </section>
 
 <!-- Object Lijst Weergave -->
