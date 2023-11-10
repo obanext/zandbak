@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <title>objectbeheer</title>
     <link rel="stylesheet" href="nextinuit.css">
 </head>
@@ -24,21 +25,26 @@
 
 <!-- Zoek- en Filtersectie -->
 <section id="search-and-filter">
-    <label for="search-id">ID:</label>
-    <input type="text" id="search-id" placeholder="nextinuitxxxxxxxxxx">
-
-    <label for="search-title">Titel:</label>
-    <input type="text" id="search-title" placeholder="Malcolm X">
-
-    <label for="status-in">In</label>
-    <input type="radio" id="status-in" name="status-filter" value="in">
-    
-    <label for="status-uit">Uit</label>
-    <input type="radio" id="status-uit" name="status-filter" value="uit">
-
-    <button id="search-button">Zoek</button>
-    <button id="clear-button">Wis</button>
-</section>
+    <div class="search-fields-container">
+        <div class="search-field">
+            <label for="search-id">ID:</label>
+            <input type="text" id="search-id" placeholder="nextinuitxxxxxxxxxx">
+        </div>
+        <div class="search-field">
+            <label for="search-title">titel:</label>
+            <input type="text" id="search-title" placeholder="Malcolm X">
+        </div>
+        <div class="status-filter">
+            <label for="status-in">in</label>
+            <input type="radio" id="status-in" name="status-filter" value="in">
+            <label for="status-uit">uit</label>
+            <input type="radio" id="status-uit" name="status-filter" value="uit">
+        </div>
+    </div>
+    <div class="search-buttons">
+        <button id="search-button">zoek</button>
+        <button id="clear-button">wis</button>
+    </div>
 
 <!-- Object Lijst Weergave -->
 <section id="object-lijst">
