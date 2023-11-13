@@ -84,7 +84,6 @@ section {
 #object-toevoegen input {
     display: block; 
     margin-bottom: 5px; 
-}	
 }
 
 #object-lijst .object-list-container {
@@ -125,10 +124,15 @@ button:hover,
     padding: 10px;
     background-color: #333;
 }
-#placeholder-image {
-  max-width: 100%; 
-  max-height: 300px; 
-  display: block; 
-  cursor: pointer; 
-  object-fit: contain; 
+
+/* CSS changes to center the scan qr-code button and add spacing */
+#qr-scanner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#start-button {
+    margin-top: 20px; /* Adjust the value to increase the space between the image and the button */
+    width: auto; /* Ensures the button does not stretch */
 }
