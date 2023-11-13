@@ -3,54 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enquête Invoer</title>
+    <title>Enquête Beheer</title>
     <link rel="stylesheet" href="nextinuit.css">
 </head>
 <body>
 <nav>
-    <a href="nextinuitadmin.html">login</a>
-<a href="nextinuit.html">qr-scannen</a>
+    <a href="nextinuit.html">qr-scanner</a>
+<a href="nextinuitadmin.html">login</a>
 </nav>
-<h1>enquête Invoer</h1>
+<h1>Enquête Beheer</h1>
 
 <!-- Enquête Invoeren Formulier -->
 <section id="enquete-toevoegen">
     <h2>Enquête invoeren</h2>
     <form id="enqueteForm">
-        <label for="lid-van-oba">Ben je lid van de OBA?</label>
         <div>
-            <input type="radio" id="lid-ja" name="lid-van-oba" value="ja" required>
+            <label>Ben je lid van de OBA?</label>
             <label for="lid-ja">Ja</label>
-            <input type="radio" id="lid-nee" name="lid-van-oba" value="nee">
+            <input type="radio" id="lid-ja" name="lid-van-oba" value="ja" required>
             <label for="lid-nee">Nee</label>
+            <input type="radio" id="lid-nee" name="lid-van-oba" value="nee">
         </div>
-
-        <label for="mening-over-lenen">Wat vind je van deze manier van lenen?</label>
-        <input type="text" id="mening-over-lenen" name="mening-over-lenen" required>
-
-        <label for="toekomstig-lid">Zou je, nu je dit gebruikt, in toekomst lid willen worden van de OBA?</label>
-        <input type="text" id="toekomstig-lid" name="toekomstig-lid" required>
-
-        <button type="submit">enquête invoeren</button>
+        <div>
+            <label for="mening-over-lenen">Wat vind je van deze manier van lenen?</label>
+            <input type="text" id="mening-over-lenen" name="mening-over-lenen" required>
+        </div>
+        <div>
+            <label for="toekomstig-lid">Zou je, nu je dit gebruikt, in toekomst lid willen worden van de OBA?</label>
+            <input type="text" id="toekomstig-lid" name="toekomstig-lid" required>
+        </div>
+        <button type="submit">Enquête invoeren</button>
     </form>
 </section>
 
 <!-- Enquête Lijst Weergave -->
 <section id="enquete-lijst">
-    <h2>enquête overzicht</h2>
+    <h2>Enquête overzicht</h2>
     <div class="enquete-list-container">
         <!-- Dynamisch gegenereerde enquête-items zullen hier ingevoegd worden -->
     </div>
 </section>
 
-<button onclick="downloadObjectAsCsv(enqueteDatabase, 'enquete' + new Date().toISOString())">export CSV</button>
+<!-- CSV Import/Export -->
 <div class="button-container">
-    <label for="csvFileInput" class="custom-file-upload">
-        import CSV
-    </label>
+    <button onclick="downloadObjectAsCsv(enqueteDatabase, 'enquete' + new Date().toISOString())">Export CSV</button>
+    <label for="csvFileInput" class="custom-file-upload">Import CSV</label>
     <input type="file" id="csvFileInput" accept=".csv" style="display: none;" />
 </div>
 
-<script src="nextinuitenquete.js"></script>
+<script src="inuitenquete.js"></script>
 </body>
 </html>
