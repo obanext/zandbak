@@ -8,8 +8,7 @@
 </head>
 <body>
 <nav>
-    <a href="nextinuit.html">qr-scanner</a>
-<a href="nextinuitadmin.html">login</a>
+    <a href="index.html">Home</a>
 </nav>
 <h1>Enquête Beheer</h1>
 
@@ -46,9 +45,9 @@
 
 <!-- CSV Import/Export -->
 <div class="button-container">
-    <button onclick="downloadObjectAsCsv(enqueteDatabase, 'enquete' + new Date().toISOString())">Export CSV</button>
+    <button id="download-csv">Export CSV</button>
     <label for="csvFileInput" class="custom-file-upload">Import CSV</label>
-    <input type="file" id="csvFileInput" accept=".csv" style="display: none;" />
+    <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="importCsv(event)" />
 </div>
 
 <script src="inuitenquete.js"></script>
