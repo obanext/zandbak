@@ -133,15 +133,14 @@ button:hover,
 }
 
 #start-button {
-    margin-top: 20px;
-    width: auto;
-}
-#qr-scanner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    margin-top: 20px; /* Adjust the value to increase the space between the image and the button */
+    width: auto; /* Ensures the button does not stretch */
 }
 
-#start-button {
-  margin-top: 20px;
-}
+/* CSS to ensure the placeholder image fits within the QR scanner area */
+#placeholder-image {
+  max-width: 100%; /* Ensures the image is not wider than its parent */
+  max-height: 300px; /* Ensures the image is not taller than the QR scanner area */
+  object-fit: contain; /* Ensures the aspect ratio is preserved */
+  width: auto; /* Scales the image width proportionally to the height */
+  height: auto; /* Scales the
