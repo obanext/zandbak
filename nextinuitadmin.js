@@ -75,7 +75,7 @@ function downloadObjectAsCsv(exportObj, exportName) {
     const date = now.toISOString().split('T')[0]; 
     const time = now.toTimeString().split(' ')[0].replace(/:/g, ''); 
 
-    const filename = `${exportName}_${date}[${time}].csv`;
+    const filename = `${exportName}_${date}${time}.csv`;
 
     const linkElement = document.createElement('a');
     linkElement.setAttribute('href', dataUri);
