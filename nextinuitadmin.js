@@ -96,46 +96,56 @@ function importCSVAndGenerateQR() {
     return;
   }
 
-  // Use existing file input element instead of creating a new one
-  fileInput.click();
+  fileInput.click(); // Open the file dialog
 
-  // Change event listener for the file input
   fileInput.onchange = e => {
-    let file = e.target.files[0];
     let busyIndicator = document.getElementById('busyIndicator');
     if (!busyIndicator) {
       busyIndicator = document.createElement('div');
       busyIndicator.id = 'busyIndicator';
-      busyIndicator.innerText = 'Bezig...';
+      busyIndicator.innerText = 'Bezig...'; // Dutch for 'Busy...'
       document.body.appendChild(busyIndicator);
     }
     busyIndicator.style.display = 'block';
 
+    let file = e.target.files[0];
     Papa.parse(file, {
       complete: function(results) {
+        let processedCount = 0; // To keep track of how many QR codes have been processed
+
         if (Array.isArray(results.data)) {
           results.data.forEach((row, index) => {
             if (Array.isArray(row) && row.length > 0 && row[0].trim() !== '') {
-              let qrCode = new QRCode(document.createElement('div'), {
-                text: row[0],
-                width: 128,
-                height: 128,
-                correctLevel: QRCode.CorrectLevel.H
-              });
+              try {
+                let qrCode = new QRCode(document.createElement('div'), {
+                  text: row[0],
+                  width: 128,
+                  height: 128,
+                  correctLevel: QRCode.CorrectLevel.H
+                });
 
-              let canvas = qrCode._oDrawing._elCanvas;
-              let filename = row[0].replace(/\W+/g, '_') + '.png';
+                let canvas = qrCode._oDrawing._elCanvas;
+                let filename = row[0].replace(/\W+/g, '_') + '.png';
 
-              canvas.toBlob(function(blob) {
-                let link = document.createElement('a');
-                link.download = filename;
-                link.href = URL.createObjectURL(blob);
-                link.click();
+                canvas.toBlob(function(blob) {
+                  let link = document.createElement('a');
+                  link.download = filename;
+                  link.href = URL.createObjectURL(blob);
+                  link.click();
 
-                if (index === results.data.length - 1) {
-                  busyIndicator.style.display = 'none';
-                }
-              });
+                  processedCount++;
+                  if (processedCount === results.data.length) {
+                    busyIndicator.style.display = 'none';
+                  }
+                });
+              } catch (error) {
+                console.error('Error generating QR code for row: ', row, error);
+              }
+            } else {
+              processedCount++; // Increment even if the row is not processed
+              if (processedCount === results.data.length) {
+                busyIndicator.style.display = 'none';
+              }
             }
           });
         } else {
@@ -150,7 +160,6 @@ function importCSVAndGenerateQR() {
     });
   };
 }
-
 
 function saveToLocalStorage() {
     localStorage.setItem('objectDatabase', JSON.stringify(objectDatabase));
