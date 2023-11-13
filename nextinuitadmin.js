@@ -89,6 +89,46 @@ function convertToCSV(objArray) {
     return csvStr;
 }
 
+function importCSVAndGenerateQR() {
+  // Create an input element to accept the CSV file
+  let inputElement = document.createElement('input');
+  inputElement.type = 'file';
+  inputElement.accept = '.csv';
+  
+  inputElement.onchange = e => {
+    let file = e.target.files[0];
+    Papa.parse(file, {
+      complete: function(results) {
+        results.data.forEach((row, index) => {
+          if (row.length > 0 && row[0].trim() !== '') {
+            // Generate QR Code for each row
+            let qrCode = new QRCode(document.createElement('div'), {
+              text: row[0],
+              width: 128,
+              height: 128,
+              correctLevel : QRCode.CorrectLevel.H
+            });
+            
+            // Trigger download
+            let canvas = qrCode._oDrawing._elCanvas; // Access the canvas element
+            let filename = row[0].replace(/\W+/g, '_') + '.png'; // Sanitize the string for use as a filename
+            
+            canvas.toBlob(function(blob) {
+              let link = document.createElement('a');
+              link.download = filename;
+              link.href = URL.createObjectURL(blob);
+              link.click();
+            });
+          }
+        });
+      }
+    });
+  };
+
+  // Trigger the file input click event
+  inputElement.click();
+}
+
 function saveToLocalStorage() {
     localStorage.setItem('objectDatabase', JSON.stringify(objectDatabase));
 }
