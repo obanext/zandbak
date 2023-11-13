@@ -96,37 +96,66 @@ function importCSVAndGenerateQR() {
   inputElement.accept = '.csv';
   
   inputElement.onchange = e => {
+    // Display a 'Busy' message
+    let busyIndicator = document.getElementById('busyIndicator');
+    if (!busyIndicator) {
+      busyIndicator = document.createElement('div');
+      busyIndicator.id = 'busyIndicator';
+      busyIndicator.innerText = 'Bezig...'; // Dutch for 'Busy...'
+      document.body.appendChild(busyIndicator);
+    }
+    busyIndicator.style.display = 'block';
+
     let file = e.target.files[0];
     Papa.parse(file, {
       complete: function(results) {
-        results.data.forEach((row, index) => {
-          if (row.length > 0 && row[0].trim() !== '') {
-            // Generate QR Code for each row
-            let qrCode = new QRCode(document.createElement('div'), {
-              text: row[0],
-              width: 128,
-              height: 128,
-              correctLevel : QRCode.CorrectLevel.H
-            });
-            
-            // Trigger download
-            let canvas = qrCode._oDrawing._elCanvas; // Access the canvas element
-            let filename = row[0].replace(/\W+/g, '_') + '.png'; // Sanitize the string for use as a filename
-            
-            canvas.toBlob(function(blob) {
-              let link = document.createElement('a');
-              link.download = filename;
-              link.href = URL.createObjectURL(blob);
-              link.click();
-            });
-          }
-        });
+        // Check if results.data is an array
+        if (Array.isArray(results.data)) {
+          results.data.forEach((row, index) => {
+            // Ensure the row is an array and not empty
+            if (Array.isArray(row) && row.length > 0 && row[0].trim() !== '') {
+              // Generate QR Code for each row
+              let qrCode = new QRCode(document.createElement('div'), {
+                text: row[0],
+                width: 128,
+                height: 128,
+                correctLevel: QRCode.CorrectLevel.H
+              });
+              
+              // Trigger download
+              let canvas = qrCode._oDrawing._elCanvas; // Access the canvas element
+              let filename = row[0].replace(/\W+/g, '_') + '.png'; // Sanitize the string for use as a filename
+              
+              canvas.toBlob(function(blob) {
+                let link = document.createElement('a');
+                link.download = filename;
+                link.href = URL.createObjectURL(blob);
+                link.click();
+
+                // Hide 'Busy' message after the last QR code is generated and downloaded
+                if (index === results.data.length - 1) {
+                  busyIndicator.style.display = 'none';
+                }
+              });
+            }
+          });
+        } else {
+          // If results.data is not an array, handle the error or alert the user
+          console.error('CSV parse did not return a valid array.');
+          busyIndicator.style.display = 'none'; // Hide 'Busy' message if there's an error
+        }
+      },
+      error: function(err) {
+        console.error('Error parsing CSV: ', err);
+        busyIndicator.style.display = 'none'; // Hide 'Busy' message if there's an error
       }
     });
   };
 
   // Trigger the file input click event
   inputElement.click();
+}
+
 }
 
 function saveToLocalStorage() {
