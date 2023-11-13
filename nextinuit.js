@@ -41,18 +41,27 @@ document.addEventListener('DOMContentLoaded', function () {
         startButton.click(); // Simuleer een klik op de start-knop
     });
 
-    function startQRScanner() {
-        html5QrCode = new Html5Qrcode("qr-reader");
-        const readerWidth = qrReaderElement.offsetWidth;
-        const qrboxSize = Math.min(300, readerWidth);
-        const config = { fps: 10, qrbox: qrboxSize };
+  function startQRScanner() {
+    html5QrCode = new Html5Qrcode("qr-reader");
+    const readerWidth = qrReaderElement.offsetWidth;
+    const qrboxSize = Math.min(300, readerWidth);
+    // Ensure the qrboxSize is at least 50px
+    const correctedQrboxSize = Math.max(qrboxSize, 50);
+    const config = {
+        fps: 10,
+        qrbox: { width: correctedQrboxSize, height: correctedQrboxSize }
+    };
 
-        html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
-            .catch((err) => {
-                console.error(`Error in starting the QR scanner: ${err}`);
-            });
-    }
-
+    // Corrected the start method parameters
+    html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
+        .catch((err) => {
+            console.error(`Error in starting the QR scanner: ${err}`);
+            // It's a good idea to also hide the busyIndicator here in case of an error.
+            if (busyIndicator) {
+                busyIndicator.style.display = 'none';
+            }
+        });
+}
     function onScanSuccess(decodedText, decodedResult) {
         console.log(`QR code detected: ${decodedText}`);
         html5QrCode.stop().then(() => {
