@@ -144,3 +144,15 @@ button:hover,
   object-fit: contain; /* Ensures the aspect ratio is preserved */
   width: auto; /* Scales the image width proportionally to the height */
   height: auto; /* Scales the
+
+#busyIndicator {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #000;
+  z-index: 1000;
+  display: none;
+}
