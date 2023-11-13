@@ -69,9 +69,17 @@ function parseCsv(data) {
 function downloadObjectAsCsv(exportObj, exportName) {
     const csvStr = convertToCSV(exportObj);
     const dataUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvStr);
+
+    // Create a date object and format the date and time for the filename
+    const now = new Date();
+    const date = now.toISOString().split('T')[0]; 
+    const time = now.toTimeString().split(' ')[0].replace(/:/g, ''); 
+
+    const filename = `${exportName}_${date}[${time}].csv`;
+
     const linkElement = document.createElement('a');
     linkElement.setAttribute('href', dataUri);
-    linkElement.setAttribute('download', exportName + '.csv');
+    linkElement.setAttribute('download', filename);
     document.body.appendChild(linkElement);
     linkElement.click();
     document.body.removeChild(linkElement);
@@ -103,7 +111,7 @@ function importCSVAndGenerateQR() {
     if (!busyIndicator) {
       busyIndicator = document.createElement('div');
       busyIndicator.id = 'busyIndicator';
-      busyIndicator.innerText = 'Bezig...'; // Dutch for 'Busy...'
+      busyIndicator.innerText = 'Bezig...'; 
       document.body.appendChild(busyIndicator);
     }
     busyIndicator.style.display = 'block';
@@ -111,7 +119,7 @@ function importCSVAndGenerateQR() {
     let file = e.target.files[0];
     Papa.parse(file, {
       complete: function(results) {
-        let processedCount = 0; // To keep track of how many QR codes have been processed
+        let processedCount = 0; 
 
         if (Array.isArray(results.data)) {
           results.data.forEach((row, index) => {
@@ -204,7 +212,7 @@ function performSearch() {
     displayObjects(results);
 }
 
-// Wisfunctie om zoekvelden te legen en de volledige lijst weer te geven
+
 function clearSearch() {
     document.getElementById('search-id').value = '';
     document.getElementById('search-title').value = '';
