@@ -44,20 +44,23 @@ document.addEventListener('DOMContentLoaded', function () {
   function startQRScanner() {
     html5QrCode = new Html5Qrcode("qr-reader");
     const readerWidth = qrReaderElement.offsetWidth;
-    const qrboxSize = Math.min(300, readerWidth);
-    // Ensure the qrboxSize is at least 50px
-    const correctedQrboxSize = Math.max(qrboxSize, 50);
+    const readerHeight = qrReaderElement.offsetHeight; // Toegevoegd om de hoogte van de reader te krijgen
+    // Je kunt hier een specifieke grootte kiezen of een bepaald percentage van de readerWidth/Height gebruiken
+    const qrboxSize = Math.min(readerWidth, readerHeight) - 100; // Verklein de afmeting iets minder dan de reader grootte
+
+    // Zorg ervoor dat de qrboxSize ten minste 100px is, bijvoorbeeld
+    const correctedQrboxSize = Math.max(qrboxSize, 100); // Verhoogd van 50px naar 100px
     const config = {
         fps: 10,
-        qrbox: { width: correctedQrboxSize, height: correctedQrboxSize }
+        qrbox: { width: correctedQrboxSize, height: correctedQrboxSize } // Gebruik de nieuwe grootte hier
     };
 
-    // Corrected the start method parameters
     html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
         .catch((err) => {
             console.error(`Error in starting the QR scanner: ${err}`);
-            
         });
+}
+
 }
    function onScanSuccess(decodedText, decodedResult) {
     console.log(`QR code detected: ${decodedText}`);
