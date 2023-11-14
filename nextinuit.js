@@ -41,25 +41,23 @@ document.addEventListener('DOMContentLoaded', function () {
         startButton.click(); // Simuleer een klik op de start-knop
     });
 
- function startQRScanner() {
+  function startQRScanner() {
     html5QrCode = new Html5Qrcode("qr-reader");
     const readerWidth = qrReaderElement.offsetWidth;
-    const readerHeight = qrReaderElement.offsetHeight;
-    // Instellen op 90% van de kleinst beschikbare dimensie voor een vierkant scangebied
-    const qrboxSize = Math.min(readerWidth, readerHeight) * 0.9;
-
+    const qrboxSize = Math.min(300, readerWidth);
+    // Ensure the qrboxSize is at least 50px
+    const correctedQrboxSize = Math.max(qrboxSize, 50);
     const config = {
         fps: 10,
-        qrbox: { width: qrboxSize, height: qrboxSize }
+        qrbox: { width: correctedQrboxSize, height: correctedQrboxSize }
     };
 
+    // Corrected the start method parameters
     html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
         .catch((err) => {
             console.error(`Error in starting the QR scanner: ${err}`);
+            
         });
-}
-
-
 }
    function onScanSuccess(decodedText, decodedResult) {
     console.log(`QR code detected: ${decodedText}`);
@@ -81,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (object.status === 'in') {
                 object.status = 'uit';
                 object.datumUit = new Date().toISOString().split('T')[0];
-                resultElement.textContent = `Enjoy: ${object.titel}`;
+                resultElement.textContent = `je hebt:${object.titel} geleend`;
             } else {
                 const newObject = {
                     id: object.id,
@@ -92,11 +90,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     status: 'in'
                 };
                 objectDatabase.push(newObject);
-                resultElement.textContent = `Thanks for returning: ${object.titel}`;
+                resultElement.textContent = `Dank voor het terugbrengen van: ${object.titel}`;
             }
             saveToLocalStorage();
         } else {
-            resultElement.textContent = "We don't know this object. Scan again or contact staff";
+            resultElement.textContent = "We weten niet wat dit is. Scan nog een keer of vraag het even";
         }
     }).catch((err) => {
         console.error(`Failed to stop QR scanner: ${err}`);
