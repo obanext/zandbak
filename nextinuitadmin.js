@@ -104,9 +104,12 @@ function importCSVAndGenerateQR() {
         return;
     }
 
-    fileInput.click(); // Open the file dialog
+    // Trigger het openen van het bestandsdialoogvenster
+    fileInput.click();
 
+    // Definieer de event handler voor het 'change' event van de file input
     fileInput.onchange = e => {
+        // Creëer of vind de busyIndicator om aan te geven dat de verwerking bezig is
         let busyIndicator = document.getElementById('busyIndicator');
         if (!busyIndicator) {
             busyIndicator = document.createElement('div');
@@ -116,71 +119,75 @@ function importCSVAndGenerateQR() {
         }
         busyIndicator.style.display = 'block';
 
+        // Verkrijg het geselecteerde bestand
         let file = e.target.files[0];
+        // Parse het bestand met PapaParse
         Papa.parse(file, {
             complete: function(results) {
-                let processedCount = 0; // To keep track of how many QR codes have been processed
+                let processedCount = 0; // Houd bij hoeveel QR-codes zijn verwerkt
 
-                if (Array.isArray(results.data)) {
-                    results.data.forEach((row, index) => {
-                        if (Array.isArray(row) && row.length > 0 && row[0].trim() !== '') {
-                            try {
-                                // Generate QR Code for each row using qrcode-generator
-                                let qr = qrcode(0, 'L');
-                                qr.addData(row[0]);
-                                qr.make();
-                                let imgTag = qr.createImgTag(4); // Creates an <img> tag as a string
+                // Loop door de data die door PapaParse is teruggegeven
+                results.data.forEach((row, index) => {
+                    // Controleer of de rij geldige data bevat
+                    if (Array.isArray(row) && row.length > 0 && row[0].trim() !== '') {
+                        try {
+                            // Genereer een QR-code voor elke rij
+                            let qr = qrcode(0, 'L');
+                            qr.addData(row[0]);
+                            qr.make();
+                            let imgTag = qr.createImgTag(4); // Maak een <img> tag als string
 
-                                // Convert image tag to a downloadable image
-                                let tempDiv = document.createElement('div');
-                                tempDiv.innerHTML = imgTag;
-                                let imgElement = tempDiv.firstChild;
-                                let canvas = document.createElement('canvas');
-                                let context = canvas.getContext('2d');
-                                let image = new Image();
-                                image.onload = function() {
-                                    canvas.width = image.width;
-                                    canvas.height = image.height;
-                                    context.drawImage(image, 0, 0);
-                                    canvas.toBlob(function(blob) {
-                                        let filename = row[0].replace(/\W+/g, '_') + '.png';
-                                        let link = document.createElement('a');
-                                        link.download = filename;
-                                        link.href = URL.createObjectURL(blob);
-                                        link.click();
-                                        processedCount++;
-                                        if (processedCount === results.data.length) {
-                                            busyIndicator.style.display = 'none';
-                                        }
-                                    });
-                                };
-                                image.src = imgElement.src;
-                            } catch (error) {
-                                console.error('Error generating QR code for row: ', row, error);
-                                processedCount++;
-                                if (processedCount === results.data.length) {
-                                    busyIndicator.style.display = 'none';
-                                }
-                            }
-                        } else {
-                            processedCount++; // Increment even if the row is not processed
+                            // Zet de image tag om naar een downloadbaar afbeeldingselement
+                            let tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = imgTag;
+                            let imgElement = tempDiv.firstChild;
+                            let canvas = document.createElement('canvas');
+                            let context = canvas.getContext('2d');
+                            let image = new Image();
+                            image.onload = function() {
+                                canvas.width = image.width;
+                                canvas.height = image.height;
+                                context.drawImage(image, 0, 0);
+                                canvas.toBlob(function(blob) {
+                                    let filename = row[0].replace(/\W+/g, '_') + '.png';
+                                    let link = document.createElement('a');
+                                    link.download = filename;
+                                    link.href = URL.createObjectURL(blob);
+                                    link.click(); // Initieer de download
+                                    processedCount++;
+                                    // Als alle QR-codes zijn verwerkt, verberg de busyIndicator
+                                    if (processedCount === results.data.length) {
+                                        busyIndicator.style.display = 'none';
+                                    }
+                                });
+                            };
+                            image.src = imgElement.src;
+                        } catch (error) {
+                            console.error('Error generating QR code for row: ', row, error);
+                            processedCount++;
+                            // Verberg de busyIndicator als er een fout optreedt
                             if (processedCount === results.data.length) {
                                 busyIndicator.style.display = 'none';
                             }
                         }
-                    });
-                } else {
-                    console.error('CSV parse did not return a valid array.');
-                    busyIndicator.style.display = 'none';
-                }
+                    } else {
+                        processedCount++; // Incrementeer ook als de rij niet verwerkt wordt
+                        // Verberg de busyIndicator als alle rijen zijn gecontroleerd
+                        if (processedCount === results.data.length) {
+                            busyIndicator.style.display = 'none';
+                        }
+                    }
+                });
             },
             error: function(err) {
                 console.error('Error parsing CSV: ', err);
+                // Verberg de busyIndicator in geval van een fout
                 busyIndicator.style.display = 'none';
             }
         });
     };
 }
+
 
 
 // Nieuwe filterfuncties
