@@ -59,39 +59,48 @@ document.addEventListener('DOMContentLoaded', function () {
             
         });
 }
-    function onScanSuccess(decodedText, decodedResult) {
-        console.log(`QR code detected: ${decodedText}`);
-        html5QrCode.stop().then(() => {
-            console.log("QR scanning stopped after successful scan.");
-            stopButton.click(); 
-            const resultElement = document.getElementById('scan-result');
-            const objectIndex = objectDatabase.findIndex(obj => obj.id === decodedText);
-            if (objectIndex !== -1) {
-                const object = objectDatabase[objectIndex];
-                if (object.status === 'in') {
-                    object.status = 'uit';
-                    object.datumUit = new Date().toISOString().split('T')[0];
-                    resultElement.textContent = `Enjoy: ${object.titel}`;
-                } else {
-                    const newObject = {
-                        id: object.id,
-                        titel: object.titel,
-                        omschrijving: object.omschrijving,
-                        datumIn: new Date().toISOString().split('T')[0],
-                        datumUit: '',
-                        status: 'in'
-                    };
-                    objectDatabase.push(newObject);
-                    resultElement.textContent = `Thanks for returning: ${object.titel}`;
-                }
-                saveToLocalStorage();
+   function onScanSuccess(decodedText, decodedResult) {
+    console.log(`QR code detected: ${decodedText}`);
+    html5QrCode.stop().then(() => {
+        console.log("QR scanning stopped after successful scan.");
+        stopButton.click(); 
+        const resultElement = document.getElementById('scan-result');
+
+        // Zoek naar het laatste record met het overeenkomende ID.
+        const objectIndices = objectDatabase
+            .map((obj, index) => ({ id: obj.id, index }))
+            .filter(obj => obj.id === decodedText)
+            .map(obj => obj.index);
+
+        const lastObjectIndex = objectIndices.length > 0 ? objectIndices[objectIndices.length - 1] : -1;
+
+        if (lastObjectIndex !== -1) {
+            const object = objectDatabase[lastObjectIndex];
+            if (object.status === 'in') {
+                object.status = 'uit';
+                object.datumUit = new Date().toISOString().split('T')[0];
+                resultElement.textContent = `Enjoy: ${object.titel}`;
             } else {
-                resultElement.textContent = "We don't know this object. Scan again or contact staff";
+                const newObject = {
+                    id: object.id,
+                    titel: object.titel,
+                    omschrijving: object.omschrijving,
+                    datumIn: new Date().toISOString().split('T')[0],
+                    datumUit: '',
+                    status: 'in'
+                };
+                objectDatabase.push(newObject);
+                resultElement.textContent = `Thanks for returning: ${object.titel}`;
             }
-        }).catch((err) => {
-            console.error(`Failed to stop QR scanner: ${err}`);
-        });
-    }
+            saveToLocalStorage();
+        } else {
+            resultElement.textContent = "We don't know this object. Scan again or contact staff";
+        }
+    }).catch((err) => {
+        console.error(`Failed to stop QR scanner: ${err}`);
+    });
+}
+
 
     function onScanFailure(error) {
         console.error(`QR scan error: ${error}`);
