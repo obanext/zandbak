@@ -68,17 +68,7 @@
     </label>
     <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="importCSVFunction()" />
 </div>
-
-<div class="button-container">
-    <label for="csvFileInputForQR" class="custom-file-upload">
-        import CSV voor QR
-    </label>
-    <input type="file" id="csvFileInputForQR" accept=".csv" style="display: none;" />
-    <button id="importQRButton" class="custom-file-upload" onclick="document.getElementById('csvFileInputForQR').click();">
-        CSV naar QR
-    </button>
-</div>
-
+<button id="importQRButton" class="custom-file-upload" onclick="importCSVAndGenerateQR()">CSV naar QR</button>
 
 <script src="nextinuitdatabase.js"></script>
 <script src="nextinuitadmin.js"></script>
