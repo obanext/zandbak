@@ -237,4 +237,3 @@ function clearSearch() {
     document.getElementById('status-uit').checked = false;
     displayObjects(); // Toont alle objecten
 }
-
