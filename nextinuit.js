@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const readerWidth = qrReaderElement.offsetWidth;
     const qrboxSize = Math.min(300, readerWidth);
     // Ensure the qrboxSize is at least 50px
-    const correctedQrboxSize = Math.max(qrboxSize, 50);
+    const correctedQrboxSize = Math.max(qrboxSize, 90);
     const config = {
         fps: 10,
         qrbox: { width: correctedQrboxSize, height: correctedQrboxSize }
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (object.status === 'in') {
                 object.status = 'uit';
                 object.datumUit = new Date().toISOString().split('T')[0];
-                resultElement.textContent = `je hebt:${object.titel} geleend`;
+                resultElement.textContent = `je hebt: "${object.titel}" geleend`;
             } else {
                 const newObject = {
                     id: object.id,
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     status: 'in'
                 };
                 objectDatabase.push(newObject);
-                resultElement.textContent = `Dank voor het terugbrengen van: ${object.titel}`;
+                resultElement.textContent = `Dank voor het terugbrengen van: "${object.titel}"`;
             }
             saveToLocalStorage();
         } else {
