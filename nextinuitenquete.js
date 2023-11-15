@@ -29,6 +29,7 @@ function displayEnquetes() {
     enqueteDatabase.forEach(enquete => {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'enquete-item';
+        itemDiv.style.fontFamily = "'AvenirLight', 'Arial', sans-serif"; // Deze regel voegt de font-family stijl toe
         itemDiv.textContent = `ID: ${enquete.id}, Lid: ${enquete.lidVanOBA}, Mening: ${enquete.meningOverLenen}, Toekomstig lid: ${enquete.toekomstigLid}`;
         listContainer.appendChild(itemDiv);
     });
@@ -42,6 +43,10 @@ function importCsv(e) {
         reader.onload = function(event) {
             const csvData = event.target.result;
             const newData = parseCsv(csvData);
+
+            
+            enqueteDatabase.length = 0;
+            
             enqueteDatabase.push(...newData);
             saveToLocalStorage();
             displayEnquetes();
@@ -50,6 +55,7 @@ function importCsv(e) {
         alert('Geen bestand geselecteerd');
     }
 }
+
 
 function parseCsv(data) {
     const csvRows = data.split(/\r\n|\n/);
