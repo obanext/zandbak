@@ -48,7 +48,7 @@ function startQRScanner() {
     html5QrCode = new Html5Qrcode("qr-reader");
     const readerWidth = qrReaderElement.offsetWidth;
     const qrboxSize = Math.min(300, readerWidth);
-    const correctedQrboxSize = Math.max(qrboxSize, 50);
+    const correctedQrboxSize = Math.max(qrboxSize, 100);
     html5QrCode.start({ facingMode: "environment" }, {
         fps: 10,
         qrbox: { width: correctedQrboxSize, height: correctedQrboxSize }
