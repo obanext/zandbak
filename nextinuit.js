@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
     placeholderImage.addEventListener('click', function () {
         startButton.click(); 
 
-  function startQRScanner() {
+ function startQRScanner() {
     html5QrCode = new Html5Qrcode("qr-reader");
     const readerWidth = qrReaderElement.offsetWidth;
     const qrboxSize = Math.min(300, readerWidth);
@@ -48,15 +48,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const correctedQrboxSize = Math.max(qrboxSize, 90);
     const config = {
         fps: 10,
-        qrbox: { width: correctedQrboxSize, height: correctedQrboxSize }
+        qrbox: { width: correctedQrboxSize, height: correctedQrboxSize },
+        facingMode: "environment" // This is now included in the config object
     };
 
-    // Corrected the start method parameters
-    html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
+    // Now pass the correct config object to the start method
+    html5QrCode.start(config, onScanSuccess, onScanFailure)
         .catch((err) => {
             console.error(`Error in starting the QR scanner: ${err}`);
-            
         });
+}
 }
    function onScanSuccess(decodedText, decodedResult) {
     console.log(`QR code detected: ${decodedText}`);
