@@ -41,7 +41,49 @@ section {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	
 }
+#enquete-toevoegen .form-group {
+    margin-bottom: 15px;
+}
+
+#enquete-toevoegen .question-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#enquete-toevoegen .options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#enquete-toevoegen .options input[type="radio"] {
+    margin-right: 5px;
+}
+
+#enquete-toevoegen input[type="text"] {
+    display: block;
+    width: 100%; 
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+#enquete-toevoegen button[type="submit"] {
+    margin-top: 10px;
+}
+textarea {
+    width: 100%;
+    padding: 5px;
+    font-family: 'AvenirLight', 'Arial', sans-serif; 
+    box-sizing: border-box; 
+    resize: vertical; 
+    min-height: 50px; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 5px; 
+}
+
 
 #object-toevoegen,
 #search-and-filter,
@@ -111,6 +153,16 @@ button,
     font-family: 'AvenirBlack', 'Arial', sans-serif;
 }
 
+label[for="titel"],
+#search-and-filter .search-field label,
+#search-and-filter .status-filter label {
+    font-family: 'AvenirLight', 'Arial', sans-serif;
+}
+
+#enquete-toevoegen label {
+    font-family: 'AvenirLight', 'Arial', sans-serif;
+}
+
 button:hover,
 .custom-file-upload:hover {
     background-color: #0056b3;
@@ -125,7 +177,7 @@ button:hover,
    
 }
 
-/* CSS changes to center the scan qr-code button and add spacing */
+
 #qr-scanner {
     display: flex;
     flex-direction: column;
@@ -133,17 +185,19 @@ button:hover,
 }
 
 #start-button {
-    margin-top: 20px; /* Adjust the value to increase the space between the image and the button */
-    width: auto; /* Ensures the button does not stretch */
+    margin-top: 20px; 
+    width: auto; 
 }
 
-/* CSS to ensure the placeholder image fits within the QR scanner area */
+
 #placeholder-image {
-  max-width: 100%; /* Ensures the image is not wider than its parent */
-  max-height: 300px; /* Ensures the image is not taller than the QR scanner area */
-  object-fit: contain; /* Ensures the aspect ratio is preserved */
-  width: auto; /* Scales the image width proportionally to the height */
-  height: auto; /* Scales the
+  max-width: 100%; 
+  max-height: 300px; 
+  object-fit: contain; 
+  width: auto; 
+  height: auto; 
+  
+  
 
 #busyIndicator {
   position: fixed;
@@ -151,8 +205,8 @@ button:hover,
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 10px;
-  background-color: #fff;
   border: 1px solid #000;
   z-index: 1000;
   display: none;
 }
+
