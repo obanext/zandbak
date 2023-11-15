@@ -38,8 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     placeholderImage.addEventListener('click', function () {
-        startButton.click(); // Simuleer een klik op de start-knop
-    });
+        startButton.click(); 
 
   function startQRScanner() {
     html5QrCode = new Html5Qrcode("qr-reader");
@@ -66,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
         stopButton.click(); 
         const resultElement = document.getElementById('scan-result');
 
-        // Zoek naar het laatste record met het overeenkomende ID.
+       
         const objectIndices = objectDatabase
             .map((obj, index) => ({ id: obj.id, index }))
             .filter(obj => obj.id === decodedText)
@@ -106,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error(`QR scan error: ${error}`);
     }
 
-    // Set initial visibility state
+   
     qrReaderElement.style.display = 'none'; 
     placeholderImage.style.display = 'block'; 
 });
