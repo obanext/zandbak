@@ -108,4 +108,4 @@ document.addEventListener('DOMContentLoaded', function () {
    
     qrReaderElement.style.display = 'none'; 
     placeholderImage.style.display = 'block'; 
-});
+}});
