@@ -3,52 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>enquête beheer</title>
+    <title>enquête</title>
     <link rel="stylesheet" href="nextinuit.css">
 </head>
 <body>
 <nav>
    
     <a href="nextinuit.html">qr-scanner</a>
- <a href="nextinuitadmin.html">login</a>
+ <a href="nextinuitadmin.html">admin</a>
 </nav>
-<h1>Enquête Beheer</h1>
+<h1>enquête</h1>
 
 <!-- enquête Invoeren Formulier -->
-<section id="enquete-toevoegen">
-    <h2>Enquête invoeren</h2>
+<<section id="enquete-toevoegen">
+    <h2>enquête invoeren</h2>
     <form id="enqueteForm">
-        <div>
-            <label>Ben je lid van de OBA?</label>
-            <label for="lid-ja">Ja</label>
-            <input type="radio" id="lid-ja" name="lid-van-oba" value="ja" required>
-            <label for="lid-nee">Nee</label>
-            <input type="radio" id="lid-nee" name="lid-van-oba" value="nee">
+        <div class="form-group">
+            <label class="question-label">Ben je lid van de OBA?</label>
+            <div class="options">
+                <input type="radio" id="lid-ja" name="lid-van-oba" value="ja" required>
+                <label for="lid-ja">Ja</label>
+                <input type="radio" id="lid-nee" name="lid-van-oba" value="nee">
+                <label for="lid-nee">Nee</label>
+            </div>
         </div>
         <div>
-            <label for="mening-over-lenen">Wat vind je van deze manier van lenen?</label>
-            <input type="text" id="mening-over-lenen" name="mening-over-lenen" required>
-        </div>
-        <div>
-            <label for="toekomstig-lid">Zou je, nu je dit gebruikt, in toekomst lid willen worden van de OBA?</label>
-            <input type="text" id="toekomstig-lid" name="toekomstig-lid" required>
-        </div>
-        <button type="submit">Enquête invoeren</button>
+    <label for="mening-over-lenen">Wat vind je van deze manier van lenen?</label>
+    <textarea id="mening-over-lenen" name="mening-over-lenen" required></textarea>
+</div>
+<div>
+    <label for="toekomstig-lid">Zou je, nu je dit gebruikt, in toekomst lid willen worden van de OBA?</label>
+    <textarea id="toekomstig-lid" name="toekomstig-lid" required></textarea>
+</div>
+
+        <button type="submit">enquête invoeren</button>
     </form>
 </section>
 
 
 <section id="enquete-lijst">
-    <h2>Enquête overzicht</h2>
+    <h2>enquête-overzicht</h2>
     <div class="enquete-list-container">
   
     </div>
 </section>
 
-<!-- CSV Import/Export -->
+
 <div class="button-container">
-    <button id="download-csv">Export CSV</button>
-    <label for="csvFileInput" class="custom-file-upload">Import CSV</label>
+    <button id="download-csv">export csv</button>
+    <label for="csvFileInput" class="custom-file-upload">import csv</label>
     <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="importCsv(event)" />
 </div>
 
