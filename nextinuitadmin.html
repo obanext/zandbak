@@ -3,22 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
     <title>objectbeheer</title>
     <link rel="stylesheet" href="nextinuit.css">
 </head>
 <body>
 <nav>
     <a href="nextinuit.html">qr-scanner</a>
-	<a href="nextinuitadmin.html">login</a>
+    <a href="nextinuitadmin.html">enquete</a>
+	
 </nav>
 <h1>objectbeheer</h1>
 
-<!-- Object Toevoegen Formulier -->
 <section id="object-toevoegen">
     <h2>object toevoegen</h2>
     <form id="objectForm">
@@ -28,8 +26,8 @@
     </form>
 </section>
 
-<!-- Zoek- en Filtersectie -->
 <section id="search-and-filter">
+<h2>zoeken en filter</h2>
     <div class="search-fields-container">
         <div class="search-field">
             <label for="search-id">ID:</label>
@@ -37,7 +35,7 @@
         </div>
         <div class="search-field">
             <label for="search-title">titel:</label>
-            <input type="text" id="search-title" placeholder="Malcolm X">
+            <input type="text" id="search-title" placeholder="Titel">
         </div>
         <div class="status-filter">
             <label for="status-in">in</label>
@@ -49,26 +47,25 @@
     <div class="search-buttons">
         <button id="search-button">zoek</button>
         <button id="clear-button">wis</button>
+        <button id="generate-qr-button">Genereer QR voor resultaten</button>
     </div>
-
 </section>
 
 <section id="object-lijst">
     <h2>objectenlijst</h2>
     <div class="object-list-container">
-    
     </div>
 </section> 
-
-<button onclick="downloadObjectAsCsv(objectDatabase, 'objecten')">export CSV</button>
-
+<button id="export-csv-button">export CSV</button>
 <div class="button-container">
     <label for="csvFileInput" class="custom-file-upload">
         import CSV
     </label>
-    <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="importCSVFunction()" />
+    <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="importCsv(event)" />
 </div>
-<button id="importQRButton" class="custom-file-upload" onclick="importCSVAndGenerateQR()">CSV naar QR</button>
 
 <script src="nextinuitdatabase.js"></script>
 <script src="nextinuitadmin.js"></script>
+<script src="nextinuitqrcode.js"></script>
+</body>
+</html>
