@@ -7,24 +7,22 @@
 <link rel="stylesheet" href="lenlkaart.css">
 </head>
 <body>
-<div class="container">
-  <div class="selectors">
-    <div class="selector-group" id="area-selectors">
-      <h3>Areas</h3>
-      <!-- Gebied selectors zullen hier dynamisch ingeladen worden -->
-    </div>
-    <div class="selector-group" id="skill-selectors">
-      <h3>Skills</h3>
-      <!-- Vaardigheid selectors zullen hier dynamisch ingeladen worden -->
-    </div>
-    <button id="generate-url">Generate Map URL</button>
+<div class="selectors">
+  <div class="selector-group" id="area-selectors">
+    <h3>Areas</h3>
+    <!-- Gebied selectors zullen hier dynamisch ingeladen worden -->
   </div>
-  <div class="map">
-    <iframe id="map-frame" src="" width="600" height="400"></iframe>
+  <div class="selector-group" id="skill-selectors">
+    <h3>Skills</h3>
+    <!-- Vaardigheid selectors zullen hier dynamisch ingeladen worden -->
   </div>
-  <div id="generated-url-container">
-    <pre id="generated-url"></pre>
-  </div>
+  <button id="generate-url">Generate Map URL</button>
+</div>
+<div class="map">
+  <iframe id="map-frame" src="" allowfullscreen></iframe>
+</div>
+<div id="generated-url-container">
+  <pre id="generated-url"></pre>
 </div>
 <script src="lenlkaart.js"></script>
 </body>
