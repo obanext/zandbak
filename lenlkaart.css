@@ -1,25 +1,33 @@
 body {
   font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 20px;
 }
 
 .selectors {
-  flex-basis: 20%;
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
 }
 
 .map {
-  flex-basis: 75%;
+  flex-grow: 1;
 }
 
 #map-frame {
   width: 100%;
-  height: 100%;
-  border: none;
+  min-width: 600px;
+  height: 400px;
+  border: 1px solid #ccc;
 }
+
 #generated-url-container {
   margin-top: 20px;
 }
@@ -28,4 +36,18 @@ body {
   width: 100%;
   padding: 5px;
   margin-top: 5px;
+  border: 1px solid #ccc;
+}
+
+.selector-group {
+  margin-bottom: 10px;
+}
+
+.selector-group label {
+  display: block;
+  margin-top: 5px;
+}
+
+.selector-group input[type="checkbox"] {
+  margin-right: 5px;
 }
