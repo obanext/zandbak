@@ -2,72 +2,59 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .container {
   display: flex;
-  flex-wrap: wrap;
-  padding: 20px;
+  flex-grow: 1; /* Zorgt ervoor dat de container groeit en de ruimte opvult */
 }
 
 .selectors {
-  flex-basis: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: row; /* Selectoren naast elkaar */
   flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 33.333%; /* 1/3 van de breedte */
 }
 
 .selector-group {
-  flex: 1 1 150px; /* Elke selector-groep zal minimaal 150px breed zijn */
+  display: flex;
+  flex-direction: column; /* Opties onder elkaar */
   margin-right: 20px;
 }
 
 .map {
-  flex: 1 1 100%; /* Zal standaard de volledige breedte innemen */
-  height: 400px; /* Stel een minimum hoogte in */
+  flex-grow: 1; /* De kaart vult de resterende 2/3 */
+  display: flex;
+  align-items: flex-start;
 }
 
 #map-frame {
   width: 100%;
-  height: 100%;
-  border: 1px solid #ccc;
+  height: 100vh; /* Hoogte is de volledige viewport-hoogte */
+  border: none;
 }
 
-/* Responsieve lay-out */
-@media (min-width: 768px) {
-  .selectors {
-    flex-basis: 33.333%; /* Selectoren nemen 1/3 van de breedte in */
-  }
-
-  .map {
-    flex-basis: 66.666%; /* Kaart neemt 2/3 van de breedte in */
-    height: auto; /* Hoogte past zich aan de inhoud aan */
-  }
-}
-
+/* Stijl voor de gegenereerde URL */
 #generated-url-container {
-  margin-top: 20px;
+  width: 100%;
 }
 
 #generated-url {
-  width: 100%;
-  padding: 5px;
-  margin-top: 5px;
-  border: none; /* Geen rand voor de URL */
-  background: none; /* Geen achtergrond voor de URL */
-  color: #555; /* Kleur van de URL tekst */
+  white-space: pre-wrap; /* Zorgt ervoor dat de URL correct wordt afgebroken */
 }
 
-/* Extra stijlen voor verticale uitlijning van de checkboxes */
-.selector-group h3 {
-  margin-top: 0;
-}
-
-.selector-group label {
-  display: flex;
-  align-items: center;
-}
-
-.selector-group input[type="checkbox"] {
-  margin-right: 5px;
+@media (max-width: 768px) {
+  .selectors,
+  .map {
+    width: 100%;
+  }
+  
+  #map-frame {
+    height: 400px; /* Een vaste hoogte voor kleinere schermen */
+  }
 }
