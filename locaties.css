@@ -1,101 +1,53 @@
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(to right, #00ff7f 0%, #64c594 35%, #a8a9a3 70%, #dcdcdc 80%, #ffffff 100%);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
 }
 
-header {
+.content {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex: 1; /* Zorgt ervoor dat de .content container de ruimte opvult */
+}
+
+.selectors {
+  display: flex;
+  flex-direction: column; /* Selectoren onder elkaar */
   padding: 20px;
-  background-color: none;
+  width: 33.333%; /* 1/3 van de breedte */
 }
 
-nav ul {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.selector-group {
+  margin-bottom: 10px;
 }
 
-nav ul li a {
-  display: block;
-  padding: 0 10px;
-  text-decoration: none;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-nav ul li a:hover {
-  color: #20BF55;
-}
-
-#oba-logo {
-  background-image: url("leefenleer.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 20px;
-  width: 75px;
-}
-
-.main-container {
-  display: flex;
-  margin: 20px;
-  background-color: transparent;
-  border-radius: 10px;
-  overflow: hidden;
-  flex-grow: 1;
-}
-
-.filters-container {
-  display: flex;
-  flex-direction: column;
-  width: calc(100% / 3);
-  background-color: rgba(255, 255, 255, 0.5);
+.map {
+  flex-grow: 2; /* De kaart neemt de resterende ruimte in */
   padding: 20px;
-  border-radius: 10px;
 }
 
-.filter-section {
-  margin-bottom: 20px;
-  border-radius: 10px;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-.filter-section ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.map-container {
-  flex-grow: 2;
-  position: relative;
-  border-radius: 10px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.5);
-  margin-left: 20px;
-}
-
-#map {
+#map-frame {
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 40px); /* Aftrekken van de padding */
   border: none;
 }
 
-.option-group label {
-  display: block;
-  color: #fff;
+#generated-url-container {
+  padding: 20px;
 }
 
-.option-group h3 {
-  color: #fff;
-  margin-bottom: 10px;
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .selectors, .map {
+    width: 100%;
+  }
+
+  #map-frame {
+    height: 400px; /* Een vaste hoogte voor kleinere schermen */
+  }
 }
