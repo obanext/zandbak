@@ -20,33 +20,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Functie om de URL te bouwen op basis van geselecteerde waarden
+  // Functie om de URL te bouwen en te tonen op basis van geselecteerde waarden
   function generateMapUrl() {
-  let url = baseMapUrl;
-  const selectedAreas = document.querySelectorAll('#area-selectors input[type="checkbox"]:checked');
-  const selectedSkills = document.querySelectorAll('#skill-selectors input[type="checkbox"]:checked');
+    let url = baseMapUrl;
+    const selectedAreas = document.querySelectorAll('#area-selectors input[type="checkbox"]:checked');
+    const selectedSkills = document.querySelectorAll('#skill-selectors input[type="checkbox"]:checked');
 
-  selectedAreas.forEach(area => {
-    url += `&activate|geonaam=${area.value}`;
-    if (selectedSkills.length === 0) { // Als geen vaardigheden zijn geselecteerd
-      url += `&activate|selector=${area.value}`;
-    }
-  });
-
-  selectedSkills.forEach(skill => {
-    if (selectedAreas.length === 0) { // Als geen gebieden zijn geselecteerd
-      url += `&activate|selector=${skill.value}`;
-    } else {
-      selectedAreas.forEach(area => {
-        url += `&activate|selector=${area.value}${skill.value}`;
-      });
-    }
-  });
-
-  // Update de kaart iframe en toon de URL
-  document.getElementById('map-frame').src = url;
-  document.getElementById('generated-url').value = url; // Toon de gegenereerde URL in het tekstveld
-}
+    selectedAreas.forEach(area => {
+      url += `&activate|geonaam=${area.value}`;
+      if (selectedSkills.length === 0) { // Als geen vaardigheden zijn geselecteerd
+        url += `&activate|selector=${area.value}`;
+      }
+    });
 
     selectedSkills.forEach(skill => {
       if (selectedAreas.length === 0) { // Als geen gebieden zijn geselecteerd
@@ -57,6 +42,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       }
     });
+
+    // Update de kaart iframe en toon de URL
+    document.getElementById('map-frame').src = url;
+    document.getElementById('generated-url').value = url; // Toon de gegenereerde URL in het tekstveld
+  }
+
+  // Event listeners
+  document.getElementById('generate-url').addEventListener('click', generateMapUrl);
+
+  // Laad de selectors
+  populateSelectors('area', areaSelectors);
+  populateSelectors('skill', skillSelectors);
+}); // Dit is de afsluitende haakje van de 'DOMContentLoaded' event listener.
+
 
     document.getElementById('map-frame').src = url; // Update de kaart iframe
   }
