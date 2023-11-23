@@ -54,16 +54,4 @@ document.addEventListener('DOMContentLoaded', function() {
   // Laad de selectors
   populateSelectors('area', areaSelectors);
   populateSelectors('skill', skillSelectors);
-}); // Dit is de afsluitende haakje van de 'DOMContentLoaded' event listener.
-
-
-    document.getElementById('map-frame').src = url; // Update de kaart iframe
-  }
-
-  // Event listeners
-  document.getElementById('generate-url').addEventListener('click', generateMapUrl);
-
-  // Laad de selectors
-  populateSelectors('area', areaSelectors);
-  populateSelectors('skill', skillSelectors);
 });
