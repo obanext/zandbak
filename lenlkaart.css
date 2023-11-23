@@ -6,26 +6,43 @@ body {
 
 .container {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  flex-wrap: wrap;
   padding: 20px;
 }
 
 .selectors {
+  flex-basis: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.selector-group {
+  flex: 1 1 150px; /* Elke selector-groep zal minimaal 150px breed zijn */
   margin-right: 20px;
 }
 
 .map {
-  flex-grow: 1;
+  flex: 1 1 100%; /* Zal standaard de volledige breedte innemen */
+  height: 400px; /* Stel een minimum hoogte in */
 }
 
 #map-frame {
   width: 100%;
-  min-width: 600px;
-  height: 400px;
+  height: 100%;
   border: 1px solid #ccc;
+}
+
+/* Responsieve lay-out */
+@media (min-width: 768px) {
+  .selectors {
+    flex-basis: 33.333%; /* Selectoren nemen 1/3 van de breedte in */
+  }
+
+  .map {
+    flex-basis: 66.666%; /* Kaart neemt 2/3 van de breedte in */
+    height: auto; /* Hoogte past zich aan de inhoud aan */
+  }
 }
 
 #generated-url-container {
@@ -36,16 +53,19 @@ body {
   width: 100%;
   padding: 5px;
   margin-top: 5px;
-  border: 1px solid #ccc;
+  border: none; /* Geen rand voor de URL */
+  background: none; /* Geen achtergrond voor de URL */
+  color: #555; /* Kleur van de URL tekst */
 }
 
-.selector-group {
-  margin-bottom: 10px;
+/* Extra stijlen voor verticale uitlijning van de checkboxes */
+.selector-group h3 {
+  margin-top: 0;
 }
 
 .selector-group label {
-  display: block;
-  margin-top: 5px;
+  display: flex;
+  align-items: center;
 }
 
 .selector-group input[type="checkbox"] {
