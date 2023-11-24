@@ -1,59 +1,83 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const baseMapUrl = 'https://localfocuswidgets.net/655f6ee99d02c?hide=dropdowns';
-  const areaSelectors = ['ac', 'an', 'az', 'azo', 'anw', 'aw', 'ao', 'awe', 'ad'];
-  const skillSelectors = ['t', 'd', 'g'];
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box; 
+}
 
-  function populateSelectors(selectorType, selectors, containerId) {
-    const container = document.getElementById(containerId);
-    selectors.forEach(selector => {
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.id = selector;
-      checkbox.value = selector;
-      checkbox.dataset.type = selectorType;
-      checkbox.addEventListener('change', updateMap); // Update map on change
-      const label = document.createElement('label');
-      label.htmlFor = selector;
-      label.textContent = selector.toUpperCase();
-      container.appendChild(label);
-      container.appendChild(checkbox);
-    });
+*, *:before, *:after {
+  box-sizing: inherit; 
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%; 
+}
+
+.selectors {
+  display: flex;
+  flex-direction: row;
+  width: 33.333%;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.areas-column,
+.skills-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1; 
+  margin-right: 10px;
+}
+
+.areas-column:last-child,
+.skills-column:last-child {
+  margin-right: 0;
+}
+
+.areas-column label,
+.skills-column label {
+  display: block; 
+  margin-bottom: 5px;
+}
+
+.areas-column input[type="checkbox"],
+.skills-column input[type="checkbox"] {
+  margin-right: 10px; 
+  vertical-align: middle; 
+}
+
+.map {
+  flex: 2; 
+  padding: 20px;
+}
+
+#map-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+#generated-url-container {
+  width: 90%; 
+  padding: 20px;
+ }
+
+#generated-url {
+  white-space: pre-wrap; 
+  word-break: break-all; 
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
   }
 
-  function updateMap() {
-    let url = baseMapUrl;
-    const selectedAreas = Array.from(document.querySelectorAll('#area-selectors input[type="checkbox"]:checked')).map(el => el.value);
-    const selectedSkills = Array.from(document.querySelectorAll('#skill-selectors input[type="checkbox"]:checked')).map(el => el.value);
-
-    // Always include all areas
-    areaSelectors.forEach(area => {
-      url += `&activate|geonaam=${area}`;
-    });
-
-    // If skills are selected, append them, otherwise include all skills
-    if (selectedSkills.length > 0) {
-      selectedSkills.forEach(skill => {
-        areaSelectors.forEach(area => {
-          url += `&activate|selector=${area}${skill}`;
-        });
-      });
-    } else {
-      skillSelectors.forEach(skill => {
-        areaSelectors.forEach(area => {
-          url += `&activate|selector=${area}${skill}`;
-        });
-      });
-    }
-
-    // Update iframe source and display URL
-    document.getElementById('map-frame').src = url;
-    document.getElementById('generated-url').textContent = url;
+  .selectors, .map {
+    width: 100%;
+    padding: 10px;
   }
-
-  // Populate selectors on load without selecting them
-  populateSelectors('area', areaSelectors, 'area-selectors');
-  populateSelectors('skill', skillSelectors, 'skill-selectors');
-
-  // Initial update map call to load all areas and skills
-  updateMap();
-});
+}
