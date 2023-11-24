@@ -1,53 +1,39 @@
-body {
-  font-family: Arial, sans-serif;
+
+body, html {
+  height: 100%;
   margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  font-family: Arial, sans-serif;
 }
 
 .content {
   display: flex;
-  flex: 1; /* Zorgt ervoor dat de .content container de ruimte opvult */
+  flex-wrap: nowrap;
+  height: calc(100% - 40px); /* Adjusting height to allow for URL display */
 }
 
 .selectors {
-  display: flex;
-  flex-direction: column; /* Selectoren onder elkaar */
+  flex: 1;
   padding: 20px;
-  width: 33.333%; /* 1/3 van de breedte */
-}
-
-.selector-group {
-  margin-bottom: 10px;
+  overflow-y: auto; /* Allows scrolling for overflow content */
 }
 
 .map {
-  flex-grow: 2; /* De kaart neemt de resterende ruimte in */
+  flex: 2;
   padding: 20px;
 }
 
 #map-frame {
   width: 100%;
-  height: calc(100vh - 40px); /* Aftrekken van de padding */
+  height: 100%;
   border: none;
 }
 
 #generated-url-container {
+  width: 100%;
   padding: 20px;
+  background-color: #f7f7f7; /* Light grey background for the URL container */
 }
 
-@media (max-width: 768px) {
-  .content {
-    flex-direction: column;
-  }
-
-  .selectors, .map {
-    width: 100%;
-  }
-
-  #map-frame {
-    height: 400px; /* Een vaste hoogte voor kleinere schermen */
-  }
+#generated-url {
+  white-space: pre-wrap; /* Ensures the full URL is visible */
 }
