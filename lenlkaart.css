@@ -1,60 +1,59 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+document.addEventListener('DOMContentLoaded', function() {
+  const baseMapUrl = 'https://localfocuswidgets.net/655f6ee99d02c?hide=dropdowns';
+  const areaSelectors = ['ac', 'an', 'az', 'azo', 'anw', 'aw', 'ao', 'awe', 'ad'];
+  const skillSelectors = ['t', 'd', 'g'];
 
-.container {
-  display: flex;
-  flex-grow: 1; /* Zorgt ervoor dat de container groeit en de ruimte opvult */
-}
-
-.selectors {
-  display: flex;
-  flex-direction: row; /* Selectoren naast elkaar */
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 33.333%; /* 1/3 van de breedte */
-}
-
-.selector-group {
-  display: flex;
-  flex-direction: column; /* Opties onder elkaar */
-  margin-right: 20px;
-}
-
-.map {
-  flex-grow: 1; /* De kaart vult de resterende 2/3 */
-  display: flex;
-  align-items: flex-start;
-}
-
-#map-frame {
-  width: 100%;
-  height: 100vh; /* Hoogte is de volledige viewport-hoogte */
-  border: none;
-}
-
-/* Stijl voor de gegenereerde URL */
-#generated-url-container {
-  width: 100%;
-}
-
-#generated-url {
-  white-space: pre-wrap; /* Zorgt ervoor dat de URL correct wordt afgebroken */
-}
-
-@media (max-width: 768px) {
-  .selectors,
-  .map {
-    width: 100%;
+  function populateSelectors(selectorType, selectors, containerId) {
+    const container = document.getElementById(containerId);
+    selectors.forEach(selector => {
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.id = selector;
+      checkbox.value = selector;
+      checkbox.dataset.type = selectorType;
+      checkbox.addEventListener('change', updateMap); // Update map on change
+      const label = document.createElement('label');
+      label.htmlFor = selector;
+      label.textContent = selector.toUpperCase();
+      container.appendChild(label);
+      container.appendChild(checkbox);
+    });
   }
-  
-  #map-frame {
-    height: 400px; /* Een vaste hoogte voor kleinere schermen */
+
+  function updateMap() {
+    let url = baseMapUrl;
+    const selectedAreas = Array.from(document.querySelectorAll('#area-selectors input[type="checkbox"]:checked')).map(el => el.value);
+    const selectedSkills = Array.from(document.querySelectorAll('#skill-selectors input[type="checkbox"]:checked')).map(el => el.value);
+
+    // Always include all areas
+    areaSelectors.forEach(area => {
+      url += `&activate|geonaam=${area}`;
+    });
+
+    // If skills are selected, append them, otherwise include all skills
+    if (selectedSkills.length > 0) {
+      selectedSkills.forEach(skill => {
+        areaSelectors.forEach(area => {
+          url += `&activate|selector=${area}${skill}`;
+        });
+      });
+    } else {
+      skillSelectors.forEach(skill => {
+        areaSelectors.forEach(area => {
+          url += `&activate|selector=${area}${skill}`;
+        });
+      });
+    }
+
+    // Update iframe source and display URL
+    document.getElementById('map-frame').src = url;
+    document.getElementById('generated-url').textContent = url;
   }
-}
+
+  // Populate selectors on load without selecting them
+  populateSelectors('area', areaSelectors, 'area-selectors');
+  populateSelectors('skill', skillSelectors, 'skill-selectors');
+
+  // Initial update map call to load all areas and skills
+  updateMap();
+});
