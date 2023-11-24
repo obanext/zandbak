@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const areaSelectors = ['ac', 'an', 'az', 'azo', 'anw', 'aw', 'ao', 'awe', 'ad'];
   const skillSelectors = ['t', 'd', 'g'];
 
-
   function populateSelectors(selectorType, selectors, containerId) {
     const container = document.getElementById(containerId);
     selectors.forEach(selector => {
@@ -12,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
       checkbox.id = selector;
       checkbox.value = selector;
       checkbox.dataset.type = selectorType;
-      checkbox.addEventListener('change', updateMap); // Update map on change
+      checkbox.addEventListener('change', updateMap); 
       const label = document.createElement('label');
       label.htmlFor = selector;
       label.textContent = selector.toUpperCase();
@@ -26,20 +25,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectedAreas = Array.from(document.querySelectorAll('#area-selectors input[type="checkbox"]:checked')).map(el => el.value);
     const selectedSkills = Array.from(document.querySelectorAll('#skill-selectors input[type="checkbox"]:checked')).map(el => el.value);
 
-   
+    
     if (selectedAreas.length === 0 && selectedSkills.length === 0) {
       areaSelectors.forEach(area => {
         url += `&activate|geonaam=${area}&activate|selector=${area}`;
       });
     } else {
-      /
+     
       selectedAreas.forEach(area => {
         url += `&activate|geonaam=${area}`;
       });
 
       if (selectedSkills.length > 0 && selectedAreas.length === 0) {
   areaSelectors.forEach(area => {
-    
+   
     url += `&activate|geonaam=${area}`;
     selectedSkills.forEach(skill => {
       
@@ -53,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
           url += `&activate|selector=${area}`;
         });
       }
-      
+  
       else {
         selectedSkills.forEach(skill => {
           selectedAreas.forEach(area => {
@@ -63,12 +62,12 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    
+   
     document.getElementById('map-frame').src = url;
     document.getElementById('generated-url').textContent = url;
   }
 
-
+  
   populateSelectors('area', areaSelectors, 'area-selectors');
   populateSelectors('skill', skillSelectors, 'skill-selectors');
 
