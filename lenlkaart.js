@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const baseMapUrl = 'https://localfocuswidgets.net/65603ea3927e4?hide=dropdowns';
   const areaSelectors = ['ac', 'an', 'az', 'azo', 'anw', 'aw', 'ao', 'awe', 'ad'];
   const skillSelectors = ['t', 'd', 'g'];
-?hide=dropdowns';
+
 
   function populateSelectors(selectorType, selectors, containerId) {
     const container = document.getElementById(containerId);
