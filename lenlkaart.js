@@ -3,52 +3,49 @@ document.addEventListener('DOMContentLoaded', function() {
   const areaSelectors = ['ac', 'an', 'az', 'azo', 'anw', 'aw', 'ao', 'awe', 'ad'];
   const skillSelectors = ['t', 'd', 'g'];
 
-  // Functie om de selectors op de pagina te zetten
-  function populateSelectors(selectorType, selectors) {
-    const container = document.getElementById(`${selectorType}-selectors`);
+  function populateSelectors(selectorType, selectors, containerId) {
+    const container = document.getElementById(containerId);
     selectors.forEach(selector => {
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.id = selector;
       checkbox.value = selector;
       checkbox.dataset.type = selectorType;
-      checkbox.addEventListener('change', updateMap); // Update de kaart bij wijziging
+      checkbox.addEventListener('change', updateMap); // Update map on change
       const label = document.createElement('label');
       label.htmlFor = selector;
       label.textContent = selector.toUpperCase();
-      container.appendChild(checkbox);
       container.appendChild(label);
+      container.appendChild(checkbox);
     });
   }
 
-  // Functie om de kaart URL te updaten
   function updateMap() {
     let url = baseMapUrl;
-    const selectedAreas = document.querySelectorAll('#area-selectors input[type="checkbox"]:checked');
-    const selectedSkills = document.querySelectorAll('#skill-selectors input[type="checkbox"]:checked');
+    const selectedAreas = Array.from(document.querySelectorAll('#area-selectors input[type="checkbox"]:checked')).map(el => el.value);
+    const selectedSkills = Array.from(document.querySelectorAll('#skill-selectors input[type="checkbox"]:checked')).map(el => el.value);
 
+    // Append areas and skills to the URL
     selectedAreas.forEach(area => {
-      url += `&activate|geonaam=${area.value}`;
-      if (selectedSkills.length === 0) {
-        url += `&activate|selector=${area.value}`;
-      }
+      url += `&activate|geonaam=${area}`;
+      selectedSkills.forEach(skill => {
+        url += `&activate|selector=${area}${skill}`;
+      });
     });
 
-    selectedSkills.forEach(skill => {
-      if (selectedAreas.length === 0) {
-        url += `&activate|selector=${skill.value}`;
-      } else {
-        selectedAreas.forEach(area => {
-          url += `&activate|selector=${area.value}${skill.value}`;
-        });
-      }
-    });
+    // If no areas are selected but skills are, append skills only
+    if (selectedAreas.length === 0) {
+      selectedSkills.forEach(skill => {
+        url += `&activate|selector=${skill}`;
+      });
+    }
 
-    document.getElementById('map-frame').src = url; // Update de kaart iframe
-    document.getElementById('generated-url').textContent = url; // Toon de gegenereerde URL
+    // Update iframe source and display URL
+    document.getElementById('map-frame').src = url;
+    document.getElementById('generated-url').textContent = url;
   }
 
-  // Laad de selectors
-  populateSelectors('area', areaSelectors);
-  populateSelectors('skill', skillSelectors);
+  // Populate selectors on load
+  populateSelectors('area', areaSelectors, 'area-selectors');
+  populateSelectors('skill', skillSelectors, 'skill-selectors');
 });
