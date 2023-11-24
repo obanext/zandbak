@@ -25,18 +25,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectedAreas = Array.from(document.querySelectorAll('#area-selectors input[type="checkbox"]:checked')).map(el => el.value);
     const selectedSkills = Array.from(document.querySelectorAll('#skill-selectors input[type="checkbox"]:checked')).map(el => el.value);
 
-    // Append areas and skills to the URL
-    selectedAreas.forEach(area => {
+    // Always include all areas
+    areaSelectors.forEach(area => {
       url += `&activate|geonaam=${area}`;
-      selectedSkills.forEach(skill => {
-        url += `&activate|selector=${area}${skill}`;
-      });
     });
 
-    // If no areas are selected but skills are, append skills only
-    if (selectedAreas.length === 0) {
+    // If skills are selected, append them, otherwise include all skills
+    if (selectedSkills.length > 0) {
       selectedSkills.forEach(skill => {
-        url += `&activate|selector=${skill}`;
+        areaSelectors.forEach(area => {
+          url += `&activate|selector=${area}${skill}`;
+        });
+      });
+    } else {
+      skillSelectors.forEach(skill => {
+        areaSelectors.forEach(area => {
+          url += `&activate|selector=${area}${skill}`;
+        });
       });
     }
 
@@ -45,7 +50,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('generated-url').textContent = url;
   }
 
-  // Populate selectors on load
+  // Populate selectors on load without selecting them
   populateSelectors('area', areaSelectors, 'area-selectors');
   populateSelectors('skill', skillSelectors, 'skill-selectors');
+
+  // Initial update map call to load all areas and skills
+  updateMap();
 });
