@@ -3,56 +3,43 @@ body, html {
   padding: 0;
   height: 100%;
   font-family: Arial, sans-serif;
-  box-sizing: border-box; 
-}
-
-*, *:before, *:after {
-  box-sizing: inherit; 
 }
 
 .content {
   display: flex;
-  flex-direction: row;
-  height: 100%;
-  width: 100%; 
+  height: calc(100% - 40px); /* Ruimte voor de gegenereerde URL container onderaan */
 }
 
 .selectors {
-  display: flex;
-  flex-direction: row;
   width: 33.333%;
   padding: 20px;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
 }
 
 .areas-column,
 .skills-column {
   display: flex;
   flex-direction: column;
-  flex: 1; 
-  margin-right: 10px;
-}
-
-.areas-column:last-child,
-.skills-column:last-child {
-  margin-right: 0;
+  width: 50%;
 }
 
 .areas-column label,
 .skills-column label {
-  display: block; 
+  display: block;
   margin-bottom: 5px;
 }
 
 .areas-column input[type="checkbox"],
 .skills-column input[type="checkbox"] {
-  margin-right: 10px; 
-  vertical-align: middle; 
+  margin-right: 5px;
 }
 
 .map {
-  flex: 2; 
+  width: 66.666%;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 #map-frame {
@@ -62,22 +49,39 @@ body, html {
 }
 
 #generated-url-container {
-  width: 90%; 
+  width: 100%;
   padding: 20px;
- }
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
 
 #generated-url {
-  white-space: pre-wrap; 
-  word-break: break-all; 
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
 @media (max-width: 768px) {
   .content {
     flex-direction: column;
+    height: calc(100% - 40px); 
   }
 
   .selectors, .map {
     width: 100%;
     padding: 10px;
+  }
+
+  .selectors {
+    flex-direction: column;
+  }
+
+  .areas-column, .skills-column {
+    width: 100%;
+  }
+
+  #generated-url-container {
+    position: static; 
   }
 }
