@@ -3,25 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Map Selector</title>
+<title>Leefenleer! testkaart</title>
 <link rel="stylesheet" href="lenlkaart.css">
 </head>
 <body>
 <div class="content">
-  <div class="selectors">
-    <div class="selector-group" id="area-selectors">
-      <h3>Areas</h3>
-      <!-- Gebied selectors zullen hier dynamisch ingeladen worden -->
+  <div class="selectors"> 
+    <div class="areas-column">
+      <h2>gebieden</h2>
+      <div id="area-selectors" class="selector-group">
+        <!-- Area selectors will be dynamically loaded here -->
+      </div>
     </div>
-    <div class="selector-group" id="skill-selectors">
-      <h3>Skills</h3>
-      <!-- Vaardigheid selectors zullen hier dynamisch ingeladen worden -->
+    <div class="skills-column">
+      <h2>vaardigheden</h2>
+      <div id="skill-selectors" class="selector-group">
+        <!-- Skill selectors will be dynamically loaded here -->
+      </div>
     </div>
-  </div>
-  <div class="map">
+  </div> 
+  <div class="map"> <!-- Map wrapper -->
     <iframe id="map-frame" src="" allowfullscreen></iframe>
   </div>
-</div>
+</div> 
 <div id="generated-url-container">
   <pre id="generated-url"></pre>
 </div>
