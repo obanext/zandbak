@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const baseMapUrl = 'https://localfocuswidgets.net/65603ea3927e4?hide=dropdowns';
+  const baseMapUrl = 'https://localfocuswidgets.net/6565faeed90fe?hide=dropdowns';
   const areaSelectors = ['ac', 'an', 'az', 'azo', 'anw', 'aw', 'ao', 'awe', 'ad'];
   const skillSelectors = ['t', 'd', 'g'];
 
