@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leefenleer! testkaart</title>
-<link rel="stylesheet" href="lenlkaart.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leefenleer! testkaart</title>
+    <link rel="stylesheet" href="lenlkaart.css">
 </head>
+
 <body>
-<div class="content">
-  <div class="selectors"> 
-    <div class="areas-column">
-      <h2>gebieden</h2>
-      <div id="area-selectors" class="selector-group">
-        <!-- Area selectors will be dynamically loaded here -->
-      </div>
+    <div class="content">
+        <div class="selectors">
+            <div class="areas-column">
+                <h2>gebieden</h2>
+                <div id="area-selectors" class="selector-group">
+                    <!-- Area selectors will be dynamically loaded here -->
+                </div>
+            </div>
+            <div class="skills-column">
+                <h2>vaardigheden</h2>
+                <div id="skill-selectors" class="selector-group">
+                    <!-- Skill selectors will be dynamically loaded here -->
+                </div>
+            </div>
+            <div id="generated-url-container">
+                <pre id="generated-url"></pre>
+            </div>
+        </div>
+        <div class="map">
+            <iframe id="map-frame" src="" allowfullscreen></iframe>
+        </div>
     </div>
-    <div class="skills-column">
-      <h2>vaardigheden</h2>
-      <div id="skill-selectors" class="selector-group">
-        <!-- Skill selectors will be dynamically loaded here -->
-      </div>
-	  <div id="generated-url-container">
-  <pre id="generated-url"></pre>
-</div>
-    </div>
-  </div> 
-  <div class="map"> 
-    <iframe id="map-frame" src="" allowfullscreen></iframe>
-  </div>
-</div> 
-<script src="lenlkaart.js"></script>
+    <script src="lenlkaart.js"></script>
 </body>
+
 </html>
