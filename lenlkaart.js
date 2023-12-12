@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const baseMapUrl = 'https://localfocuswidgets.net/656828b5aa7c9?hide=dropdowns';
     const areaSelectors = ['ac', 'an', 'az', 'azo', 'anw', 'aw', 'ao', 'awe', 'ad'];
-    const skillSelectors = ['T', 'd', 'g'];
+    const skillSelectors = ['t', 'd', 'g'];
 
     const areaLabels = {
         ac: 'Centrum',
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const skillLabels = {
-        T: 'Taal',
+        t: 'Taal',
         d: 'Computer',
         g: 'Geld en Rekenen'
     };
