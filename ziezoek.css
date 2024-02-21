@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#search-container {
+    text-align: center;
+    margin: 20px;
+}
+
+#results-container {
+    display: flex;
+}
+
+.results-method {
+    width: 50%;
+    padding: 10px;
+}
+
+img {
+    max-width: 100px;
+    max-height: 100px;
+    margin: 10px;
+}
