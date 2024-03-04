@@ -67,7 +67,7 @@ function displayResults(data, type, method, searchTerm) {
                 link.href = result.detailLink;
                 link.target = '_blank';
                 const img = document.createElement('img');
-                img.src = type === 'website' ? 'obana.png' : (result.coverimages[1] || result.coverimages[0]);
+                img.src = type === 'website' ? 'na.png' : (result.coverimages[1] || result.coverimages[0]);
                 img.alt = 'Cover image';
                 link.appendChild(img);
                 section.appendChild(link);
@@ -98,7 +98,7 @@ function displayResults(data, type, method, searchTerm) {
             link.target = '_blank';
 
             const img = document.createElement('img');
-            img.src = type === 'website' ? 'obana.png' : (result.coverimages[1] || result.coverimages[0]);
+            img.src = type === 'website' ? 'na.png' : (result.coverimages[1] || result.coverimages[0]);
             img.alt = 'Cover image';
             link.appendChild(img);
 
@@ -141,7 +141,7 @@ function fetchMoreResults(type, searchTerm) {
                     link.target = '_blank';
 
                     const img = document.createElement('img');
-                    img.src = type === 'website' ? 'obana.png' : (result.coverimages[1] || result.coverimages[0]);
+                    img.src = type === 'website' ? 'na.png' : (result.coverimages[1] || result.coverimages[0]);
                     img.alt = 'Cover image';
                     link.appendChild(img);
 
